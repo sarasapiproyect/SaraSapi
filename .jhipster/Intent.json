@@ -1,0 +1,73 @@
+{
+  "applications": ["SaraBusinessInteligente"],
+  "changelogDate": "20230520213231",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "intent",
+  "fields": [
+    {
+      "fieldName": "intenType",
+      "fieldType": "IntentType",
+      "fieldValues": "INFO,BACK_END_INFO"
+    },
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "300",
+      "fieldValidateRulesMinlength": "1"
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "300",
+      "fieldValidateRulesMinlength": "1"
+    },
+    {
+      "fieldName": "urlRequest",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "300",
+      "fieldValidateRulesMinlength": "1"
+    },
+    {
+      "fieldName": "enabled",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "creationDate",
+      "fieldType": "Instant"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Intent",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "language",
+      "relationshipName": "languaje",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "value",
+      "otherEntityName": "userExpresion",
+      "otherEntityRelationshipName": "intent",
+      "ownerSide": true,
+      "relationshipName": "userExpresion",
+      "relationshipType": "many-to-many"
+    },
+    {
+      "otherEntityField": "valueResponse",
+      "otherEntityName": "userResponse",
+      "otherEntityRelationshipName": "intent",
+      "ownerSide": true,
+      "relationshipName": "userResponse",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "service": "no"
+}

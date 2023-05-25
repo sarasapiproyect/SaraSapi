@@ -1,0 +1,9 @@
+{
+  "saraBusinessInteligenteApp": {
+    "IntentType": {
+      "null": "",
+      "INFO": "INFO",
+      "BACK_END_INFO": "BACK_END_INFO"
+    }
+  }
+}

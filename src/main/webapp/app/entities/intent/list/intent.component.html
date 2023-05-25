@@ -1,0 +1,148 @@
+<div>
+  <h2 id="page-heading" data-cy="IntentHeading">
+    <span jhiTranslate="saraBusinessInteligenteApp.intent.home.title">Intents</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="saraBusinessInteligenteApp.intent.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-intent"
+        [routerLink]="['/intent/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="saraBusinessInteligenteApp.intent.home.createLabel"> Create a new Intent </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="intents?.length === 0">
+    <span jhiTranslate="saraBusinessInteligenteApp.intent.home.notFound">No Intents found</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="intents && intents.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span jhiTranslate="global.field.id">ID</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="intenType">
+            <div class="d-flex">
+              <span jhiTranslate="saraBusinessInteligenteApp.intent.intenType">Inten Type</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="name">
+            <div class="d-flex">
+              <span jhiTranslate="saraBusinessInteligenteApp.intent.name">Name</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="description">
+            <div class="d-flex">
+              <span jhiTranslate="saraBusinessInteligenteApp.intent.description">Description</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="urlRequest">
+            <div class="d-flex">
+              <span jhiTranslate="saraBusinessInteligenteApp.intent.urlRequest">Url Request</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="enabled">
+            <div class="d-flex">
+              <span jhiTranslate="saraBusinessInteligenteApp.intent.enabled">Enabled</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="creationDate">
+            <div class="d-flex">
+              <span jhiTranslate="saraBusinessInteligenteApp.intent.creationDate">Creation Date</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="languaje.name">
+            <div class="d-flex">
+              <span jhiTranslate="saraBusinessInteligenteApp.intent.languaje">Languaje</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="userExpresion.value">
+            <div class="d-flex">
+              <span jhiTranslate="saraBusinessInteligenteApp.intent.userExpresion">User Expresion</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="userResponse.valueResponse">
+            <div class="d-flex">
+              <span jhiTranslate="saraBusinessInteligenteApp.intent.userResponse">User Response</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let intent of intents; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/intent', intent.id, 'view']">{{ intent.id }}</a>
+          </td>
+          <td jhiTranslate="{{ 'saraBusinessInteligenteApp.IntentType.' + intent.intenType }}">{{ intent.intenType }}</td>
+          <td>{{ intent.name }}</td>
+          <td>{{ intent.description }}</td>
+          <td>{{ intent.urlRequest }}</td>
+          <td>{{ intent.enabled }}</td>
+          <td>{{ intent.creationDate | formatMediumDatetime }}</td>
+          <td>
+            <div *ngIf="intent.languaje">
+              <a [routerLink]="['/language', intent.languaje.id, 'view']">{{ intent.languaje.name }}</a>
+            </div>
+          </td>
+          <td>
+            <span *ngFor="let userExpresion of intent.userExpresions; let last = last">
+              <a class="form-control-static" [routerLink]="['/user-expresion', userExpresion.id, 'view']">{{ userExpresion.value }}</a
+              >{{ last ? '' : ', ' }}
+            </span>
+          </td>
+          <td>
+            <span *ngFor="let userResponse of intent.userResponses; let last = last">
+              <a class="form-control-static" [routerLink]="['/user-response', userResponse.id, 'view']">{{ userResponse.valueResponse }}</a
+              >{{ last ? '' : ', ' }}
+            </span>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button type="submit" [routerLink]="['/intent', intent.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button type="submit" [routerLink]="['/intent', intent.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(intent)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

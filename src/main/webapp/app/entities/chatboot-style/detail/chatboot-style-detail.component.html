@@ -1,0 +1,45 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="chatbootStyle">
+      <h2 data-cy="chatbootStyleDetailsHeading">
+        <span jhiTranslate="saraBusinessInteligenteApp.chatbootStyle.detail.title">Chatboot Style</span>
+      </h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ chatbootStyle.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="saraBusinessInteligenteApp.chatbootStyle.nameProperties">Name Properties</span></dt>
+        <dd>
+          <span>{{ chatbootStyle.nameProperties }}</span>
+        </dd>
+        <dt><span jhiTranslate="saraBusinessInteligenteApp.chatbootStyle.value">Value</span></dt>
+        <dd>
+          <span>{{ chatbootStyle.value }}</span>
+        </dd>
+        <dt><span jhiTranslate="saraBusinessInteligenteApp.chatbootStyle.multimedia">Multimedia</span></dt>
+        <dd>
+          <div *ngIf="chatbootStyle.multimedia">
+            <a (click)="openFile(chatbootStyle.multimedia, chatbootStyle.multimediaContentType)" jhiTranslate="entity.action.open">Open</a>
+            {{ chatbootStyle.multimediaContentType }}, {{ byteSize(chatbootStyle.multimedia) }}
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/chatboot-style', chatbootStyle.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

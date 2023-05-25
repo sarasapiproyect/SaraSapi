@@ -1,0 +1,10 @@
+{
+  "saraBusinessInteligenteApp": {
+    "SourceChannel": {
+      "null": "",
+      "WHATSAPP": "WHATSAPP",
+      "TELEGRAM": "TELEGRAM",
+      "WEB": "WEB"
+    }
+  }
+}

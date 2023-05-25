@@ -1,0 +1,42 @@
+{
+  "applications": ["SaraBusinessInteligente"],
+  "changelogDate": "20230520213731",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "interations",
+  "fields": [
+    {
+      "fieldName": "valueRequest",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "300",
+      "fieldValidateRulesMinlength": "1"
+    },
+    {
+      "fieldName": "sourceInfo",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "300",
+      "fieldValidateRulesMinlength": "1"
+    },
+    {
+      "fieldName": "valueResponse",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "300",
+      "fieldValidateRulesMinlength": "1"
+    },
+    {
+      "fieldName": "sourceChannel",
+      "fieldType": "SourceChannel",
+      "fieldValues": "WHATSAPP,TELEGRAM,WEB"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Interations",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [],
+  "service": "no"
+}

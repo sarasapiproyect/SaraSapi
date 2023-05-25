@@ -1,0 +1,155 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-chatboot-style-heading"
+        data-cy="ChatbootStyleCreateUpdateHeading"
+        jhiTranslate="saraBusinessInteligenteApp.chatbootStyle.home.createOrEditLabel"
+      >
+        Create or edit a Chatboot Style
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="saraBusinessInteligenteApp.chatbootStyle.nameProperties" for="field_nameProperties"
+            >Name Properties</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="nameProperties"
+            id="field_nameProperties"
+            data-cy="nameProperties"
+            formControlName="nameProperties"
+          />
+          <div
+            *ngIf="
+              editForm.get('nameProperties')!.invalid && (editForm.get('nameProperties')!.dirty || editForm.get('nameProperties')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('nameProperties')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('nameProperties')?.errors?.minlength"
+              jhiTranslate="entity.validation.minlength"
+              [translateValues]="{ min: 1 }"
+            >
+              This field is required to be at least 1 characters.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('nameProperties')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 300 }"
+            >
+              This field cannot be longer than 300 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="saraBusinessInteligenteApp.chatbootStyle.value" for="field_value">Value</label>
+          <input type="text" class="form-control" name="value" id="field_value" data-cy="value" formControlName="value" />
+          <div *ngIf="editForm.get('value')!.invalid && (editForm.get('value')!.dirty || editForm.get('value')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('value')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('value')?.errors?.minlength"
+              jhiTranslate="entity.validation.minlength"
+              [translateValues]="{ min: 1 }"
+            >
+              This field is required to be at least 1 characters.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('value')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 300 }"
+            >
+              This field cannot be longer than 300 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="saraBusinessInteligenteApp.chatbootStyle.multimedia" for="field_multimedia"
+            >Multimedia</label
+          >
+          <div>
+            <div *ngIf="editForm.get('multimedia')!.value" class="form-text text-danger clearfix">
+              <a
+                class="pull-start"
+                (click)="openFile(editForm.get('multimedia')!.value!, editForm.get('multimediaContentType')!.value!)"
+                jhiTranslate="entity.action.open"
+                >Open</a
+              ><br />
+              <span class="pull-start"
+                >{{ editForm.get('multimediaContentType')!.value }}, {{ byteSize(editForm.get('multimedia')!.value!) }}</span
+              >
+              <button
+                type="button"
+                (click)="editForm.patchValue({ multimedia: undefined, multimediaContentType: undefined })"
+                class="btn btn-secondary btn-xs pull-end"
+              >
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+            <input
+              type="file"
+              id="file_multimedia"
+              data-cy="multimedia"
+              (change)="setFileData($event, 'multimedia', false)"
+              jhiTranslate="entity.action.addblob"
+            />
+          </div>
+          <input
+            type="hidden"
+            class="form-control"
+            name="multimedia"
+            id="field_multimedia"
+            data-cy="multimedia"
+            formControlName="multimedia"
+          />
+          <input
+            type="hidden"
+            class="form-control"
+            name="multimediaContentType"
+            id="field_multimediaContentType"
+            formControlName="multimediaContentType"
+          />
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

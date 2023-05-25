@@ -1,0 +1,140 @@
+application {
+  config {
+    baseName SaraBusinessInteligente
+    languages [en, es]
+    applicationType monolith
+    packageName com.sara.services
+    serviceDiscoveryType eureka
+    cacheProvider ehcache
+    serverPort 2626
+    enableHibernateCache true
+    authenticationType jwt
+    databaseType sql
+    devDatabaseType mysql
+    prodDatabaseType mysql
+    searchEngine false
+    enableTranslation true
+    messageBroker false
+    serviceDiscoveryType eureka
+    enableSwaggerCodegen false
+    buildTool maven
+    clientPackageManager npm
+    clientFramework angularX
+    clientTheme none
+    testFrameworks [cypress]
+    reactive false
+  }
+  
+  entities *
+}
+
+enum IntentType{
+	INFO, BACK_END_INFO
+}
+
+
+enum Priority{
+	LOW, MEDIA, HIGHT
+}
+
+enum SourceChannel{
+	WHATSAPP, TELEGRAM, WEB
+}
+
+entity Language {
+	name String required minlength(1) maxlength(50) ,
+    isoValue String required minlength(1) maxlength(50) ,
+    description String required minlength(1) maxlength(50) ,
+    iconsrc String required minlength(1) maxlength(200) ,
+    imgBlogIcon ImageBlob
+}
+
+
+entity Intent {
+    intenType IntentType,
+    name String required minlength(1) maxlength(300) ,
+    description String required minlength(1) maxlength(300) ,
+    urlRequest String required minlength(1) maxlength(300) ,
+    enabled Boolean,
+    creationDate Instant,  
+}
+
+relationship ManyToOne {
+	Intent{languaje(name)} to Language
+}
+
+relationship ManyToMany {
+   Intent{userExpresion(value)} to UserExpresion{intent}
+}
+
+relationship ManyToMany {
+   Intent{userResponse(valueResponse)} to UserResponse{intent}
+}
+
+entity UserExpresion {
+    value String  required minlength(1) maxlength(300) ,
+    priority Priority,
+}
+
+entity UserResponse {
+    valueResponse String required minlength(1) maxlength(300) ,
+    priority Priority,
+    multimedia AnyBlob,
+    multimediaVoice AnyBlob,
+    saraAnimation ImageBlob,
+    isEndConversation Boolean,
+}
+
+
+entity DefaultResponse {
+    defaultValueResponse String required minlength(1) maxlength(500) ,
+    priority Priority,
+    multimedia AnyBlob,
+    multimediaVoice AnyBlob,
+    saraAnimation ImageBlob,
+    isEndConversation Boolean,
+}
+
+entity Training {
+      value String required minlength(1) maxlength(300) ,
+      sourceChannel SourceChannel, 
+      creationDate Instant, 
+      ip String required minlength(1) maxlength(300) ,
+      postionX Float,
+      postionY Float,
+      sourceInfo String required minlength(1) maxlength(300),
+}
+
+
+entity Interations {
+      valueRequest	 String required minlength(1) maxlength(300) ,
+      sourceInfo	 String required minlength(1) maxlength(300) ,
+      valueResponse	 String required minlength(1) maxlength(300) ,
+      sourceChannel SourceChannel, 
+}
+
+
+entity ChatbootStyle {
+      nameProperties String required minlength(1) maxlength(300) ,
+      value	 String required minlength(1) maxlength(300) ,
+      multimedia AnyBlob,
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 

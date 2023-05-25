@@ -1,0 +1,30 @@
+{
+  "saraBusinessInteligenteApp": {
+    "userResponse": {
+      "home": {
+        "title": "User Responses",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Crear nuevo User Response",
+        "createOrEditLabel": "Crear o editar User Response",
+        "notFound": "Ningún User Responses encontrado"
+      },
+      "created": "Un nuevo User Response ha sido creado con el identificador {{ param }}",
+      "updated": "Un User Response ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un User Response ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar User Response {{ id }}?"
+      },
+      "detail": {
+        "title": "User Response"
+      },
+      "id": "ID",
+      "valueResponse": "Value Response",
+      "priority": "Priority",
+      "multimedia": "Multimedia",
+      "multimediaVoice": "Multimedia Voice",
+      "saraAnimation": "Sara Animation",
+      "isEndConversation": "Is End Conversation",
+      "intent": "Intent"
+    }
+  }
+}

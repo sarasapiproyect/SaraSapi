@@ -1,0 +1,26 @@
+{
+  "saraBusinessInteligenteApp": {
+    "userExpresion": {
+      "home": {
+        "title": "User Expresions",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new User Expresion",
+        "createOrEditLabel": "Create or edit a User Expresion",
+        "notFound": "No User Expresions found"
+      },
+      "created": "A new User Expresion is created with identifier {{ param }}",
+      "updated": "A User Expresion is updated with identifier {{ param }}",
+      "deleted": "A User Expresion is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete User Expresion {{ id }}?"
+      },
+      "detail": {
+        "title": "User Expresion"
+      },
+      "id": "ID",
+      "value": "Value",
+      "priority": "Priority",
+      "intent": "Intent"
+    }
+  }
+}

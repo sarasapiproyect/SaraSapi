@@ -1,0 +1,29 @@
+{
+  "saraBusinessInteligenteApp": {
+    "defaultResponse": {
+      "home": {
+        "title": "Default Responses",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Default Response",
+        "createOrEditLabel": "Create or edit a Default Response",
+        "notFound": "No Default Responses found"
+      },
+      "created": "A new Default Response is created with identifier {{ param }}",
+      "updated": "A Default Response is updated with identifier {{ param }}",
+      "deleted": "A Default Response is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Default Response {{ id }}?"
+      },
+      "detail": {
+        "title": "Default Response"
+      },
+      "id": "ID",
+      "defaultValueResponse": "Default Value Response",
+      "priority": "Priority",
+      "multimedia": "Multimedia",
+      "multimediaVoice": "Multimedia Voice",
+      "saraAnimation": "Sara Animation",
+      "isEndConversation": "Is End Conversation"
+    }
+  }
+}

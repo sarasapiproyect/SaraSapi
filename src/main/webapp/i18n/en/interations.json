@@ -1,0 +1,27 @@
+{
+  "saraBusinessInteligenteApp": {
+    "interations": {
+      "home": {
+        "title": "Interations",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Interations",
+        "createOrEditLabel": "Create or edit a Interations",
+        "notFound": "No Interations found"
+      },
+      "created": "A new Interations is created with identifier {{ param }}",
+      "updated": "A Interations is updated with identifier {{ param }}",
+      "deleted": "A Interations is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Interations {{ id }}?"
+      },
+      "detail": {
+        "title": "Interations"
+      },
+      "id": "ID",
+      "valueRequest": "Value Request",
+      "sourceInfo": "Source Info",
+      "valueResponse": "Value Response",
+      "sourceChannel": "Source Channel"
+    }
+  }
+}

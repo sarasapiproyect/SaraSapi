@@ -1,0 +1,26 @@
+{
+  "saraBusinessInteligenteApp": {
+    "chatbootStyle": {
+      "home": {
+        "title": "Chatboot Styles",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Chatboot Style",
+        "createOrEditLabel": "Create or edit a Chatboot Style",
+        "notFound": "No Chatboot Styles found"
+      },
+      "created": "A new Chatboot Style is created with identifier {{ param }}",
+      "updated": "A Chatboot Style is updated with identifier {{ param }}",
+      "deleted": "A Chatboot Style is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Chatboot Style {{ id }}?"
+      },
+      "detail": {
+        "title": "Chatboot Style"
+      },
+      "id": "ID",
+      "nameProperties": "Name Properties",
+      "value": "Value",
+      "multimedia": "Multimedia"
+    }
+  }
+}

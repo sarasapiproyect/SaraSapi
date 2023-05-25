@@ -1,0 +1,58 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="training">
+      <h2 data-cy="trainingDetailsHeading"><span jhiTranslate="saraBusinessInteligenteApp.training.detail.title">Training</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ training.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="saraBusinessInteligenteApp.training.value">Value</span></dt>
+        <dd>
+          <span>{{ training.value }}</span>
+        </dd>
+        <dt><span jhiTranslate="saraBusinessInteligenteApp.training.sourceChannel">Source Channel</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'saraBusinessInteligenteApp.SourceChannel.' + training.sourceChannel }}">{{
+            training.sourceChannel
+          }}</span>
+        </dd>
+        <dt><span jhiTranslate="saraBusinessInteligenteApp.training.creationDate">Creation Date</span></dt>
+        <dd>
+          <span>{{ training.creationDate | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="saraBusinessInteligenteApp.training.ip">Ip</span></dt>
+        <dd>
+          <span>{{ training.ip }}</span>
+        </dd>
+        <dt><span jhiTranslate="saraBusinessInteligenteApp.training.postionX">Postion X</span></dt>
+        <dd>
+          <span>{{ training.postionX }}</span>
+        </dd>
+        <dt><span jhiTranslate="saraBusinessInteligenteApp.training.postionY">Postion Y</span></dt>
+        <dd>
+          <span>{{ training.postionY }}</span>
+        </dd>
+        <dt><span jhiTranslate="saraBusinessInteligenteApp.training.sourceInfo">Source Info</span></dt>
+        <dd>
+          <span>{{ training.sourceInfo }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/training', training.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,219 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-intent-heading"
+        data-cy="IntentCreateUpdateHeading"
+        jhiTranslate="saraBusinessInteligenteApp.intent.home.createOrEditLabel"
+      >
+        Create or edit a Intent
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="saraBusinessInteligenteApp.intent.intenType" for="field_intenType">Inten Type</label>
+          <select class="form-control" name="intenType" formControlName="intenType" id="field_intenType" data-cy="intenType">
+            <option [ngValue]="null">{{ 'saraBusinessInteligenteApp.IntentType.null' | translate }}</option>
+            <option *ngFor="let intentType of intentTypeValues" [value]="intentType">
+              {{ 'saraBusinessInteligenteApp.IntentType.' + intentType | translate }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="saraBusinessInteligenteApp.intent.name" for="field_name">Name</label>
+          <input type="text" class="form-control" name="name" id="field_name" data-cy="name" formControlName="name" />
+          <div *ngIf="editForm.get('name')!.invalid && (editForm.get('name')!.dirty || editForm.get('name')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('name')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('name')?.errors?.minlength"
+              jhiTranslate="entity.validation.minlength"
+              [translateValues]="{ min: 1 }"
+            >
+              This field is required to be at least 1 characters.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('name')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 300 }"
+            >
+              This field cannot be longer than 300 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="saraBusinessInteligenteApp.intent.description" for="field_description">Description</label>
+          <input
+            type="text"
+            class="form-control"
+            name="description"
+            id="field_description"
+            data-cy="description"
+            formControlName="description"
+          />
+          <div *ngIf="editForm.get('description')!.invalid && (editForm.get('description')!.dirty || editForm.get('description')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('description')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('description')?.errors?.minlength"
+              jhiTranslate="entity.validation.minlength"
+              [translateValues]="{ min: 1 }"
+            >
+              This field is required to be at least 1 characters.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('description')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 300 }"
+            >
+              This field cannot be longer than 300 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="saraBusinessInteligenteApp.intent.urlRequest" for="field_urlRequest">Url Request</label>
+          <input
+            type="text"
+            class="form-control"
+            name="urlRequest"
+            id="field_urlRequest"
+            data-cy="urlRequest"
+            formControlName="urlRequest"
+          />
+          <div *ngIf="editForm.get('urlRequest')!.invalid && (editForm.get('urlRequest')!.dirty || editForm.get('urlRequest')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('urlRequest')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('urlRequest')?.errors?.minlength"
+              jhiTranslate="entity.validation.minlength"
+              [translateValues]="{ min: 1 }"
+            >
+              This field is required to be at least 1 characters.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('urlRequest')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 300 }"
+            >
+              This field cannot be longer than 300 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="saraBusinessInteligenteApp.intent.enabled" for="field_enabled">Enabled</label>
+          <input type="checkbox" class="form-check" name="enabled" id="field_enabled" data-cy="enabled" formControlName="enabled" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="saraBusinessInteligenteApp.intent.creationDate" for="field_creationDate"
+            >Creation Date</label
+          >
+          <div class="d-flex">
+            <input
+              id="field_creationDate"
+              data-cy="creationDate"
+              type="datetime-local"
+              class="form-control"
+              name="creationDate"
+              formControlName="creationDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="saraBusinessInteligenteApp.intent.languaje" for="field_languaje">Languaje</label>
+          <select
+            class="form-control"
+            id="field_languaje"
+            data-cy="languaje"
+            name="languaje"
+            formControlName="languaje"
+            [compareWith]="compareLanguage"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="languageOption" *ngFor="let languageOption of languagesSharedCollection">{{ languageOption.name }}</option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label jhiTranslate="saraBusinessInteligenteApp.intent.userExpresion" for="field_userExpresions">User Expresion</label>
+          <select
+            class="form-control"
+            id="field_userExpresions"
+            data-cy="userExpresion"
+            multiple
+            name="userExpresions"
+            formControlName="userExpresions"
+            [compareWith]="compareUserExpresion"
+          >
+            <option [ngValue]="userExpresionOption" *ngFor="let userExpresionOption of userExpresionsSharedCollection">
+              {{ userExpresionOption.value }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label jhiTranslate="saraBusinessInteligenteApp.intent.userResponse" for="field_userResponses">User Response</label>
+          <select
+            class="form-control"
+            id="field_userResponses"
+            data-cy="userResponse"
+            multiple
+            name="userResponses"
+            formControlName="userResponses"
+            [compareWith]="compareUserResponse"
+          >
+            <option [ngValue]="userResponseOption" *ngFor="let userResponseOption of userResponsesSharedCollection">
+              {{ userResponseOption.valueResponse }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

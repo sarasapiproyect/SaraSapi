@@ -1,0 +1,55 @@
+{
+  "applications": ["SaraBusinessInteligente"],
+  "changelogDate": "20230520213431",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "user_response",
+  "fields": [
+    {
+      "fieldName": "valueResponse",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "300",
+      "fieldValidateRulesMinlength": "1"
+    },
+    {
+      "fieldName": "priority",
+      "fieldType": "Priority",
+      "fieldValues": "LOW,MEDIA,HIGHT"
+    },
+    {
+      "fieldName": "multimedia",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "any"
+    },
+    {
+      "fieldName": "multimediaVoice",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "any"
+    },
+    {
+      "fieldName": "saraAnimation",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "image"
+    },
+    {
+      "fieldName": "isEndConversation",
+      "fieldType": "Boolean"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "UserResponse",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "intent",
+      "otherEntityRelationshipName": "userResponse",
+      "ownerSide": false,
+      "relationshipName": "intent",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "service": "no"
+}

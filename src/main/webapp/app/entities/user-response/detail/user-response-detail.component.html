@@ -1,0 +1,71 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="userResponse">
+      <h2 data-cy="userResponseDetailsHeading">
+        <span jhiTranslate="saraBusinessInteligenteApp.userResponse.detail.title">User Response</span>
+      </h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ userResponse.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="saraBusinessInteligenteApp.userResponse.valueResponse">Value Response</span></dt>
+        <dd>
+          <span>{{ userResponse.valueResponse }}</span>
+        </dd>
+        <dt><span jhiTranslate="saraBusinessInteligenteApp.userResponse.priority">Priority</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'saraBusinessInteligenteApp.Priority.' + userResponse.priority }}">{{ userResponse.priority }}</span>
+        </dd>
+        <dt><span jhiTranslate="saraBusinessInteligenteApp.userResponse.multimedia">Multimedia</span></dt>
+        <dd>
+          <div *ngIf="userResponse.multimedia">
+            <a (click)="openFile(userResponse.multimedia, userResponse.multimediaContentType)" jhiTranslate="entity.action.open">Open</a>
+            {{ userResponse.multimediaContentType }}, {{ byteSize(userResponse.multimedia) }}
+          </div>
+        </dd>
+        <dt><span jhiTranslate="saraBusinessInteligenteApp.userResponse.multimediaVoice">Multimedia Voice</span></dt>
+        <dd>
+          <div *ngIf="userResponse.multimediaVoice">
+            <a (click)="openFile(userResponse.multimediaVoice, userResponse.multimediaVoiceContentType)" jhiTranslate="entity.action.open"
+              >Open</a
+            >
+            {{ userResponse.multimediaVoiceContentType }}, {{ byteSize(userResponse.multimediaVoice) }}
+          </div>
+        </dd>
+        <dt><span jhiTranslate="saraBusinessInteligenteApp.userResponse.saraAnimation">Sara Animation</span></dt>
+        <dd>
+          <div *ngIf="userResponse.saraAnimation">
+            <a (click)="openFile(userResponse.saraAnimation, userResponse.saraAnimationContentType)">
+              <img
+                [src]="'data:' + userResponse.saraAnimationContentType + ';base64,' + userResponse.saraAnimation"
+                style="max-width: 100%"
+                alt="userResponse image"
+              />
+            </a>
+            {{ userResponse.saraAnimationContentType }}, {{ byteSize(userResponse.saraAnimation) }}
+          </div>
+        </dd>
+        <dt><span jhiTranslate="saraBusinessInteligenteApp.userResponse.isEndConversation">Is End Conversation</span></dt>
+        <dd>
+          <span>{{ userResponse.isEndConversation }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/user-response', userResponse.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

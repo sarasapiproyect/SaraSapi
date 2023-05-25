@@ -1,0 +1,30 @@
+{
+  "saraBusinessInteligenteApp": {
+    "training": {
+      "home": {
+        "title": "Trainings",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Crear nuevo Training",
+        "createOrEditLabel": "Crear o editar Training",
+        "notFound": "Ningún Trainings encontrado"
+      },
+      "created": "Un nuevo Training ha sido creado con el identificador {{ param }}",
+      "updated": "Un Training ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Training ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Training {{ id }}?"
+      },
+      "detail": {
+        "title": "Training"
+      },
+      "id": "ID",
+      "value": "Value",
+      "sourceChannel": "Source Channel",
+      "creationDate": "Creation Date",
+      "ip": "Ip",
+      "postionX": "Postion X",
+      "postionY": "Postion Y",
+      "sourceInfo": "Source Info"
+    }
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "applications": ["SaraBusinessInteligente"],
+  "changelogDate": "20230520213631",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "training",
+  "fields": [
+    {
+      "fieldName": "value",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "300",
+      "fieldValidateRulesMinlength": "1"
+    },
+    {
+      "fieldName": "sourceChannel",
+      "fieldType": "SourceChannel",
+      "fieldValues": "WHATSAPP,TELEGRAM,WEB"
+    },
+    {
+      "fieldName": "creationDate",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "ip",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "300",
+      "fieldValidateRulesMinlength": "1"
+    },
+    {
+      "fieldName": "postionX",
+      "fieldType": "Float"
+    },
+    {
+      "fieldName": "postionY",
+      "fieldType": "Float"
+    },
+    {
+      "fieldName": "sourceInfo",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "300",
+      "fieldValidateRulesMinlength": "1"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Training",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [],
+  "service": "no"
+}

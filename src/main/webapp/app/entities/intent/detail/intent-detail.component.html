@@ -1,0 +1,72 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="intent">
+      <h2 data-cy="intentDetailsHeading"><span jhiTranslate="saraBusinessInteligenteApp.intent.detail.title">Intent</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ intent.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="saraBusinessInteligenteApp.intent.intenType">Inten Type</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'saraBusinessInteligenteApp.IntentType.' + intent.intenType }}">{{ intent.intenType }}</span>
+        </dd>
+        <dt><span jhiTranslate="saraBusinessInteligenteApp.intent.name">Name</span></dt>
+        <dd>
+          <span>{{ intent.name }}</span>
+        </dd>
+        <dt><span jhiTranslate="saraBusinessInteligenteApp.intent.description">Description</span></dt>
+        <dd>
+          <span>{{ intent.description }}</span>
+        </dd>
+        <dt><span jhiTranslate="saraBusinessInteligenteApp.intent.urlRequest">Url Request</span></dt>
+        <dd>
+          <span>{{ intent.urlRequest }}</span>
+        </dd>
+        <dt><span jhiTranslate="saraBusinessInteligenteApp.intent.enabled">Enabled</span></dt>
+        <dd>
+          <span>{{ intent.enabled }}</span>
+        </dd>
+        <dt><span jhiTranslate="saraBusinessInteligenteApp.intent.creationDate">Creation Date</span></dt>
+        <dd>
+          <span>{{ intent.creationDate | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="saraBusinessInteligenteApp.intent.languaje">Languaje</span></dt>
+        <dd>
+          <div *ngIf="intent.languaje">
+            <a [routerLink]="['/language', intent.languaje.id, 'view']">{{ intent.languaje.name }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="saraBusinessInteligenteApp.intent.userExpresion">User Expresion</span></dt>
+        <dd>
+          <span *ngFor="let userExpresion of intent.userExpresions; let last = last">
+            <a [routerLink]="['/user-expresion', userExpresion.id, 'view']">{{ userExpresion.value }}</a
+            >{{ last ? '' : ', ' }}
+          </span>
+        </dd>
+        <dt><span jhiTranslate="saraBusinessInteligenteApp.intent.userResponse">User Response</span></dt>
+        <dd>
+          <span *ngFor="let userResponse of intent.userResponses; let last = last">
+            <a [routerLink]="['/user-response', userResponse.id, 'view']">{{ userResponse.valueResponse }}</a
+            >{{ last ? '' : ', ' }}
+          </span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/intent', intent.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

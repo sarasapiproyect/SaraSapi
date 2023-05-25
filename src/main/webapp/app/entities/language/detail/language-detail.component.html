@@ -1,0 +1,57 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="language">
+      <h2 data-cy="languageDetailsHeading"><span jhiTranslate="saraBusinessInteligenteApp.language.detail.title">Language</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ language.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="saraBusinessInteligenteApp.language.name">Name</span></dt>
+        <dd>
+          <span>{{ language.name }}</span>
+        </dd>
+        <dt><span jhiTranslate="saraBusinessInteligenteApp.language.isoValue">Iso Value</span></dt>
+        <dd>
+          <span>{{ language.isoValue }}</span>
+        </dd>
+        <dt><span jhiTranslate="saraBusinessInteligenteApp.language.description">Description</span></dt>
+        <dd>
+          <span>{{ language.description }}</span>
+        </dd>
+        <dt><span jhiTranslate="saraBusinessInteligenteApp.language.iconsrc">Iconsrc</span></dt>
+        <dd>
+          <span>{{ language.iconsrc }}</span>
+        </dd>
+        <dt><span jhiTranslate="saraBusinessInteligenteApp.language.imgBlogIcon">Img Blog Icon</span></dt>
+        <dd>
+          <div *ngIf="language.imgBlogIcon">
+            <a (click)="openFile(language.imgBlogIcon, language.imgBlogIconContentType)">
+              <img
+                [src]="'data:' + language.imgBlogIconContentType + ';base64,' + language.imgBlogIcon"
+                style="max-width: 100%"
+                alt="language image"
+              />
+            </a>
+            {{ language.imgBlogIconContentType }}, {{ byteSize(language.imgBlogIcon) }}
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/language', language.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

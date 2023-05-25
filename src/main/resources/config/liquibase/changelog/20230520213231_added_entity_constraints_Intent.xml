@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity Intent.
+    -->
+    <changeSet id="20230520213231-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="languaje_id"
+                                 baseTableName="intent"
+                                 constraintName="fk_intent__languaje_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="language"/>
+
+        <addForeignKeyConstraint baseColumnNames="intent_id"
+                                 baseTableName="rel_intent__user_expresion"
+                                 constraintName="fk_rel_intent__user_expresion__intent_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="intent"/>
+
+        <addForeignKeyConstraint baseColumnNames="user_expresion_id"
+                                 baseTableName="rel_intent__user_expresion"
+                                 constraintName="fk_rel_intent__user_expresion__user_expresion_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="user_expresion"/>
+
+        <addForeignKeyConstraint baseColumnNames="intent_id"
+                                 baseTableName="rel_intent__user_response"
+                                 constraintName="fk_rel_intent__user_response__intent_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="intent"/>
+
+        <addForeignKeyConstraint baseColumnNames="user_response_id"
+                                 baseTableName="rel_intent__user_response"
+                                 constraintName="fk_rel_intent__user_response__user_response_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="user_response"/>
+    </changeSet>
+</databaseChangeLog>

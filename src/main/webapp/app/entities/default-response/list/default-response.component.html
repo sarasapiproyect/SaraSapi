@@ -1,0 +1,157 @@
+<div>
+  <h2 id="page-heading" data-cy="DefaultResponseHeading">
+    <span jhiTranslate="saraBusinessInteligenteApp.defaultResponse.home.title">Default Responses</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="saraBusinessInteligenteApp.defaultResponse.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-default-response"
+        [routerLink]="['/default-response/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="saraBusinessInteligenteApp.defaultResponse.home.createLabel"> Create a new Default Response </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="defaultResponses?.length === 0">
+    <span jhiTranslate="saraBusinessInteligenteApp.defaultResponse.home.notFound">No Default Responses found</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="defaultResponses && defaultResponses.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span jhiTranslate="global.field.id">ID</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="defaultValueResponse">
+            <div class="d-flex">
+              <span jhiTranslate="saraBusinessInteligenteApp.defaultResponse.defaultValueResponse">Default Value Response</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="priority">
+            <div class="d-flex">
+              <span jhiTranslate="saraBusinessInteligenteApp.defaultResponse.priority">Priority</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="multimedia">
+            <div class="d-flex">
+              <span jhiTranslate="saraBusinessInteligenteApp.defaultResponse.multimedia">Multimedia</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="multimediaVoice">
+            <div class="d-flex">
+              <span jhiTranslate="saraBusinessInteligenteApp.defaultResponse.multimediaVoice">Multimedia Voice</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="saraAnimation">
+            <div class="d-flex">
+              <span jhiTranslate="saraBusinessInteligenteApp.defaultResponse.saraAnimation">Sara Animation</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="isEndConversation">
+            <div class="d-flex">
+              <span jhiTranslate="saraBusinessInteligenteApp.defaultResponse.isEndConversation">Is End Conversation</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let defaultResponse of defaultResponses; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/default-response', defaultResponse.id, 'view']">{{ defaultResponse.id }}</a>
+          </td>
+          <td>{{ defaultResponse.defaultValueResponse }}</td>
+          <td jhiTranslate="{{ 'saraBusinessInteligenteApp.Priority.' + defaultResponse.priority }}">{{ defaultResponse.priority }}</td>
+          <td>
+            <a
+              *ngIf="defaultResponse.multimedia"
+              (click)="openFile(defaultResponse.multimedia, defaultResponse.multimediaContentType)"
+              jhiTranslate="entity.action.open"
+              >Open</a
+            >
+            <span *ngIf="defaultResponse.multimedia"
+              >{{ defaultResponse.multimediaContentType }}, {{ byteSize(defaultResponse.multimedia) }}</span
+            >
+          </td>
+          <td>
+            <a
+              *ngIf="defaultResponse.multimediaVoice"
+              (click)="openFile(defaultResponse.multimediaVoice, defaultResponse.multimediaVoiceContentType)"
+              jhiTranslate="entity.action.open"
+              >Open</a
+            >
+            <span *ngIf="defaultResponse.multimediaVoice"
+              >{{ defaultResponse.multimediaVoiceContentType }}, {{ byteSize(defaultResponse.multimediaVoice) }}</span
+            >
+          </td>
+          <td>
+            <a
+              *ngIf="defaultResponse.saraAnimation"
+              (click)="openFile(defaultResponse.saraAnimation, defaultResponse.saraAnimationContentType)"
+            >
+              <img
+                [src]="'data:' + defaultResponse.saraAnimationContentType + ';base64,' + defaultResponse.saraAnimation"
+                style="max-height: 30px"
+                alt="defaultResponse image"
+              />
+            </a>
+            <span *ngIf="defaultResponse.saraAnimation"
+              >{{ defaultResponse.saraAnimationContentType }}, {{ byteSize(defaultResponse.saraAnimation) }}</span
+            >
+          </td>
+          <td>{{ defaultResponse.isEndConversation }}</td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/default-response', defaultResponse.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/default-response', defaultResponse.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(defaultResponse)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

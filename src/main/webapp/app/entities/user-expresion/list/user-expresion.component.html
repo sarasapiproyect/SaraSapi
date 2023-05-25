@@ -1,0 +1,95 @@
+<div>
+  <h2 id="page-heading" data-cy="UserExpresionHeading">
+    <span jhiTranslate="saraBusinessInteligenteApp.userExpresion.home.title">User Expresions</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="saraBusinessInteligenteApp.userExpresion.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-user-expresion"
+        [routerLink]="['/user-expresion/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="saraBusinessInteligenteApp.userExpresion.home.createLabel"> Create a new User Expresion </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="userExpresions?.length === 0">
+    <span jhiTranslate="saraBusinessInteligenteApp.userExpresion.home.notFound">No User Expresions found</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="userExpresions && userExpresions.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span jhiTranslate="global.field.id">ID</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="value">
+            <div class="d-flex">
+              <span jhiTranslate="saraBusinessInteligenteApp.userExpresion.value">Value</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="priority">
+            <div class="d-flex">
+              <span jhiTranslate="saraBusinessInteligenteApp.userExpresion.priority">Priority</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let userExpresion of userExpresions; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/user-expresion', userExpresion.id, 'view']">{{ userExpresion.id }}</a>
+          </td>
+          <td>{{ userExpresion.value }}</td>
+          <td jhiTranslate="{{ 'saraBusinessInteligenteApp.Priority.' + userExpresion.priority }}">{{ userExpresion.priority }}</td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/user-expresion', userExpresion.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/user-expresion', userExpresion.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(userExpresion)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,32 @@
+{
+  "saraBusinessInteligenteApp": {
+    "intent": {
+      "home": {
+        "title": "Intents",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Intent",
+        "createOrEditLabel": "Create or edit a Intent",
+        "notFound": "No Intents found"
+      },
+      "created": "A new Intent is created with identifier {{ param }}",
+      "updated": "A Intent is updated with identifier {{ param }}",
+      "deleted": "A Intent is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Intent {{ id }}?"
+      },
+      "detail": {
+        "title": "Intent"
+      },
+      "id": "ID",
+      "intenType": "Inten Type",
+      "name": "Name",
+      "description": "Description",
+      "urlRequest": "Url Request",
+      "enabled": "Enabled",
+      "creationDate": "Creation Date",
+      "languaje": "Languaje",
+      "userExpresion": "User Expresion",
+      "userResponse": "User Response"
+    }
+  }
+}

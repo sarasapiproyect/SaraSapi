@@ -1,0 +1,36 @@
+{
+  "applications": ["SaraBusinessInteligente"],
+  "changelogDate": "20230520213331",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "user_expresion",
+  "fields": [
+    {
+      "fieldName": "value",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "300",
+      "fieldValidateRulesMinlength": "1"
+    },
+    {
+      "fieldName": "priority",
+      "fieldType": "Priority",
+      "fieldValues": "LOW,MEDIA,HIGHT"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "UserExpresion",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "intent",
+      "otherEntityRelationshipName": "userExpresion",
+      "ownerSide": false,
+      "relationshipName": "intent",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "service": "no"
+}

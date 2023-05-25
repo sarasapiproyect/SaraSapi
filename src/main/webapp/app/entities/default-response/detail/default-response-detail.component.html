@@ -1,0 +1,75 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="defaultResponse">
+      <h2 data-cy="defaultResponseDetailsHeading">
+        <span jhiTranslate="saraBusinessInteligenteApp.defaultResponse.detail.title">Default Response</span>
+      </h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ defaultResponse.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="saraBusinessInteligenteApp.defaultResponse.defaultValueResponse">Default Value Response</span></dt>
+        <dd>
+          <span>{{ defaultResponse.defaultValueResponse }}</span>
+        </dd>
+        <dt><span jhiTranslate="saraBusinessInteligenteApp.defaultResponse.priority">Priority</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'saraBusinessInteligenteApp.Priority.' + defaultResponse.priority }}">{{ defaultResponse.priority }}</span>
+        </dd>
+        <dt><span jhiTranslate="saraBusinessInteligenteApp.defaultResponse.multimedia">Multimedia</span></dt>
+        <dd>
+          <div *ngIf="defaultResponse.multimedia">
+            <a (click)="openFile(defaultResponse.multimedia, defaultResponse.multimediaContentType)" jhiTranslate="entity.action.open"
+              >Open</a
+            >
+            {{ defaultResponse.multimediaContentType }}, {{ byteSize(defaultResponse.multimedia) }}
+          </div>
+        </dd>
+        <dt><span jhiTranslate="saraBusinessInteligenteApp.defaultResponse.multimediaVoice">Multimedia Voice</span></dt>
+        <dd>
+          <div *ngIf="defaultResponse.multimediaVoice">
+            <a
+              (click)="openFile(defaultResponse.multimediaVoice, defaultResponse.multimediaVoiceContentType)"
+              jhiTranslate="entity.action.open"
+              >Open</a
+            >
+            {{ defaultResponse.multimediaVoiceContentType }}, {{ byteSize(defaultResponse.multimediaVoice) }}
+          </div>
+        </dd>
+        <dt><span jhiTranslate="saraBusinessInteligenteApp.defaultResponse.saraAnimation">Sara Animation</span></dt>
+        <dd>
+          <div *ngIf="defaultResponse.saraAnimation">
+            <a (click)="openFile(defaultResponse.saraAnimation, defaultResponse.saraAnimationContentType)">
+              <img
+                [src]="'data:' + defaultResponse.saraAnimationContentType + ';base64,' + defaultResponse.saraAnimation"
+                style="max-width: 100%"
+                alt="defaultResponse image"
+              />
+            </a>
+            {{ defaultResponse.saraAnimationContentType }}, {{ byteSize(defaultResponse.saraAnimation) }}
+          </div>
+        </dd>
+        <dt><span jhiTranslate="saraBusinessInteligenteApp.defaultResponse.isEndConversation">Is End Conversation</span></dt>
+        <dd>
+          <span>{{ defaultResponse.isEndConversation }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/default-response', defaultResponse.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

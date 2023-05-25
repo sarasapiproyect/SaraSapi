@@ -1,0 +1,10 @@
+{
+  "saraBusinessInteligenteApp": {
+    "Priority": {
+      "null": "",
+      "LOW": "LOW",
+      "MEDIA": "MEDIA",
+      "HIGHT": "HIGHT"
+    }
+  }
+}

@@ -1,0 +1,257 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-default-response-heading"
+        data-cy="DefaultResponseCreateUpdateHeading"
+        jhiTranslate="saraBusinessInteligenteApp.defaultResponse.home.createOrEditLabel"
+      >
+        Create or edit a Default Response
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="saraBusinessInteligenteApp.defaultResponse.defaultValueResponse"
+            for="field_defaultValueResponse"
+            >Default Value Response</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="defaultValueResponse"
+            id="field_defaultValueResponse"
+            data-cy="defaultValueResponse"
+            formControlName="defaultValueResponse"
+          />
+          <div
+            *ngIf="
+              editForm.get('defaultValueResponse')!.invalid &&
+              (editForm.get('defaultValueResponse')!.dirty || editForm.get('defaultValueResponse')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('defaultValueResponse')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('defaultValueResponse')?.errors?.minlength"
+              jhiTranslate="entity.validation.minlength"
+              [translateValues]="{ min: 1 }"
+            >
+              This field is required to be at least 1 characters.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('defaultValueResponse')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 500 }"
+            >
+              This field cannot be longer than 500 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="saraBusinessInteligenteApp.defaultResponse.priority" for="field_priority">Priority</label>
+          <select class="form-control" name="priority" formControlName="priority" id="field_priority" data-cy="priority">
+            <option [ngValue]="null">{{ 'saraBusinessInteligenteApp.Priority.null' | translate }}</option>
+            <option *ngFor="let priority of priorityValues" [value]="priority">
+              {{ 'saraBusinessInteligenteApp.Priority.' + priority | translate }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="saraBusinessInteligenteApp.defaultResponse.multimedia" for="field_multimedia"
+            >Multimedia</label
+          >
+          <div>
+            <div *ngIf="editForm.get('multimedia')!.value" class="form-text text-danger clearfix">
+              <a
+                class="pull-start"
+                (click)="openFile(editForm.get('multimedia')!.value!, editForm.get('multimediaContentType')!.value!)"
+                jhiTranslate="entity.action.open"
+                >Open</a
+              ><br />
+              <span class="pull-start"
+                >{{ editForm.get('multimediaContentType')!.value }}, {{ byteSize(editForm.get('multimedia')!.value!) }}</span
+              >
+              <button
+                type="button"
+                (click)="editForm.patchValue({ multimedia: undefined, multimediaContentType: undefined })"
+                class="btn btn-secondary btn-xs pull-end"
+              >
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+            <input
+              type="file"
+              id="file_multimedia"
+              data-cy="multimedia"
+              (change)="setFileData($event, 'multimedia', false)"
+              jhiTranslate="entity.action.addblob"
+            />
+          </div>
+          <input
+            type="hidden"
+            class="form-control"
+            name="multimedia"
+            id="field_multimedia"
+            data-cy="multimedia"
+            formControlName="multimedia"
+          />
+          <input
+            type="hidden"
+            class="form-control"
+            name="multimediaContentType"
+            id="field_multimediaContentType"
+            formControlName="multimediaContentType"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="saraBusinessInteligenteApp.defaultResponse.multimediaVoice" for="field_multimediaVoice"
+            >Multimedia Voice</label
+          >
+          <div>
+            <div *ngIf="editForm.get('multimediaVoice')!.value" class="form-text text-danger clearfix">
+              <a
+                class="pull-start"
+                (click)="openFile(editForm.get('multimediaVoice')!.value!, editForm.get('multimediaVoiceContentType')!.value!)"
+                jhiTranslate="entity.action.open"
+                >Open</a
+              ><br />
+              <span class="pull-start"
+                >{{ editForm.get('multimediaVoiceContentType')!.value }}, {{ byteSize(editForm.get('multimediaVoice')!.value!) }}</span
+              >
+              <button
+                type="button"
+                (click)="editForm.patchValue({ multimediaVoice: undefined, multimediaVoiceContentType: undefined })"
+                class="btn btn-secondary btn-xs pull-end"
+              >
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+            <input
+              type="file"
+              id="file_multimediaVoice"
+              data-cy="multimediaVoice"
+              (change)="setFileData($event, 'multimediaVoice', false)"
+              jhiTranslate="entity.action.addblob"
+            />
+          </div>
+          <input
+            type="hidden"
+            class="form-control"
+            name="multimediaVoice"
+            id="field_multimediaVoice"
+            data-cy="multimediaVoice"
+            formControlName="multimediaVoice"
+          />
+          <input
+            type="hidden"
+            class="form-control"
+            name="multimediaVoiceContentType"
+            id="field_multimediaVoiceContentType"
+            formControlName="multimediaVoiceContentType"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="saraBusinessInteligenteApp.defaultResponse.saraAnimation" for="field_saraAnimation"
+            >Sara Animation</label
+          >
+          <div>
+            <img
+              [src]="'data:' + editForm.get('saraAnimationContentType')!.value + ';base64,' + editForm.get('saraAnimation')!.value"
+              style="max-height: 100px"
+              *ngIf="editForm.get('saraAnimation')!.value"
+              alt="defaultResponse image"
+            />
+            <div *ngIf="editForm.get('saraAnimation')!.value" class="form-text text-danger clearfix">
+              <span class="pull-start"
+                >{{ editForm.get('saraAnimationContentType')!.value }}, {{ byteSize(editForm.get('saraAnimation')!.value!) }}</span
+              >
+              <button
+                type="button"
+                (click)="clearInputImage('saraAnimation', 'saraAnimationContentType', 'file_saraAnimation')"
+                class="btn btn-secondary btn-xs pull-end"
+              >
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+            <input
+              type="file"
+              id="file_saraAnimation"
+              data-cy="saraAnimation"
+              (change)="setFileData($event, 'saraAnimation', true)"
+              accept="image/*"
+              jhiTranslate="entity.action.addimage"
+            />
+          </div>
+          <input
+            type="hidden"
+            class="form-control"
+            name="saraAnimation"
+            id="field_saraAnimation"
+            data-cy="saraAnimation"
+            formControlName="saraAnimation"
+          />
+          <input
+            type="hidden"
+            class="form-control"
+            name="saraAnimationContentType"
+            id="field_saraAnimationContentType"
+            formControlName="saraAnimationContentType"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="saraBusinessInteligenteApp.defaultResponse.isEndConversation"
+            for="field_isEndConversation"
+            >Is End Conversation</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="isEndConversation"
+            id="field_isEndConversation"
+            data-cy="isEndConversation"
+            formControlName="isEndConversation"
+          />
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
