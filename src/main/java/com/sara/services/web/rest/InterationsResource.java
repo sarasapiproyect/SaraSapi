@@ -223,7 +223,6 @@ public class InterationsResource {
         interations.setSourceChannel(GeneralUtils.getOriginAplicationValue(request.getSourceChannel()));
         interations.setSourceInfo(request.getSourceInfo());
         interations.setValueRequest(request.getValueRequest());
-        interations.setValueResponse(null);
         
         List<UserExpresion> userExpresions= userExpresionRepository.findByValue(request.getValueRequest());
         if (!userExpresions.isEmpty()) {
