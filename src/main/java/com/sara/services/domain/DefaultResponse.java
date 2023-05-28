@@ -2,6 +2,9 @@ package com.sara.services.domain;
 
 import com.sara.services.domain.enumeration.Priority;
 import java.io.Serializable;
+import java.util.List;
+import java.util.Random;
+
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
@@ -222,5 +225,11 @@ public class DefaultResponse implements Serializable {
             ", saraAnimationContentType='" + getSaraAnimationContentType() + "'" +
             ", isEndConversation='" + getIsEndConversation() + "'" +
             "}";
+    }
+    
+    public static DefaultResponse getRandomElement(List<DefaultResponse> defaultResponses)
+    {
+        Random rand = new Random();
+        return defaultResponses.get(rand.nextInt(defaultResponses.size()));
     }
 }

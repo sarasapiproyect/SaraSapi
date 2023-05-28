@@ -1,13 +1,30 @@
 package com.sara.services.web.rest;
 
+import com.sara.services.domain.DefaultResponse;
+import com.sara.services.domain.Intent;
 import com.sara.services.domain.Interations;
+import com.sara.services.domain.Training;
+import com.sara.services.domain.UserExpresion;
+import com.sara.services.domain.UserResponse;
+import com.sara.services.repository.DefaultResponseRepository;
 import com.sara.services.repository.InterationsRepository;
+import com.sara.services.repository.TrainingRepository;
+import com.sara.services.repository.UserExpresionRepository;
+import com.sara.services.web.rest.Util.GeneralUtils;
 import com.sara.services.web.rest.errors.BadRequestAlertException;
+import com.sara.services.web.rest.request.ReceiveMessageRequest;
+import com.sara.services.web.rest.response.ResponseMessage;
+
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
+import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.core.Context;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
@@ -35,9 +52,19 @@ public class InterationsResource {
     private String applicationName;
 
     private final InterationsRepository interationsRepository;
+    
+    private final UserExpresionRepository userExpresionRepository;
+    
+    private final DefaultResponseRepository defaultResponseRepository;
+    
+    private final TrainingRepository trainingRepository;
 
-    public InterationsResource(InterationsRepository interationsRepository) {
+    public InterationsResource(InterationsRepository interationsRepository, UserExpresionRepository userExpresionRepository,
+    		DefaultResponseRepository defaultResponseRepository, TrainingRepository trainingRepository) {
         this.interationsRepository = interationsRepository;
+        this.userExpresionRepository = userExpresionRepository;
+        this.defaultResponseRepository = defaultResponseRepository;
+        this.trainingRepository = trainingRepository;
     }
 
     /**
@@ -187,4 +214,44 @@ public class InterationsResource {
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
     }
+    
+    @PostMapping("/receiveMessage")
+    public ResponseMessage receiveMessage(@Valid @RequestBody ReceiveMessageRequest request, @Context HttpServletRequest ipRequest) throws URISyntaxException {
+        log.debug("REST request to receiveMessage : {}", request);
+        String ip =  GeneralUtils.getClientIpAddress(ipRequest); 
+        Interations interations = new Interations();
+        interations.setSourceChannel(GeneralUtils.getOriginAplicationValue(request.getSourceChannel()));
+        interations.setSourceInfo(request.getSourceInfo());
+        interations.setValueRequest(request.getValueRequest());
+        interations.setValueResponse(null);
+        
+        List<UserExpresion> userExpresions= userExpresionRepository.findByValue(request.getValueRequest());
+        if (!userExpresions.isEmpty()) {
+            Set<Intent> setIntents = userExpresions.get(0).getIntents();
+        	
+            List<Intent> intents = GeneralUtils.convertToList(setIntents);
+            Intent intent = intents.get(0);
+            List<UserResponse> userResponses = GeneralUtils.convertToList(intent.getUserResponses());
+            UserResponse userResponse =  UserResponse.getRandomElement(userResponses);
+            interations.setValueResponse(userResponse.getValueResponse());
+            interationsRepository.save(interations);
+            return GeneralUtils.covertToResponseMessage(userResponse);
+        }else {
+            Date date = new Date();
+            List<DefaultResponse> defaultResponses =defaultResponseRepository.findAll();
+            Training training = new Training();
+            training.setCreationDate(Instant.ofEpochMilli(date.getTime()));
+            training.setValue(request.getValueRequest());
+            training.setSourceInfo(request.getSourceInfo());
+            training.setSourceChannel(GeneralUtils.getOriginAplicationValue(request.getSourceChannel()));
+            training.setIp(ip);
+            trainingRepository.save(training);
+            DefaultResponse defaultResponse = DefaultResponse.getRandomElement(defaultResponses);
+            interations.setValueResponse(defaultResponse.getDefaultValueResponse());
+            interationsRepository.save(interations);
+            return GeneralUtils.covertToResponseMessage(defaultResponse);
+        }
+    }
+    
+
 }

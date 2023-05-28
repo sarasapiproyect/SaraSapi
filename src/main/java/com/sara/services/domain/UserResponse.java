@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sara.services.domain.enumeration.Priority;
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Random;
 import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -261,5 +263,11 @@ public class UserResponse implements Serializable {
             ", saraAnimationContentType='" + getSaraAnimationContentType() + "'" +
             ", isEndConversation='" + getIsEndConversation() + "'" +
             "}";
+    }
+    
+    public static UserResponse getRandomElement(List<UserResponse> userResponses)
+    {
+        Random rand = new Random();
+        return userResponses.get(rand.nextInt(userResponses.size()));
     }
 }
