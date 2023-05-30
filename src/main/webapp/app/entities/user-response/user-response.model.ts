@@ -1,5 +1,6 @@
 import { IIntent } from 'app/entities/intent/intent.model';
 import { Priority } from 'app/entities/enumerations/priority.model';
+import { ResponseType } from 'app/entities/enumerations/response-type.model';
 
 export interface IUserResponse {
   id: number;
@@ -12,6 +13,8 @@ export interface IUserResponse {
   saraAnimation?: string | null;
   saraAnimationContentType?: string | null;
   isEndConversation?: boolean | null;
+  responseType?: ResponseType | null;
+  url?: string | null;
   intents?: Pick<IIntent, 'id'>[] | null;
 }
 

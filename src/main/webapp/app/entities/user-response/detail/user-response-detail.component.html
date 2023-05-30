@@ -57,6 +57,16 @@
         <dd>
           <span>{{ userResponse.isEndConversation }}</span>
         </dd>
+        <dt><span jhiTranslate="saraBusinessInteligenteApp.userResponse.responseType">Response Type</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'saraBusinessInteligenteApp.ResponseType.' + userResponse.responseType }}">{{
+            userResponse.responseType
+          }}</span>
+        </dd>
+        <dt><span jhiTranslate="saraBusinessInteligenteApp.userResponse.url">Url</span></dt>
+        <dd>
+          <span>{{ userResponse.url }}</span>
+        </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

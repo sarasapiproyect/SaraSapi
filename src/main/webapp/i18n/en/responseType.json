@@ -1,0 +1,9 @@
+{
+  "saraBusinessInteligenteApp": {
+    "ResponseType": {
+      "null": "",
+      "QUERY": "QUERY",
+      "SERVICIO": "SERVICIO"
+    }
+  }
+}

@@ -228,6 +228,23 @@
             formControlName="isEndConversation"
           />
         </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="saraBusinessInteligenteApp.userResponse.responseType" for="field_responseType"
+            >Response Type</label
+          >
+          <select class="form-control" name="responseType" formControlName="responseType" id="field_responseType" data-cy="responseType">
+            <option [ngValue]="null">{{ 'saraBusinessInteligenteApp.ResponseType.null' | translate }}</option>
+            <option *ngFor="let responseType of responseTypeValues" [value]="responseType">
+              {{ 'saraBusinessInteligenteApp.ResponseType.' + responseType | translate }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="saraBusinessInteligenteApp.userResponse.url" for="field_url">Url</label>
+          <input type="text" class="form-control" name="url" id="field_url" data-cy="url" formControlName="url" />
+        </div>
       </div>
 
       <div>

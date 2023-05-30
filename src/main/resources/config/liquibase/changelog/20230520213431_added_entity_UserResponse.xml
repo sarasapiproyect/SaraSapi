@@ -74,4 +74,14 @@
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>
+      <changeSet id="20230520213431-2" author="jhipster">
+			<addColumn tableName="user_response">
+	         <column name="response_type" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="url" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+	        </addColumn>
+	  </changeSet>
 </databaseChangeLog>

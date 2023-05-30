@@ -35,6 +35,15 @@
     {
       "fieldName": "isEndConversation",
       "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "responseType",
+      "fieldType": "ResponseType",
+      "fieldValues": "QUERY,SERVICIO"
+    },
+    {
+      "fieldName": "url",
+      "fieldType": "String"
     }
   ],
   "fluentMethods": true,

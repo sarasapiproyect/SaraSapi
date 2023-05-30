@@ -74,6 +74,18 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
+          <th scope="col" jhiSortBy="responseType">
+            <div class="d-flex">
+              <span jhiTranslate="saraBusinessInteligenteApp.userResponse.responseType">Response Type</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="url">
+            <div class="d-flex">
+              <span jhiTranslate="saraBusinessInteligenteApp.userResponse.url">Url</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -117,6 +129,10 @@
             >
           </td>
           <td>{{ userResponse.isEndConversation }}</td>
+          <td jhiTranslate="{{ 'saraBusinessInteligenteApp.ResponseType.' + userResponse.responseType }}">
+            {{ userResponse.responseType }}
+          </td>
+          <td>{{ userResponse.url }}</td>
           <td class="text-end">
             <div class="btn-group">
               <button

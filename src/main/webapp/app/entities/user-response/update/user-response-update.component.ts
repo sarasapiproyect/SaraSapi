@@ -11,6 +11,7 @@ import { AlertError } from 'app/shared/alert/alert-error.model';
 import { EventManager, EventWithContent } from 'app/core/util/event-manager.service';
 import { DataUtils, FileLoadError } from 'app/core/util/data-util.service';
 import { Priority } from 'app/entities/enumerations/priority.model';
+import { ResponseType } from 'app/entities/enumerations/response-type.model';
 
 @Component({
   selector: 'jhi-user-response-update',
@@ -20,6 +21,7 @@ export class UserResponseUpdateComponent implements OnInit {
   isSaving = false;
   userResponse: IUserResponse | null = null;
   priorityValues = Object.keys(Priority);
+  responseTypeValues = Object.keys(ResponseType);
 
   editForm: UserResponseFormGroup = this.userResponseFormService.createUserResponseFormGroup();
 

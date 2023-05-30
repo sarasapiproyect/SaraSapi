@@ -2,6 +2,7 @@ package com.sara.services.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sara.services.domain.enumeration.Priority;
+import com.sara.services.domain.enumeration.ResponseType;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.List;
@@ -60,6 +61,13 @@ public class UserResponse implements Serializable {
 
     @Column(name = "is_end_conversation")
     private Boolean isEndConversation;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "response_type")
+    private ResponseType responseType;
+
+    @Column(name = "url")
+    private String url;
 
     @ManyToMany(mappedBy = "userResponses")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
@@ -198,6 +206,32 @@ public class UserResponse implements Serializable {
         this.isEndConversation = isEndConversation;
     }
 
+    public ResponseType getResponseType() {
+        return this.responseType;
+    }
+
+    public UserResponse responseType(ResponseType responseType) {
+        this.setResponseType(responseType);
+        return this;
+    }
+
+    public void setResponseType(ResponseType responseType) {
+        this.responseType = responseType;
+    }
+
+    public String getUrl() {
+        return this.url;
+    }
+
+    public UserResponse url(String url) {
+        this.setUrl(url);
+        return this;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
     public Set<Intent> getIntents() {
         return this.intents;
     }
@@ -262,6 +296,8 @@ public class UserResponse implements Serializable {
             ", saraAnimation='" + getSaraAnimation() + "'" +
             ", saraAnimationContentType='" + getSaraAnimationContentType() + "'" +
             ", isEndConversation='" + getIsEndConversation() + "'" +
+            ", responseType='" + getResponseType() + "'" +
+            ", url='" + getUrl() + "'" +
             "}";
     }
     

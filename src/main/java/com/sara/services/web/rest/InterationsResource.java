@@ -6,6 +6,7 @@ import com.sara.services.domain.Interations;
 import com.sara.services.domain.Training;
 import com.sara.services.domain.UserExpresion;
 import com.sara.services.domain.UserResponse;
+import com.sara.services.domain.enumeration.ResponseType;
 import com.sara.services.repository.DefaultResponseRepository;
 import com.sara.services.repository.InterationsRepository;
 import com.sara.services.repository.TrainingRepository;
@@ -232,7 +233,11 @@ public class InterationsResource {
             Intent intent = intents.get(0);
             List<UserResponse> userResponses = GeneralUtils.convertToList(intent.getUserResponses());
             UserResponse userResponse =  UserResponse.getRandomElement(userResponses);
-            interations.setValueResponse(userResponse.getValueResponse());
+//            if (userResponse.getResponseType().equals(ResponseType.QUERY)){
+                interations.setValueResponse(userResponse.getValueResponse());
+//            }else{
+//            
+//            }
             interationsRepository.save(interations);
             return GeneralUtils.covertToResponseMessage(userResponse);
         }else {

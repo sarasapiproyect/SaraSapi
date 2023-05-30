@@ -27,6 +27,8 @@ type UserResponseFormGroupContent = {
   saraAnimation: FormControl<IUserResponse['saraAnimation']>;
   saraAnimationContentType: FormControl<IUserResponse['saraAnimationContentType']>;
   isEndConversation: FormControl<IUserResponse['isEndConversation']>;
+  responseType: FormControl<IUserResponse['responseType']>;
+  url: FormControl<IUserResponse['url']>;
   intents: FormControl<IUserResponse['intents']>;
 };
 
@@ -58,6 +60,8 @@ export class UserResponseFormService {
       saraAnimation: new FormControl(userResponseRawValue.saraAnimation),
       saraAnimationContentType: new FormControl(userResponseRawValue.saraAnimationContentType),
       isEndConversation: new FormControl(userResponseRawValue.isEndConversation),
+      responseType: new FormControl(userResponseRawValue.responseType),
+      url: new FormControl(userResponseRawValue.url),
       intents: new FormControl(userResponseRawValue.intents ?? []),
     });
   }

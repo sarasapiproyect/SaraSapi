@@ -26,6 +26,8 @@ describe('UserResponse Form Service', () => {
             multimediaVoice: expect.any(Object),
             saraAnimation: expect.any(Object),
             isEndConversation: expect.any(Object),
+            responseType: expect.any(Object),
+            url: expect.any(Object),
             intents: expect.any(Object),
           })
         );
@@ -43,6 +45,8 @@ describe('UserResponse Form Service', () => {
             multimediaVoice: expect.any(Object),
             saraAnimation: expect.any(Object),
             isEndConversation: expect.any(Object),
+            responseType: expect.any(Object),
+            url: expect.any(Object),
             intents: expect.any(Object),
           })
         );

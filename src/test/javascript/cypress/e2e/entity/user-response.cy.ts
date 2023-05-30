@@ -15,7 +15,7 @@ describe('UserResponse e2e test', () => {
   const userResponsePageUrlPattern = new RegExp('/user-response(\\?.*)?$');
   const username = Cypress.env('E2E_USERNAME') ?? 'user';
   const password = Cypress.env('E2E_PASSWORD') ?? 'user';
-  const userResponseSample = { valueResponse: 'Fantastic Massachusetts' };
+  const userResponseSample = { valueResponse: 'models Money' };
 
   let userResponse;
 
@@ -169,6 +169,10 @@ describe('UserResponse e2e test', () => {
 
       cy.get(`[data-cy="isEndConversation"]`).should('not.be.checked');
       cy.get(`[data-cy="isEndConversation"]`).click().should('be.checked');
+
+      cy.get(`[data-cy="responseType"]`).select('SERVICIO');
+
+      cy.get(`[data-cy="url"]`).type('http://fernando.org').should('have.value', 'http://fernando.org');
 
       // since cypress clicks submit too fast before the blob fields are validated
       cy.wait(200); // eslint-disable-line cypress/no-unnecessary-waiting

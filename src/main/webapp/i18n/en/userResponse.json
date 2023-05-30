@@ -24,6 +24,8 @@
       "multimediaVoice": "Multimedia Voice",
       "saraAnimation": "Sara Animation",
       "isEndConversation": "Is End Conversation",
+      "responseType": "Response Type",
+      "url": "Url",
       "intent": "Intent"
     }
   }

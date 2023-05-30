@@ -8,6 +8,7 @@
 //import com.sara.services.IntegrationTest;
 //import com.sara.services.domain.UserResponse;
 //import com.sara.services.domain.enumeration.Priority;
+//import com.sara.services.domain.enumeration.ResponseType;
 //import com.sara.services.repository.UserResponseRepository;
 //import java.util.List;
 //import java.util.Random;
@@ -55,6 +56,12 @@
 //    private static final Boolean DEFAULT_IS_END_CONVERSATION = false;
 //    private static final Boolean UPDATED_IS_END_CONVERSATION = true;
 //
+//    private static final ResponseType DEFAULT_RESPONSE_TYPE = ResponseType.QUERY;
+//    private static final ResponseType UPDATED_RESPONSE_TYPE = ResponseType.SERVICIO;
+//
+//    private static final String DEFAULT_URL = "AAAAAAAAAA";
+//    private static final String UPDATED_URL = "BBBBBBBBBB";
+//
 //    private static final String ENTITY_API_URL = "/api/user-responses";
 //    private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 //
@@ -88,7 +95,9 @@
 //            .multimediaVoiceContentType(DEFAULT_MULTIMEDIA_VOICE_CONTENT_TYPE)
 //            .saraAnimation(DEFAULT_SARA_ANIMATION)
 //            .saraAnimationContentType(DEFAULT_SARA_ANIMATION_CONTENT_TYPE)
-//            .isEndConversation(DEFAULT_IS_END_CONVERSATION);
+//            .isEndConversation(DEFAULT_IS_END_CONVERSATION)
+//            .responseType(DEFAULT_RESPONSE_TYPE)
+//            .url(DEFAULT_URL);
 //        return userResponse;
 //    }
 //
@@ -108,7 +117,9 @@
 //            .multimediaVoiceContentType(UPDATED_MULTIMEDIA_VOICE_CONTENT_TYPE)
 //            .saraAnimation(UPDATED_SARA_ANIMATION)
 //            .saraAnimationContentType(UPDATED_SARA_ANIMATION_CONTENT_TYPE)
-//            .isEndConversation(UPDATED_IS_END_CONVERSATION);
+//            .isEndConversation(UPDATED_IS_END_CONVERSATION)
+//            .responseType(UPDATED_RESPONSE_TYPE)
+//            .url(UPDATED_URL);
 //        return userResponse;
 //    }
 //
@@ -139,6 +150,8 @@
 //        assertThat(testUserResponse.getSaraAnimation()).isEqualTo(DEFAULT_SARA_ANIMATION);
 //        assertThat(testUserResponse.getSaraAnimationContentType()).isEqualTo(DEFAULT_SARA_ANIMATION_CONTENT_TYPE);
 //        assertThat(testUserResponse.getIsEndConversation()).isEqualTo(DEFAULT_IS_END_CONVERSATION);
+//        assertThat(testUserResponse.getResponseType()).isEqualTo(DEFAULT_RESPONSE_TYPE);
+//        assertThat(testUserResponse.getUrl()).isEqualTo(DEFAULT_URL);
 //    }
 //
 //    @Test
@@ -196,7 +209,9 @@
 //            .andExpect(jsonPath("$.[*].multimediaVoice").value(hasItem(Base64Utils.encodeToString(DEFAULT_MULTIMEDIA_VOICE))))
 //            .andExpect(jsonPath("$.[*].saraAnimationContentType").value(hasItem(DEFAULT_SARA_ANIMATION_CONTENT_TYPE)))
 //            .andExpect(jsonPath("$.[*].saraAnimation").value(hasItem(Base64Utils.encodeToString(DEFAULT_SARA_ANIMATION))))
-//            .andExpect(jsonPath("$.[*].isEndConversation").value(hasItem(DEFAULT_IS_END_CONVERSATION.booleanValue())));
+//            .andExpect(jsonPath("$.[*].isEndConversation").value(hasItem(DEFAULT_IS_END_CONVERSATION.booleanValue())))
+//            .andExpect(jsonPath("$.[*].responseType").value(hasItem(DEFAULT_RESPONSE_TYPE.toString())))
+//            .andExpect(jsonPath("$.[*].url").value(hasItem(DEFAULT_URL)));
 //    }
 //
 //    @Test
@@ -219,7 +234,9 @@
 //            .andExpect(jsonPath("$.multimediaVoice").value(Base64Utils.encodeToString(DEFAULT_MULTIMEDIA_VOICE)))
 //            .andExpect(jsonPath("$.saraAnimationContentType").value(DEFAULT_SARA_ANIMATION_CONTENT_TYPE))
 //            .andExpect(jsonPath("$.saraAnimation").value(Base64Utils.encodeToString(DEFAULT_SARA_ANIMATION)))
-//            .andExpect(jsonPath("$.isEndConversation").value(DEFAULT_IS_END_CONVERSATION.booleanValue()));
+//            .andExpect(jsonPath("$.isEndConversation").value(DEFAULT_IS_END_CONVERSATION.booleanValue()))
+//            .andExpect(jsonPath("$.responseType").value(DEFAULT_RESPONSE_TYPE.toString()))
+//            .andExpect(jsonPath("$.url").value(DEFAULT_URL));
 //    }
 //
 //    @Test
@@ -250,7 +267,9 @@
 //            .multimediaVoiceContentType(UPDATED_MULTIMEDIA_VOICE_CONTENT_TYPE)
 //            .saraAnimation(UPDATED_SARA_ANIMATION)
 //            .saraAnimationContentType(UPDATED_SARA_ANIMATION_CONTENT_TYPE)
-//            .isEndConversation(UPDATED_IS_END_CONVERSATION);
+//            .isEndConversation(UPDATED_IS_END_CONVERSATION)
+//            .responseType(UPDATED_RESPONSE_TYPE)
+//            .url(UPDATED_URL);
 //
 //        restUserResponseMockMvc
 //            .perform(
@@ -273,6 +292,8 @@
 //        assertThat(testUserResponse.getSaraAnimation()).isEqualTo(UPDATED_SARA_ANIMATION);
 //        assertThat(testUserResponse.getSaraAnimationContentType()).isEqualTo(UPDATED_SARA_ANIMATION_CONTENT_TYPE);
 //        assertThat(testUserResponse.getIsEndConversation()).isEqualTo(UPDATED_IS_END_CONVERSATION);
+//        assertThat(testUserResponse.getResponseType()).isEqualTo(UPDATED_RESPONSE_TYPE);
+//        assertThat(testUserResponse.getUrl()).isEqualTo(UPDATED_URL);
 //    }
 //
 //    @Test
@@ -348,7 +369,9 @@
 //            .priority(UPDATED_PRIORITY)
 //            .saraAnimation(UPDATED_SARA_ANIMATION)
 //            .saraAnimationContentType(UPDATED_SARA_ANIMATION_CONTENT_TYPE)
-//            .isEndConversation(UPDATED_IS_END_CONVERSATION);
+//            .isEndConversation(UPDATED_IS_END_CONVERSATION)
+//            .responseType(UPDATED_RESPONSE_TYPE)
+//            .url(UPDATED_URL);
 //
 //        restUserResponseMockMvc
 //            .perform(
@@ -371,6 +394,8 @@
 //        assertThat(testUserResponse.getSaraAnimation()).isEqualTo(UPDATED_SARA_ANIMATION);
 //        assertThat(testUserResponse.getSaraAnimationContentType()).isEqualTo(UPDATED_SARA_ANIMATION_CONTENT_TYPE);
 //        assertThat(testUserResponse.getIsEndConversation()).isEqualTo(UPDATED_IS_END_CONVERSATION);
+//        assertThat(testUserResponse.getResponseType()).isEqualTo(UPDATED_RESPONSE_TYPE);
+//        assertThat(testUserResponse.getUrl()).isEqualTo(UPDATED_URL);
 //    }
 //
 //    @Test
@@ -394,7 +419,9 @@
 //            .multimediaVoiceContentType(UPDATED_MULTIMEDIA_VOICE_CONTENT_TYPE)
 //            .saraAnimation(UPDATED_SARA_ANIMATION)
 //            .saraAnimationContentType(UPDATED_SARA_ANIMATION_CONTENT_TYPE)
-//            .isEndConversation(UPDATED_IS_END_CONVERSATION);
+//            .isEndConversation(UPDATED_IS_END_CONVERSATION)
+//            .responseType(UPDATED_RESPONSE_TYPE)
+//            .url(UPDATED_URL);
 //
 //        restUserResponseMockMvc
 //            .perform(
@@ -417,6 +444,8 @@
 //        assertThat(testUserResponse.getSaraAnimation()).isEqualTo(UPDATED_SARA_ANIMATION);
 //        assertThat(testUserResponse.getSaraAnimationContentType()).isEqualTo(UPDATED_SARA_ANIMATION_CONTENT_TYPE);
 //        assertThat(testUserResponse.getIsEndConversation()).isEqualTo(UPDATED_IS_END_CONVERSATION);
+//        assertThat(testUserResponse.getResponseType()).isEqualTo(UPDATED_RESPONSE_TYPE);
+//        assertThat(testUserResponse.getUrl()).isEqualTo(UPDATED_URL);
 //    }
 //
 //    @Test
