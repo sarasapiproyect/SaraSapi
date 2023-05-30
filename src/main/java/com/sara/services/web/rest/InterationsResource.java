@@ -1,5 +1,7 @@
 package com.sara.services.web.rest;
 
+import com.sapi.services.integration.methods.Sapi;
+import com.sapi.services.integration.response.ResponseGeneral;
 import com.sara.services.domain.DefaultResponse;
 import com.sara.services.domain.Intent;
 import com.sara.services.domain.Interations;
@@ -224,8 +226,8 @@ public class InterationsResource {
         interations.setSourceChannel(GeneralUtils.getOriginAplicationValue(request.getSourceChannel()));
         interations.setSourceInfo(request.getSourceInfo());
         interations.setValueRequest(request.getValueRequest());
-        
-        List<UserExpresion> userExpresions= userExpresionRepository.findByValue(request.getValueRequest());
+        String[] fields = request.getValueRequest().split("&");
+        List<UserExpresion> userExpresions= userExpresionRepository.findByValue(fields[0]);
         if (!userExpresions.isEmpty()) {
             Set<Intent> setIntents = userExpresions.get(0).getIntents();
         	
@@ -233,11 +235,18 @@ public class InterationsResource {
             Intent intent = intents.get(0);
             List<UserResponse> userResponses = GeneralUtils.convertToList(intent.getUserResponses());
             UserResponse userResponse =  UserResponse.getRandomElement(userResponses);
-//            if (userResponse.getResponseType().equals(ResponseType.QUERY)){
+            if (userResponse.getResponseType().equals(ResponseType.QUERY)){
                 interations.setValueResponse(userResponse.getValueResponse());
-//            }else{
-//            
-//            }
+            }else{
+            
+            	try {
+                    ResponseGeneral response = Sapi.getGeneric(6000,  fields[1], userResponse.getUrl());
+                     userResponse.setValueResponse(response.toString());
+                    interations.setValueResponse(response.toString());
+		} catch (Exception e) {
+                    interations.setValueResponse("Error en respuesta");
+		}
+            }
             interationsRepository.save(interations);
             return GeneralUtils.covertToResponseMessage(userResponse);
         }else {
