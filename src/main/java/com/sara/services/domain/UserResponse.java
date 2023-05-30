@@ -5,9 +5,9 @@ import com.sara.services.domain.enumeration.Priority;
 import com.sara.services.domain.enumeration.ResponseType;
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Set;
 import java.util.List;
 import java.util.Random;
-import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
@@ -68,6 +68,15 @@ public class UserResponse implements Serializable {
 
     @Column(name = "url")
     private String url;
+
+    @Column(name = "multimedia_url")
+    private String multimediaUrl;
+
+    @Column(name = "multimedia_voice_url")
+    private String multimediaVoiceUrl;
+
+    @Column(name = "sara_animation_url")
+    private String saraAnimationUrl;
 
     @ManyToMany(mappedBy = "userResponses")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
@@ -232,6 +241,45 @@ public class UserResponse implements Serializable {
         this.url = url;
     }
 
+    public String getMultimediaUrl() {
+        return this.multimediaUrl;
+    }
+
+    public UserResponse multimediaUrl(String multimediaUrl) {
+        this.setMultimediaUrl(multimediaUrl);
+        return this;
+    }
+
+    public void setMultimediaUrl(String multimediaUrl) {
+        this.multimediaUrl = multimediaUrl;
+    }
+
+    public String getMultimediaVoiceUrl() {
+        return this.multimediaVoiceUrl;
+    }
+
+    public UserResponse multimediaVoiceUrl(String multimediaVoiceUrl) {
+        this.setMultimediaVoiceUrl(multimediaVoiceUrl);
+        return this;
+    }
+
+    public void setMultimediaVoiceUrl(String multimediaVoiceUrl) {
+        this.multimediaVoiceUrl = multimediaVoiceUrl;
+    }
+
+    public String getSaraAnimationUrl() {
+        return this.saraAnimationUrl;
+    }
+
+    public UserResponse saraAnimationUrl(String saraAnimationUrl) {
+        this.setSaraAnimationUrl(saraAnimationUrl);
+        return this;
+    }
+
+    public void setSaraAnimationUrl(String saraAnimationUrl) {
+        this.saraAnimationUrl = saraAnimationUrl;
+    }
+
     public Set<Intent> getIntents() {
         return this.intents;
     }
@@ -298,6 +346,9 @@ public class UserResponse implements Serializable {
             ", isEndConversation='" + getIsEndConversation() + "'" +
             ", responseType='" + getResponseType() + "'" +
             ", url='" + getUrl() + "'" +
+            ", multimediaUrl='" + getMultimediaUrl() + "'" +
+            ", multimediaVoiceUrl='" + getMultimediaVoiceUrl() + "'" +
+            ", saraAnimationUrl='" + getSaraAnimationUrl() + "'" +
             "}";
     }
     

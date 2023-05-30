@@ -29,6 +29,9 @@ type UserResponseFormGroupContent = {
   isEndConversation: FormControl<IUserResponse['isEndConversation']>;
   responseType: FormControl<IUserResponse['responseType']>;
   url: FormControl<IUserResponse['url']>;
+  multimediaUrl: FormControl<IUserResponse['multimediaUrl']>;
+  multimediaVoiceUrl: FormControl<IUserResponse['multimediaVoiceUrl']>;
+  saraAnimationUrl: FormControl<IUserResponse['saraAnimationUrl']>;
   intents: FormControl<IUserResponse['intents']>;
 };
 
@@ -62,6 +65,9 @@ export class UserResponseFormService {
       isEndConversation: new FormControl(userResponseRawValue.isEndConversation),
       responseType: new FormControl(userResponseRawValue.responseType),
       url: new FormControl(userResponseRawValue.url),
+      multimediaUrl: new FormControl(userResponseRawValue.multimediaUrl),
+      multimediaVoiceUrl: new FormControl(userResponseRawValue.multimediaVoiceUrl),
+      saraAnimationUrl: new FormControl(userResponseRawValue.saraAnimationUrl),
       intents: new FormControl(userResponseRawValue.intents ?? []),
     });
   }

@@ -26,6 +26,9 @@
       "isEndConversation": "Is End Conversation",
       "responseType": "Response Type",
       "url": "Url",
+      "multimediaUrl": "Multimedia Url",
+      "multimediaVoiceUrl": "Multimedia Voice Url",
+      "saraAnimationUrl": "Sara Animation Url",
       "intent": "Intent"
     }
   }

@@ -15,6 +15,9 @@ export interface IUserResponse {
   isEndConversation?: boolean | null;
   responseType?: ResponseType | null;
   url?: string | null;
+  multimediaUrl?: string | null;
+  multimediaVoiceUrl?: string | null;
+  saraAnimationUrl?: string | null;
   intents?: Pick<IIntent, 'id'>[] | null;
 }
 

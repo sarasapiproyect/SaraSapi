@@ -74,7 +74,7 @@
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>
-      <changeSet id="20230520213431-2" author="jhipster">
+     <changeSet id="20230520213431-2" author="jhipster">
 			<addColumn tableName="user_response">
 	         <column name="response_type" type="varchar(255)">
                 <constraints nullable="true" />
@@ -83,5 +83,18 @@
                 <constraints nullable="true" />
             </column>
 	        </addColumn>
+	  </changeSet>
+	  <changeSet id="20230520213431-3" author="jhipster">
+	  	<addColumn tableName="user_response">
+	        <column name="multimedia_url" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="multimedia_voice_url" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="sara_animation_url" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>	
+	    </addColumn>
 	  </changeSet>
 </databaseChangeLog>

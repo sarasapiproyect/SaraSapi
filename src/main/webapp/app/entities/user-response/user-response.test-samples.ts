@@ -9,32 +9,36 @@ export const sampleWithRequiredData: IUserResponse = {
 };
 
 export const sampleWithPartialData: IUserResponse = {
-  id: 52432,
-  valueResponse: 'next-generation Bedfordshire',
+  id: 84609,
+  valueResponse: 'Bedfordshire',
   priority: Priority['MEDIA'],
   saraAnimation: '../fake-data/blob/hipster.png',
   saraAnimationContentType: 'unknown',
   isEndConversation: true,
   responseType: ResponseType['QUERY'],
+  multimediaUrl: 'Handcrafted',
 };
 
 export const sampleWithFullData: IUserResponse = {
-  id: 18611,
-  valueResponse: 'Lek',
-  priority: Priority['LOW'],
+  id: 70976,
+  valueResponse: 'Buckinghamshire',
+  priority: Priority['HIGHT'],
   multimedia: '../fake-data/blob/hipster.png',
   multimediaContentType: 'unknown',
   multimediaVoice: '../fake-data/blob/hipster.png',
   multimediaVoiceContentType: 'unknown',
   saraAnimation: '../fake-data/blob/hipster.png',
   saraAnimationContentType: 'unknown',
-  isEndConversation: true,
-  responseType: ResponseType['SERVICIO'],
-  url: 'http://tania.com',
+  isEndConversation: false,
+  responseType: ResponseType['QUERY'],
+  url: 'http://esta.com',
+  multimediaUrl: 'Bacon multi-tasking',
+  multimediaVoiceUrl: 'Soft Cyprus Avon',
+  saraAnimationUrl: 'migration',
 };
 
 export const sampleWithNewData: NewUserResponse = {
-  valueResponse: 'Gloves',
+  valueResponse: 'lavender bifurcated Borders',
   id: null,
 };
 
