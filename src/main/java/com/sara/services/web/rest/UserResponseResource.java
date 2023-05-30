@@ -1,13 +1,21 @@
 package com.sara.services.web.rest;
 
+import com.sara.services.config.ApplicationProperties;
+import com.sara.services.config.Constants;
 import com.sara.services.domain.UserResponse;
 import com.sara.services.repository.UserResponseRepository;
 import com.sara.services.web.rest.errors.BadRequestAlertException;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.logging.Level;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
@@ -34,17 +42,22 @@ public class UserResponseResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
+    private final ApplicationProperties applicationProperties;
+
     private final UserResponseRepository userResponseRepository;
 
-    public UserResponseResource(UserResponseRepository userResponseRepository) {
+    public UserResponseResource(UserResponseRepository userResponseRepository, ApplicationProperties applicationProperties) {
         this.userResponseRepository = userResponseRepository;
+        this.applicationProperties = applicationProperties;
     }
 
     /**
      * {@code POST  /user-responses} : Create a new userResponse.
      *
      * @param userResponse the userResponse to create.
-     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new userResponse, or with status {@code 400 (Bad Request)} if the userResponse has already an ID.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and
+     * with body the new userResponse, or with status {@code 400 (Bad Request)}
+     * if the userResponse has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/user-responses")
@@ -53,6 +66,57 @@ public class UserResponseResource {
         if (userResponse.getId() != null) {
             throw new BadRequestAlertException("A new userResponse cannot already have an ID", ENTITY_NAME, "idexists");
         }
+
+        if (userResponse.getMultimedia() != null) {
+            ///////guardando el archivo fisico/////////////////////////////Multimedia
+            Date date = new Date();
+            String time = String.valueOf(date.getTime());
+            byte[] bytesImg = userResponse.getMultimedia();
+
+            String nameFile = time + Constants.BASE_PROFILE_IMAGE_TEXT;
+
+            Path rutaCompleta = Paths.get(applicationProperties.getCompliance().getSource_image_profile() + nameFile);
+            try {
+                Files.write(rutaCompleta, bytesImg);
+            } catch (IOException ex) {
+                java.util.logging.Logger.getLogger(UserResponseResource.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            String URL = applicationProperties.getCompliance().getAddress_image_profile() + Constants.SPRING_PATH + nameFile;
+            userResponse.setMultimediaUrl(URL);
+        }
+
+        if (userResponse.getSaraAnimation() != null) {
+            ///////guardando el archivo fisico/////////////////////////////Multimedia
+            Date date2 = new Date();
+            String time2 = String.valueOf(date2.getTime());
+            byte[] bytesImg2 = userResponse.getSaraAnimation();
+            String nameFile2 = time2 + Constants.BASE_IMAGE_IMAGE_GIF;
+            Path rutaCompleta2 = Paths.get(applicationProperties.getCompliance().getSource_image_profile() + nameFile2);
+            try {
+                Files.write(rutaCompleta2, bytesImg2);
+            } catch (IOException ex) {
+                java.util.logging.Logger.getLogger(UserResponseResource.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            String URL2 = applicationProperties.getCompliance().getAddress_image_profile() + Constants.SPRING_PATH + nameFile2;
+            userResponse.setSaraAnimationUrl(URL2);
+        }
+
+        if (userResponse.getMultimediaVoice() != null) {
+            ///////guardando el archivo fisico/////////////////////////////Multimedia
+            Date date3 = new Date();
+            String time3 = String.valueOf(date3.getTime());
+            byte[] bytesImg3 = userResponse.getMultimediaVoice();
+            String nameFile3 = time3 + Constants.BASE_IMAGE_IMAGE_MP3;
+            Path rutaCompleta3 = Paths.get(applicationProperties.getCompliance().getSource_image_profile() + nameFile3);
+            try {
+                Files.write(rutaCompleta3, bytesImg3);
+            } catch (IOException ex) {
+                java.util.logging.Logger.getLogger(UserResponseResource.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            String URL3 = applicationProperties.getCompliance().getAddress_image_profile() + Constants.SPRING_PATH + nameFile3;
+            userResponse.setMultimediaVoiceUrl(URL3);
+        }
+
         UserResponse result = userResponseRepository.save(userResponse);
         return ResponseEntity
             .created(new URI("/api/user-responses/" + result.getId()))
@@ -85,6 +149,56 @@ public class UserResponseResource {
 
         if (!userResponseRepository.existsById(id)) {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+        }
+
+        if (userResponse.getMultimedia() != null) {
+            ///////guardando el archivo fisico/////////////////////////////Multimedia
+            Date date = new Date();
+            String time = String.valueOf(date.getTime());
+            byte[] bytesImg = userResponse.getMultimedia();
+
+            String nameFile = time + Constants.BASE_PROFILE_IMAGE_TEXT;
+
+            Path rutaCompleta = Paths.get(applicationProperties.getCompliance().getSource_image_profile() + nameFile);
+            try {
+                Files.write(rutaCompleta, bytesImg);
+            } catch (IOException ex) {
+                java.util.logging.Logger.getLogger(UserResponseResource.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            String URL = applicationProperties.getCompliance().getAddress_image_profile() + Constants.SPRING_PATH + nameFile;
+            userResponse.setMultimediaUrl(URL);
+        }
+
+        if (userResponse.getSaraAnimation() != null) {
+            ///////guardando el archivo fisico/////////////////////////////Multimedia
+            Date date2 = new Date();
+            String time2 = String.valueOf(date2.getTime());
+            byte[] bytesImg2 = userResponse.getSaraAnimation();
+            String nameFile2 = time2 + Constants.BASE_IMAGE_IMAGE_GIF;
+            Path rutaCompleta2 = Paths.get(applicationProperties.getCompliance().getSource_image_profile() + nameFile2);
+            try {
+                Files.write(rutaCompleta2, bytesImg2);
+            } catch (IOException ex) {
+                java.util.logging.Logger.getLogger(UserResponseResource.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            String URL2 = applicationProperties.getCompliance().getAddress_image_profile() + Constants.SPRING_PATH + nameFile2;
+            userResponse.setSaraAnimationUrl(URL2);
+        }
+
+        if (userResponse.getMultimediaVoice() != null) {
+            ///////guardando el archivo fisico/////////////////////////////Multimedia
+            Date date3 = new Date();
+            String time3 = String.valueOf(date3.getTime());
+            byte[] bytesImg3 = userResponse.getMultimediaVoice();
+            String nameFile3 = time3 + Constants.BASE_IMAGE_IMAGE_MP3;
+            Path rutaCompleta3 = Paths.get(applicationProperties.getCompliance().getSource_image_profile() + nameFile3);
+            try {
+                Files.write(rutaCompleta3, bytesImg3);
+            } catch (IOException ex) {
+                java.util.logging.Logger.getLogger(UserResponseResource.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            String URL3 = applicationProperties.getCompliance().getAddress_image_profile() + Constants.SPRING_PATH + nameFile3;
+            userResponse.setMultimediaVoiceUrl(URL3);
         }
 
         UserResponse result = userResponseRepository.save(userResponse);

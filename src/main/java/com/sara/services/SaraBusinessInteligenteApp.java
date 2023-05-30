@@ -2,12 +2,13 @@ package com.sara.services;
 
 import com.sara.services.config.ApplicationProperties;
 import com.sara.services.config.CRLFLogConverter;
+import com.sara.services.config.Constants;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Optional;
-import java.util.logging.Level;
+import java.util.concurrent.TimeUnit;
 import javax.annotation.PostConstruct;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -17,21 +18,24 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.liquibase.LiquibaseProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.core.env.Environment;
-import org.telegram.telegrambots.meta.TelegramBotsApi;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
+import org.springframework.http.CacheControl;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import tech.jhipster.config.DefaultProfileUtil;
 import tech.jhipster.config.JHipsterConstants;
 
 @SpringBootApplication
 @EnableConfigurationProperties({ LiquibaseProperties.class, ApplicationProperties.class })
-public class SaraBusinessInteligenteApp {
+public class SaraBusinessInteligenteApp implements WebMvcConfigurer {
 
     private static final Logger log = LoggerFactory.getLogger(SaraBusinessInteligenteApp.class);
 
     private final Environment env;
 
-    public SaraBusinessInteligenteApp(Environment env) {
+    private ApplicationProperties applicationProperties;
+
+    public SaraBusinessInteligenteApp(Environment env, ApplicationProperties applicationProperties) {
+        this.applicationProperties = applicationProperties;
         this.env = env;
     }
 
@@ -105,5 +109,14 @@ public class SaraBusinessInteligenteApp {
             contextPath,
             env.getActiveProfiles().length == 0 ? env.getDefaultProfiles() : env.getActiveProfiles()
         );
+    }
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        // Register resource handler for images
+        registry
+            .addResourceHandler(Constants.SPRING_PATH_ALL)
+            .addResourceLocations("file:///" + applicationProperties.getCompliance().getSource_image_profile())
+            .setCacheControl(CacheControl.maxAge(2, TimeUnit.HOURS).cachePublic());
     }
 }
