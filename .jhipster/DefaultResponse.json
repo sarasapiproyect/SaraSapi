@@ -35,6 +35,18 @@
     {
       "fieldName": "isEndConversation",
       "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "multimediaUrl",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "multimediaVoiceUrl",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "saraAnimationUrl",
+      "fieldType": "String"
     }
   ],
   "fluentMethods": true,

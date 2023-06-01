@@ -11,12 +11,18 @@ public class ResponseMessage {
 	private byte[] multimedia;
 
 	private String multimediaContentType;
+	
+	private String multimediaUrl;
 
 	private byte[] multimediaVoice;
+	
+	private String multimediaVoiceUrl;
 
 	private String multimediaVoiceContentType;
 
 	private byte[] saraAnimation;
+	
+	private String saraAnimationeUrl;
 
 	private String saraAnimationContentType;
 
@@ -98,6 +104,30 @@ public class ResponseMessage {
 
 	public void setIsEndConversation(Boolean isEndConversation) {
 		this.isEndConversation = isEndConversation;
+	}
+
+	public String getMultimediaUrl() {
+		return multimediaUrl;
+	}
+
+	public void setMultimediaUrl(String multimediaUrl) {
+		this.multimediaUrl = multimediaUrl;
+	}
+
+	public String getMultimediaVoiceUrl() {
+		return multimediaVoiceUrl;
+	}
+
+	public void setMultimediaVoiceUrl(String multimediaVoiceUrl) {
+		this.multimediaVoiceUrl = multimediaVoiceUrl;
+	}
+
+	public String getSaraAnimationeUrl() {
+		return saraAnimationeUrl;
+	}
+
+	public void setSaraAnimationeUrl(String saraAnimationeUrl) {
+		this.saraAnimationeUrl = saraAnimationeUrl;
 	}
 	
 	

@@ -26,6 +26,9 @@ describe('DefaultResponse Form Service', () => {
             multimediaVoice: expect.any(Object),
             saraAnimation: expect.any(Object),
             isEndConversation: expect.any(Object),
+            multimediaUrl: expect.any(Object),
+            multimediaVoiceUrl: expect.any(Object),
+            saraAnimationUrl: expect.any(Object),
           })
         );
       });
@@ -42,6 +45,9 @@ describe('DefaultResponse Form Service', () => {
             multimediaVoice: expect.any(Object),
             saraAnimation: expect.any(Object),
             isEndConversation: expect.any(Object),
+            multimediaUrl: expect.any(Object),
+            multimediaVoiceUrl: expect.any(Object),
+            saraAnimationUrl: expect.any(Object),
           })
         );
       });

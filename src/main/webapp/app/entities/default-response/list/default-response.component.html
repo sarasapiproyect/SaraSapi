@@ -74,6 +74,24 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
+          <th scope="col" jhiSortBy="multimediaUrl">
+            <div class="d-flex">
+              <span jhiTranslate="saraBusinessInteligenteApp.defaultResponse.multimediaUrl">Multimedia Url</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="multimediaVoiceUrl">
+            <div class="d-flex">
+              <span jhiTranslate="saraBusinessInteligenteApp.defaultResponse.multimediaVoiceUrl">Multimedia Voice Url</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="saraAnimationUrl">
+            <div class="d-flex">
+              <span jhiTranslate="saraBusinessInteligenteApp.defaultResponse.saraAnimationUrl">Sara Animation Url</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -122,6 +140,9 @@
             >
           </td>
           <td>{{ defaultResponse.isEndConversation }}</td>
+          <td>{{ defaultResponse.multimediaUrl }}</td>
+          <td>{{ defaultResponse.multimediaVoiceUrl }}</td>
+          <td>{{ defaultResponse.saraAnimationUrl }}</td>
           <td class="text-end">
             <div class="btn-group">
               <button

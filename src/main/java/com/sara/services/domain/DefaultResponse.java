@@ -59,6 +59,15 @@ public class DefaultResponse implements Serializable {
     @Column(name = "is_end_conversation")
     private Boolean isEndConversation;
 
+    @Column(name = "multimedia_url")
+    private String multimediaUrl;
+
+    @Column(name = "multimedia_voice_url")
+    private String multimediaVoiceUrl;
+
+    @Column(name = "sara_animation_url")
+    private String saraAnimationUrl;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public Long getId() {
@@ -191,6 +200,45 @@ public class DefaultResponse implements Serializable {
         this.isEndConversation = isEndConversation;
     }
 
+    public String getMultimediaUrl() {
+        return this.multimediaUrl;
+    }
+
+    public DefaultResponse multimediaUrl(String multimediaUrl) {
+        this.setMultimediaUrl(multimediaUrl);
+        return this;
+    }
+
+    public void setMultimediaUrl(String multimediaUrl) {
+        this.multimediaUrl = multimediaUrl;
+    }
+
+    public String getMultimediaVoiceUrl() {
+        return this.multimediaVoiceUrl;
+    }
+
+    public DefaultResponse multimediaVoiceUrl(String multimediaVoiceUrl) {
+        this.setMultimediaVoiceUrl(multimediaVoiceUrl);
+        return this;
+    }
+
+    public void setMultimediaVoiceUrl(String multimediaVoiceUrl) {
+        this.multimediaVoiceUrl = multimediaVoiceUrl;
+    }
+
+    public String getSaraAnimationUrl() {
+        return this.saraAnimationUrl;
+    }
+
+    public DefaultResponse saraAnimationUrl(String saraAnimationUrl) {
+        this.setSaraAnimationUrl(saraAnimationUrl);
+        return this;
+    }
+
+    public void setSaraAnimationUrl(String saraAnimationUrl) {
+        this.saraAnimationUrl = saraAnimationUrl;
+    }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -224,6 +272,9 @@ public class DefaultResponse implements Serializable {
             ", saraAnimation='" + getSaraAnimation() + "'" +
             ", saraAnimationContentType='" + getSaraAnimationContentType() + "'" +
             ", isEndConversation='" + getIsEndConversation() + "'" +
+            ", multimediaUrl='" + getMultimediaUrl() + "'" +
+            ", multimediaVoiceUrl='" + getMultimediaVoiceUrl() + "'" +
+            ", saraAnimationUrl='" + getSaraAnimationUrl() + "'" +
             "}";
     }
     

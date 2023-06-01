@@ -8,17 +8,19 @@ export const sampleWithRequiredData: IDefaultResponse = {
 };
 
 export const sampleWithPartialData: IDefaultResponse = {
-  id: 32370,
-  defaultValueResponse: 'system Gorgeous',
+  id: 44168,
+  defaultValueResponse: 'Gorgeous Incredible',
   multimediaVoice: '../fake-data/blob/hipster.png',
   multimediaVoiceContentType: 'unknown',
   saraAnimation: '../fake-data/blob/hipster.png',
   saraAnimationContentType: 'unknown',
+  multimediaVoiceUrl: 'Small deposit',
+  saraAnimationUrl: 'whiteboard',
 };
 
 export const sampleWithFullData: IDefaultResponse = {
-  id: 9116,
-  defaultValueResponse: 'Future-proofed',
+  id: 21158,
+  defaultValueResponse: 'Keys',
   priority: Priority['LOW'],
   multimedia: '../fake-data/blob/hipster.png',
   multimediaContentType: 'unknown',
@@ -26,11 +28,14 @@ export const sampleWithFullData: IDefaultResponse = {
   multimediaVoiceContentType: 'unknown',
   saraAnimation: '../fake-data/blob/hipster.png',
   saraAnimationContentType: 'unknown',
-  isEndConversation: true,
+  isEndConversation: false,
+  multimediaUrl: 'Industrial Specialist frame',
+  multimediaVoiceUrl: 'Metrics',
+  saraAnimationUrl: 'Maine',
 };
 
 export const sampleWithNewData: NewDefaultResponse = {
-  defaultValueResponse: 'motivating',
+  defaultValueResponse: 'program enable',
   id: null,
 };
 

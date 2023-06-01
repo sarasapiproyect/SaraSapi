@@ -27,6 +27,9 @@ type DefaultResponseFormGroupContent = {
   saraAnimation: FormControl<IDefaultResponse['saraAnimation']>;
   saraAnimationContentType: FormControl<IDefaultResponse['saraAnimationContentType']>;
   isEndConversation: FormControl<IDefaultResponse['isEndConversation']>;
+  multimediaUrl: FormControl<IDefaultResponse['multimediaUrl']>;
+  multimediaVoiceUrl: FormControl<IDefaultResponse['multimediaVoiceUrl']>;
+  saraAnimationUrl: FormControl<IDefaultResponse['saraAnimationUrl']>;
 };
 
 export type DefaultResponseFormGroup = FormGroup<DefaultResponseFormGroupContent>;
@@ -57,6 +60,9 @@ export class DefaultResponseFormService {
       saraAnimation: new FormControl(defaultResponseRawValue.saraAnimation),
       saraAnimationContentType: new FormControl(defaultResponseRawValue.saraAnimationContentType),
       isEndConversation: new FormControl(defaultResponseRawValue.isEndConversation),
+      multimediaUrl: new FormControl(defaultResponseRawValue.multimediaUrl),
+      multimediaVoiceUrl: new FormControl(defaultResponseRawValue.multimediaVoiceUrl),
+      saraAnimationUrl: new FormControl(defaultResponseRawValue.saraAnimationUrl),
     });
   }
 

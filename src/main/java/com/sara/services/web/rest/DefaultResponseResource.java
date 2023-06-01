@@ -1,13 +1,23 @@
 package com.sara.services.web.rest;
 
+import com.sara.services.config.ApplicationProperties;
+import com.sara.services.config.Constants;
 import com.sara.services.domain.DefaultResponse;
 import com.sara.services.repository.DefaultResponseRepository;
 import com.sara.services.web.rest.errors.BadRequestAlertException;
+
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.logging.Level;
+
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
@@ -35,9 +45,13 @@ public class DefaultResponseResource {
     private String applicationName;
 
     private final DefaultResponseRepository defaultResponseRepository;
+    
+    private final ApplicationProperties applicationProperties;
 
-    public DefaultResponseResource(DefaultResponseRepository defaultResponseRepository) {
+    public DefaultResponseResource(DefaultResponseRepository defaultResponseRepository,
+    		ApplicationProperties applicationProperties) {
         this.defaultResponseRepository = defaultResponseRepository;
+        this.applicationProperties = applicationProperties;
     }
 
     /**
@@ -53,6 +67,55 @@ public class DefaultResponseResource {
         log.debug("REST request to save DefaultResponse : {}", defaultResponse);
         if (defaultResponse.getId() != null) {
             throw new BadRequestAlertException("A new defaultResponse cannot already have an ID", ENTITY_NAME, "idexists");
+        }
+        if (defaultResponse.getMultimedia() != null) {
+            ///////guardando el archivo fisico/////////////////////////////Multimedia
+            Date date = new Date();
+            String time = String.valueOf(date.getTime());
+            byte[] bytesImg = defaultResponse.getMultimedia();
+
+            String nameFile = time + Constants.BASE_PROFILE_IMAGE_TEXT;
+
+            Path rutaCompleta = Paths.get(applicationProperties.getCompliance().getSource_image_profile() + nameFile);
+            try {
+                Files.write(rutaCompleta, bytesImg);
+            } catch (IOException ex) {
+                java.util.logging.Logger.getLogger(UserResponseResource.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            String URL = applicationProperties.getCompliance().getAddress_image_profile() + Constants.SPRING_PATH + nameFile;
+            defaultResponse.setMultimediaUrl(URL);
+        }
+
+        if (defaultResponse.getSaraAnimation() != null) {
+            ///////guardando el archivo fisico/////////////////////////////Multimedia
+            Date date2 = new Date();
+            String time2 = String.valueOf(date2.getTime());
+            byte[] bytesImg2 = defaultResponse.getSaraAnimation();
+            String nameFile2 = time2 + Constants.BASE_IMAGE_IMAGE_GIF;
+            Path rutaCompleta2 = Paths.get(applicationProperties.getCompliance().getSource_image_profile() + nameFile2);
+            try {
+                Files.write(rutaCompleta2, bytesImg2);
+            } catch (IOException ex) {
+                java.util.logging.Logger.getLogger(UserResponseResource.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            String URL2 = applicationProperties.getCompliance().getAddress_image_profile() + Constants.SPRING_PATH + nameFile2;
+            defaultResponse.setSaraAnimationUrl(URL2);
+        }
+
+        if (defaultResponse.getMultimediaVoice() != null) {
+            ///////guardando el archivo fisico/////////////////////////////Multimedia
+            Date date3 = new Date();
+            String time3 = String.valueOf(date3.getTime());
+            byte[] bytesImg3 = defaultResponse.getMultimediaVoice();
+            String nameFile3 = time3 + Constants.BASE_IMAGE_IMAGE_MP3;
+            Path rutaCompleta3 = Paths.get(applicationProperties.getCompliance().getSource_image_profile() + nameFile3);
+            try {
+                Files.write(rutaCompleta3, bytesImg3);
+            } catch (IOException ex) {
+                java.util.logging.Logger.getLogger(UserResponseResource.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            String URL3 = applicationProperties.getCompliance().getAddress_image_profile() + Constants.SPRING_PATH + nameFile3;
+            defaultResponse.setMultimediaVoiceUrl(URL3);
         }
         DefaultResponse result = defaultResponseRepository.save(defaultResponse);
         return ResponseEntity
@@ -87,7 +150,55 @@ public class DefaultResponseResource {
         if (!defaultResponseRepository.existsById(id)) {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
+        if (defaultResponse.getMultimedia() != null) {
+            ///////guardando el archivo fisico/////////////////////////////Multimedia
+            Date date = new Date();
+            String time = String.valueOf(date.getTime());
+            byte[] bytesImg = defaultResponse.getMultimedia();
 
+            String nameFile = time + Constants.BASE_PROFILE_IMAGE_TEXT;
+
+            Path rutaCompleta = Paths.get(applicationProperties.getCompliance().getSource_image_profile() + nameFile);
+            try {
+                Files.write(rutaCompleta, bytesImg);
+            } catch (IOException ex) {
+                java.util.logging.Logger.getLogger(UserResponseResource.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            String URL = applicationProperties.getCompliance().getAddress_image_profile() + Constants.SPRING_PATH + nameFile;
+            defaultResponse.setMultimediaUrl(URL);
+        }
+
+        if (defaultResponse.getSaraAnimation() != null) {
+            ///////guardando el archivo fisico/////////////////////////////Multimedia
+            Date date2 = new Date();
+            String time2 = String.valueOf(date2.getTime());
+            byte[] bytesImg2 = defaultResponse.getSaraAnimation();
+            String nameFile2 = time2 + Constants.BASE_IMAGE_IMAGE_GIF;
+            Path rutaCompleta2 = Paths.get(applicationProperties.getCompliance().getSource_image_profile() + nameFile2);
+            try {
+                Files.write(rutaCompleta2, bytesImg2);
+            } catch (IOException ex) {
+                java.util.logging.Logger.getLogger(UserResponseResource.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            String URL2 = applicationProperties.getCompliance().getAddress_image_profile() + Constants.SPRING_PATH + nameFile2;
+            defaultResponse.setSaraAnimationUrl(URL2);
+        }
+
+        if (defaultResponse.getMultimediaVoice() != null) {
+            ///////guardando el archivo fisico/////////////////////////////Multimedia
+            Date date3 = new Date();
+            String time3 = String.valueOf(date3.getTime());
+            byte[] bytesImg3 = defaultResponse.getMultimediaVoice();
+            String nameFile3 = time3 + Constants.BASE_IMAGE_IMAGE_MP3;
+            Path rutaCompleta3 = Paths.get(applicationProperties.getCompliance().getSource_image_profile() + nameFile3);
+            try {
+                Files.write(rutaCompleta3, bytesImg3);
+            } catch (IOException ex) {
+                java.util.logging.Logger.getLogger(UserResponseResource.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            String URL3 = applicationProperties.getCompliance().getAddress_image_profile() + Constants.SPRING_PATH + nameFile3;
+            defaultResponse.setMultimediaVoiceUrl(URL3);
+        }
         DefaultResponse result = defaultResponseRepository.save(defaultResponse);
         return ResponseEntity
             .ok()

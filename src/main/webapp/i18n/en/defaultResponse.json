@@ -23,7 +23,10 @@
       "multimedia": "Multimedia",
       "multimediaVoice": "Multimedia Voice",
       "saraAnimation": "Sara Animation",
-      "isEndConversation": "Is End Conversation"
+      "isEndConversation": "Is End Conversation",
+      "multimediaUrl": "Multimedia Url",
+      "multimediaVoiceUrl": "Multimedia Voice Url",
+      "saraAnimationUrl": "Sara Animation Url"
     }
   }
 }
