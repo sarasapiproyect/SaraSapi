@@ -29,9 +29,9 @@ public class UserResponse implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @NotNull
-    @Size(min = 1, max = 300)
-    @Column(name = "value_response", length = 300, nullable = false)
+
+    @Size(max = 2000)
+    @Column(name = "value_response", length = 2000, nullable = false)
     private String valueResponse;
 
     @Enumerated(EnumType.STRING)

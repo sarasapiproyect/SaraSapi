@@ -97,4 +97,11 @@
             </column>	
 	    </addColumn>
 	  </changeSet>
+           <changeSet author="jhipster" id="20230520213431-4">
+    <modifyDataType
+        columnName="value_response"
+        newDataType="varchar(2000)"
+        tableName="user_response"/>
+     
+</changeSet>
 </databaseChangeLog>
