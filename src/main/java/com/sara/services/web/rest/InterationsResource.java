@@ -244,7 +244,8 @@ public class InterationsResource {
                      userResponse.setValueResponse(response.toString());
                     interations.setValueResponse(response.toString());
 		} catch (Exception e) {
-                    interations.setValueResponse("Error en respuesta");
+                     userResponse.setValueResponse("Información no encontrada");
+                    interations.setValueResponse("Información no encontrada");
 		}
             }
             interationsRepository.save(interations);

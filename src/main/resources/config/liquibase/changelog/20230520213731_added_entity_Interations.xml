@@ -54,4 +54,14 @@
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>
+    <changeSet author="jhipster" id="20230520213731-2">
+    <modifyDataType
+        columnName="value_request"
+        newDataType="varchar(2000)"
+        tableName="interations"/>
+     <modifyDataType
+        columnName="value_response"
+        newDataType="varchar(2000)"
+        tableName="interations"/>
+</changeSet>
 </databaseChangeLog>
