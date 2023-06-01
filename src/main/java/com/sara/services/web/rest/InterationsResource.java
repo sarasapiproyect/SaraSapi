@@ -229,6 +229,7 @@ public class InterationsResource {
         String[] fields = request.getValueRequest().split("&");
         List<UserExpresion> userExpresions= userExpresionRepository.findByValue(fields[0]);
         if (!userExpresions.isEmpty()) {
+            log.info("Encontro userExpresion asociada");
             Set<Intent> setIntents = userExpresions.get(0).getIntents();
         	
             List<Intent> intents = GeneralUtils.convertToList(setIntents);
@@ -236,18 +237,30 @@ public class InterationsResource {
             List<UserResponse> userResponses = GeneralUtils.convertToList(intent.getUserResponses());
             UserResponse userResponse =  UserResponse.getRandomElement(userResponses);
             if (userResponse.getResponseType().equals(ResponseType.QUERY)){
+                log.info("UserResponse de tipo Query");
                 interations.setValueResponse(userResponse.getValueResponse());
-            }else{
-            
+            }else{           
             	try {
+                    log.info("UserResponse de tipo Services");
                     ResponseGeneral response = Sapi.getGeneric(6000,  fields[1], userResponse.getUrl());
-                     userResponse.setValueResponse(response.toString());
-                    interations.setValueResponse(response.toString());
+
+                    if (response!=null && response.getResponseData()!=null && response.getResponseData().length>0){
+                        log.info("UserResponse respuesta"+ response.toString());
+                        log.info("UserResponse cantidad"+ response.getResponseData().length);
+                        userResponse.setValueResponse(response.toString());
+                        interations.setValueResponse(response.toString());
+                    }else{
+                        log.info("UserResponse vacio");
+                         userResponse.setValueResponse("Informacion no encontrada");
+                        interations.setValueResponse("Informacion no encontrada");
+                    }
+                    log.info("UserResponse sin excepcion");
 		} catch (Exception e) {
-                     userResponse.setValueResponse("Información no encontrada");
-                    interations.setValueResponse("Información no encontrada");
+                    log.info("UserResponse Informacion no encontrada");
+                    userResponse.setValueResponse("Informacion no encontrada");
+                    interations.setValueResponse("Informacion no encontrada");
 		}
-            }
+            }           
             interationsRepository.save(interations);
             return GeneralUtils.covertToResponseMessage(userResponse);
         }else {
