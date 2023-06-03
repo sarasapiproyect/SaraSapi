@@ -47,6 +47,11 @@
     {
       "fieldName": "saraAnimationUrl",
       "fieldType": "String"
+    },
+    {
+      "fieldName": "multimediaType",
+      "fieldType": "MultimediaType",
+      "fieldValues": "AUDIO,VISUAL"
     }
   ],
   "fluentMethods": true,

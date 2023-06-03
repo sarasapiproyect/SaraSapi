@@ -15,7 +15,7 @@ describe('DefaultResponse e2e test', () => {
   const defaultResponsePageUrlPattern = new RegExp('/default-response(\\?.*)?$');
   const username = Cypress.env('E2E_USERNAME') ?? 'user';
   const password = Cypress.env('E2E_PASSWORD') ?? 'user';
-  const defaultResponseSample = { defaultValueResponse: 'Home Bacon' };
+  const defaultResponseSample = { defaultValueResponse: 'heuristic' };
 
   let defaultResponse;
 
@@ -177,6 +177,8 @@ describe('DefaultResponse e2e test', () => {
         .should('have.value', 'functionalities Producer Cotton');
 
       cy.get(`[data-cy="saraAnimationUrl"]`).type('Planner tan').should('have.value', 'Planner tan');
+
+      cy.get(`[data-cy="multimediaType"]`).select('AUDIO');
 
       // since cypress clicks submit too fast before the blob fields are validated
       cy.wait(200); // eslint-disable-line cypress/no-unnecessary-waiting

@@ -1,4 +1,5 @@
 import { Priority } from 'app/entities/enumerations/priority.model';
+import { MultimediaType } from 'app/entities/enumerations/multimedia-type.model';
 
 export interface IDefaultResponse {
   id: number;
@@ -14,6 +15,7 @@ export interface IDefaultResponse {
   multimediaUrl?: string | null;
   multimediaVoiceUrl?: string | null;
   saraAnimationUrl?: string | null;
+  multimediaType?: MultimediaType | null;
 }
 
 export type NewDefaultResponse = Omit<IDefaultResponse, 'id'> & { id: null };

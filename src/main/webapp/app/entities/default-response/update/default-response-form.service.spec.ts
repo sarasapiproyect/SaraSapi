@@ -29,6 +29,7 @@ describe('DefaultResponse Form Service', () => {
             multimediaUrl: expect.any(Object),
             multimediaVoiceUrl: expect.any(Object),
             saraAnimationUrl: expect.any(Object),
+            multimediaType: expect.any(Object),
           })
         );
       });
@@ -48,6 +49,7 @@ describe('DefaultResponse Form Service', () => {
             multimediaUrl: expect.any(Object),
             multimediaVoiceUrl: expect.any(Object),
             saraAnimationUrl: expect.any(Object),
+            multimediaType: expect.any(Object),
           })
         );
       });

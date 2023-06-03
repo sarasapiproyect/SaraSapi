@@ -32,6 +32,7 @@ type UserResponseFormGroupContent = {
   multimediaUrl: FormControl<IUserResponse['multimediaUrl']>;
   multimediaVoiceUrl: FormControl<IUserResponse['multimediaVoiceUrl']>;
   saraAnimationUrl: FormControl<IUserResponse['saraAnimationUrl']>;
+  multimediaType: FormControl<IUserResponse['multimediaType']>;
   intents: FormControl<IUserResponse['intents']>;
 };
 
@@ -68,6 +69,7 @@ export class UserResponseFormService {
       multimediaUrl: new FormControl(userResponseRawValue.multimediaUrl),
       multimediaVoiceUrl: new FormControl(userResponseRawValue.multimediaVoiceUrl),
       saraAnimationUrl: new FormControl(userResponseRawValue.saraAnimationUrl),
+      multimediaType: new FormControl(userResponseRawValue.multimediaType),
       intents: new FormControl(userResponseRawValue.intents ?? []),
     });
   }

@@ -12,6 +12,7 @@ import { EventManager, EventWithContent } from 'app/core/util/event-manager.serv
 import { DataUtils, FileLoadError } from 'app/core/util/data-util.service';
 import { Priority } from 'app/entities/enumerations/priority.model';
 import { ResponseType } from 'app/entities/enumerations/response-type.model';
+import { MultimediaType } from 'app/entities/enumerations/multimedia-type.model';
 
 @Component({
   selector: 'jhi-user-response-update',
@@ -22,6 +23,7 @@ export class UserResponseUpdateComponent implements OnInit {
   userResponse: IUserResponse | null = null;
   priorityValues = Object.keys(Priority);
   responseTypeValues = Object.keys(ResponseType);
+  multimediaTypeValues = Object.keys(MultimediaType);
 
   editForm: UserResponseFormGroup = this.userResponseFormService.createUserResponseFormGroup();
 

@@ -57,9 +57,9 @@
               class="form-text text-danger"
               *ngIf="editForm.get('defaultValueResponse')?.errors?.maxlength"
               jhiTranslate="entity.validation.maxlength"
-              [translateValues]="{ max: 500 }"
+              [translateValues]="{ max: 2000 }"
             >
-              This field cannot be longer than 500 characters.
+              This field cannot be longer than 2000 characters.
             </small>
           </div>
         </div>
@@ -279,6 +279,24 @@
             data-cy="saraAnimationUrl"
             formControlName="saraAnimationUrl"
           />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="saraBusinessInteligenteApp.defaultResponse.multimediaType" for="field_multimediaType"
+            >Multimedia Type</label
+          >
+          <select
+            class="form-control"
+            name="multimediaType"
+            formControlName="multimediaType"
+            id="field_multimediaType"
+            data-cy="multimediaType"
+          >
+            <option [ngValue]="null">{{ 'saraBusinessInteligenteApp.MultimediaType.null' | translate }}</option>
+            <option *ngFor="let multimediaType of multimediaTypeValues" [value]="multimediaType">
+              {{ 'saraBusinessInteligenteApp.MultimediaType.' + multimediaType | translate }}
+            </option>
+          </select>
         </div>
       </div>
 

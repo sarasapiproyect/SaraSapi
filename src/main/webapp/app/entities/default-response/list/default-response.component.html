@@ -92,6 +92,12 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
+          <th scope="col" jhiSortBy="multimediaType">
+            <div class="d-flex">
+              <span jhiTranslate="saraBusinessInteligenteApp.defaultResponse.multimediaType">Multimedia Type</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -143,6 +149,9 @@
           <td>{{ defaultResponse.multimediaUrl }}</td>
           <td>{{ defaultResponse.multimediaVoiceUrl }}</td>
           <td>{{ defaultResponse.saraAnimationUrl }}</td>
+          <td jhiTranslate="{{ 'saraBusinessInteligenteApp.MultimediaType.' + defaultResponse.multimediaType }}">
+            {{ defaultResponse.multimediaType }}
+          </td>
           <td class="text-end">
             <div class="btn-group">
               <button

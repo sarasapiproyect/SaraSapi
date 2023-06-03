@@ -30,6 +30,7 @@ type DefaultResponseFormGroupContent = {
   multimediaUrl: FormControl<IDefaultResponse['multimediaUrl']>;
   multimediaVoiceUrl: FormControl<IDefaultResponse['multimediaVoiceUrl']>;
   saraAnimationUrl: FormControl<IDefaultResponse['saraAnimationUrl']>;
+  multimediaType: FormControl<IDefaultResponse['multimediaType']>;
 };
 
 export type DefaultResponseFormGroup = FormGroup<DefaultResponseFormGroupContent>;
@@ -63,6 +64,7 @@ export class DefaultResponseFormService {
       multimediaUrl: new FormControl(defaultResponseRawValue.multimediaUrl),
       multimediaVoiceUrl: new FormControl(defaultResponseRawValue.multimediaVoiceUrl),
       saraAnimationUrl: new FormControl(defaultResponseRawValue.saraAnimationUrl),
+      multimediaType: new FormControl(defaultResponseRawValue.multimediaType),
     });
   }
 

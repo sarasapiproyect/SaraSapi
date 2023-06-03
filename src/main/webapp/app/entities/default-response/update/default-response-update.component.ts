@@ -11,6 +11,7 @@ import { AlertError } from 'app/shared/alert/alert-error.model';
 import { EventManager, EventWithContent } from 'app/core/util/event-manager.service';
 import { DataUtils, FileLoadError } from 'app/core/util/data-util.service';
 import { Priority } from 'app/entities/enumerations/priority.model';
+import { MultimediaType } from 'app/entities/enumerations/multimedia-type.model';
 
 @Component({
   selector: 'jhi-default-response-update',
@@ -20,6 +21,7 @@ export class DefaultResponseUpdateComponent implements OnInit {
   isSaving = false;
   defaultResponse: IDefaultResponse | null = null;
   priorityValues = Object.keys(Priority);
+  multimediaTypeValues = Object.keys(MultimediaType);
 
   editForm: DefaultResponseFormGroup = this.defaultResponseFormService.createDefaultResponseFormGroup();
 

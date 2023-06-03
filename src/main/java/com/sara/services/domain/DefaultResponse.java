@@ -1,5 +1,6 @@
 package com.sara.services.domain;
 
+import com.sara.services.domain.enumeration.MultimediaType;
 import com.sara.services.domain.enumeration.Priority;
 import java.io.Serializable;
 import java.util.List;
@@ -27,8 +28,8 @@ public class DefaultResponse implements Serializable {
     private Long id;
 
     @NotNull
-    @Size(min = 1, max = 500)
-    @Column(name = "default_value_response", length = 500, nullable = false)
+    @Size(max = 2000)
+    @Column(name = "default_value_response", length = 2000, nullable = false)
     private String defaultValueResponse;
 
     @Enumerated(EnumType.STRING)
@@ -67,6 +68,10 @@ public class DefaultResponse implements Serializable {
 
     @Column(name = "sara_animation_url")
     private String saraAnimationUrl;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "multimedia_type")
+    private MultimediaType multimediaType;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -239,6 +244,19 @@ public class DefaultResponse implements Serializable {
         this.saraAnimationUrl = saraAnimationUrl;
     }
 
+    public MultimediaType getMultimediaType() {
+        return this.multimediaType;
+    }
+
+    public DefaultResponse multimediaType(MultimediaType multimediaType) {
+        this.setMultimediaType(multimediaType);
+        return this;
+    }
+
+    public void setMultimediaType(MultimediaType multimediaType) {
+        this.multimediaType = multimediaType;
+    }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -275,6 +293,7 @@ public class DefaultResponse implements Serializable {
             ", multimediaUrl='" + getMultimediaUrl() + "'" +
             ", multimediaVoiceUrl='" + getMultimediaVoiceUrl() + "'" +
             ", saraAnimationUrl='" + getSaraAnimationUrl() + "'" +
+            ", multimediaType='" + getMultimediaType() + "'" +
             "}";
     }
     

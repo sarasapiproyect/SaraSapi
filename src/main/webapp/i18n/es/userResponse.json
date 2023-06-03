@@ -29,6 +29,7 @@
       "multimediaUrl": "Multimedia Url",
       "multimediaVoiceUrl": "Multimedia Voice Url",
       "saraAnimationUrl": "Sara Animation Url",
+      "multimediaType": "Multimedia Type",
       "intent": "Intent"
     }
   }

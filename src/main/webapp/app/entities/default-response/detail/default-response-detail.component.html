@@ -73,6 +73,12 @@
         <dd>
           <span>{{ defaultResponse.saraAnimationUrl }}</span>
         </dd>
+        <dt><span jhiTranslate="saraBusinessInteligenteApp.defaultResponse.multimediaType">Multimedia Type</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'saraBusinessInteligenteApp.MultimediaType.' + defaultResponse.multimediaType }}">{{
+            defaultResponse.multimediaType
+          }}</span>
+        </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

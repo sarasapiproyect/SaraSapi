@@ -1,0 +1,9 @@
+{
+  "saraBusinessInteligenteApp": {
+    "MultimediaType": {
+      "null": "",
+      "AUDIO": "AUDIO",
+      "VISUAL": "VISUAL"
+    }
+  }
+}

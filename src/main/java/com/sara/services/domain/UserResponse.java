@@ -1,13 +1,14 @@
 package com.sara.services.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.sara.services.domain.enumeration.MultimediaType;
 import com.sara.services.domain.enumeration.Priority;
 import com.sara.services.domain.enumeration.ResponseType;
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
@@ -28,7 +29,6 @@ public class UserResponse implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-
 
     @Size(max = 2000)
     @Column(name = "value_response", length = 2000, nullable = false)
@@ -77,6 +77,10 @@ public class UserResponse implements Serializable {
 
     @Column(name = "sara_animation_url")
     private String saraAnimationUrl;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "multimedia_type")
+    private MultimediaType multimediaType;
 
     @ManyToMany(mappedBy = "userResponses")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
@@ -280,6 +284,19 @@ public class UserResponse implements Serializable {
         this.saraAnimationUrl = saraAnimationUrl;
     }
 
+    public MultimediaType getMultimediaType() {
+        return this.multimediaType;
+    }
+
+    public UserResponse multimediaType(MultimediaType multimediaType) {
+        this.setMultimediaType(multimediaType);
+        return this;
+    }
+
+    public void setMultimediaType(MultimediaType multimediaType) {
+        this.multimediaType = multimediaType;
+    }
+
     public Set<Intent> getIntents() {
         return this.intents;
     }
@@ -349,6 +366,7 @@ public class UserResponse implements Serializable {
             ", multimediaUrl='" + getMultimediaUrl() + "'" +
             ", multimediaVoiceUrl='" + getMultimediaVoiceUrl() + "'" +
             ", saraAnimationUrl='" + getSaraAnimationUrl() + "'" +
+            ", multimediaType='" + getMultimediaType() + "'" +
             "}";
     }
     

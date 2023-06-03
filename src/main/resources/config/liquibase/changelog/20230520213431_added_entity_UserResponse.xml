@@ -97,11 +97,17 @@
             </column>	
 	    </addColumn>
 	  </changeSet>
-           <changeSet author="jhipster" id="20230520213431-4">
+    <changeSet author="jhipster" id="20230520213431-4">
     <modifyDataType
         columnName="value_response"
         newDataType="varchar(2000)"
-        tableName="user_response"/>
-     
-</changeSet>
+        tableName="user_response"/> 
+	</changeSet>
+    <changeSet id="20230520213431-5" author="jhipster">
+		<addColumn tableName="user_response">
+	        <column name="multimedia_type" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+	    </addColumn>
+	  </changeSet>
 </databaseChangeLog>

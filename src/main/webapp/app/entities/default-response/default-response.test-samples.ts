@@ -1,4 +1,5 @@
 import { Priority } from 'app/entities/enumerations/priority.model';
+import { MultimediaType } from 'app/entities/enumerations/multimedia-type.model';
 
 import { IDefaultResponse, NewDefaultResponse } from './default-response.model';
 
@@ -8,34 +9,35 @@ export const sampleWithRequiredData: IDefaultResponse = {
 };
 
 export const sampleWithPartialData: IDefaultResponse = {
-  id: 44168,
-  defaultValueResponse: 'Gorgeous Incredible',
+  id: 37570,
+  defaultValueResponse: 'Quality-focused',
   multimediaVoice: '../fake-data/blob/hipster.png',
   multimediaVoiceContentType: 'unknown',
   saraAnimation: '../fake-data/blob/hipster.png',
   saraAnimationContentType: 'unknown',
-  multimediaVoiceUrl: 'Small deposit',
-  saraAnimationUrl: 'whiteboard',
+  multimediaVoiceUrl: 'Future-proofed',
+  saraAnimationUrl: 'Functionality',
 };
 
 export const sampleWithFullData: IDefaultResponse = {
-  id: 21158,
-  defaultValueResponse: 'Keys',
-  priority: Priority['LOW'],
+  id: 63684,
+  defaultValueResponse: 'Arkansas',
+  priority: Priority['HIGHT'],
   multimedia: '../fake-data/blob/hipster.png',
   multimediaContentType: 'unknown',
   multimediaVoice: '../fake-data/blob/hipster.png',
   multimediaVoiceContentType: 'unknown',
   saraAnimation: '../fake-data/blob/hipster.png',
   saraAnimationContentType: 'unknown',
-  isEndConversation: false,
-  multimediaUrl: 'Industrial Specialist frame',
-  multimediaVoiceUrl: 'Metrics',
-  saraAnimationUrl: 'Maine',
+  isEndConversation: true,
+  multimediaUrl: 'Multi-layered',
+  multimediaVoiceUrl: 'Chair',
+  saraAnimationUrl: 'Specialist frame Unbranded',
+  multimediaType: MultimediaType['VISUAL'],
 };
 
 export const sampleWithNewData: NewDefaultResponse = {
-  defaultValueResponse: 'program enable',
+  defaultValueResponse: 'Operations SSL',
   id: null,
 };
 

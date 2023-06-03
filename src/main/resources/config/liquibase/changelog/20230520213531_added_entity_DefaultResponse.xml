@@ -87,4 +87,17 @@
             </column>
 	    </addColumn>
 	  </changeSet>
+	  <changeSet id="20230520213531-3" author="jhipster">
+	  	<addColumn tableName="default_response">
+	       	<column name="multimedia_type" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>           
+	    </addColumn>
+	  </changeSet>
+	  <changeSet author="jhipster" id="20230520213531-4">
+   		 <modifyDataType
+        columnName="default_value_response"
+        newDataType="varchar(2000)"
+        tableName="default_response"/> 
+	</changeSet>
 </databaseChangeLog>

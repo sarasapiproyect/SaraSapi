@@ -15,7 +15,7 @@ describe('UserResponse e2e test', () => {
   const userResponsePageUrlPattern = new RegExp('/user-response(\\?.*)?$');
   const username = Cypress.env('E2E_USERNAME') ?? 'user';
   const password = Cypress.env('E2E_PASSWORD') ?? 'user';
-  const userResponseSample = { valueResponse: 'Enhanced end-to-end Cloned' };
+  const userResponseSample = { valueResponse: 'to' };
 
   let userResponse;
 
@@ -179,6 +179,8 @@ describe('UserResponse e2e test', () => {
       cy.get(`[data-cy="multimediaVoiceUrl"]`).type('Pine').should('have.value', 'Pine');
 
       cy.get(`[data-cy="saraAnimationUrl"]`).type('open-source').should('have.value', 'open-source');
+
+      cy.get(`[data-cy="multimediaType"]`).select('VISUAL');
 
       // since cypress clicks submit too fast before the blob fields are validated
       cy.wait(200); // eslint-disable-line cypress/no-unnecessary-waiting

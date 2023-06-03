@@ -1,6 +1,7 @@
 import { IIntent } from 'app/entities/intent/intent.model';
 import { Priority } from 'app/entities/enumerations/priority.model';
 import { ResponseType } from 'app/entities/enumerations/response-type.model';
+import { MultimediaType } from 'app/entities/enumerations/multimedia-type.model';
 
 export interface IUserResponse {
   id: number;
@@ -18,6 +19,7 @@ export interface IUserResponse {
   multimediaUrl?: string | null;
   multimediaVoiceUrl?: string | null;
   saraAnimationUrl?: string | null;
+  multimediaType?: MultimediaType | null;
   intents?: Pick<IIntent, 'id'>[] | null;
 }
 
