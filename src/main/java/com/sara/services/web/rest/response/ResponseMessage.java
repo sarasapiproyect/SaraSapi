@@ -28,7 +28,7 @@ public class ResponseMessage {
 
 	private Boolean isEndConversation;
 	
-	
+	private String multimediaType;
 
 	public ResponseMessage() {
 		super();
@@ -129,6 +129,14 @@ public class ResponseMessage {
 	public void setSaraAnimationeUrl(String saraAnimationeUrl) {
 		this.saraAnimationeUrl = saraAnimationeUrl;
 	}
+
+        public String getMultimediaType() {
+            return multimediaType;
+        }
+
+        public void setMultimediaType(String multimediaType) {
+            this.multimediaType = multimediaType;
+        }
 	
 	
 

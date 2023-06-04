@@ -43,6 +43,7 @@ public class GeneralUtils {
             responseMessage.setMultimediaUrl(userResponse.getMultimediaUrl());
             responseMessage.setMultimediaVoiceUrl(userResponse.getMultimediaVoiceUrl());
             responseMessage.setSaraAnimationeUrl(userResponse.getSaraAnimationUrl());
+            responseMessage.setMultimediaType(userResponse.getMultimediaType()!=null?userResponse.getMultimediaType().getValue():null);
             return responseMessage;
          }
          
@@ -60,6 +61,7 @@ public class GeneralUtils {
             responseMessage.setMultimediaUrl(defaultResponse.getMultimediaUrl());
             responseMessage.setMultimediaVoiceUrl(defaultResponse.getMultimediaVoiceUrl());
             responseMessage.setSaraAnimationeUrl(defaultResponse.getSaraAnimationUrl());
+            responseMessage.setMultimediaType(defaultResponse.getMultimediaType()!=null?defaultResponse.getMultimediaType().getValue():null);
             return responseMessage;
          }
           
