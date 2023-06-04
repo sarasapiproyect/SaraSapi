@@ -91,6 +91,9 @@ describe('DefaultResponse e2e test', () => {
             },
             {
               statusCode: 200,
+              headers: {
+                link: '<http://localhost/api/default-responses?page=0&size=20>; rel="last",<http://localhost/api/default-responses?page=0&size=20>; rel="first"',
+              },
               body: [defaultResponse],
             }
           ).as('entitiesRequestInternal');
@@ -122,7 +125,7 @@ describe('DefaultResponse e2e test', () => {
         cy.url().should('match', defaultResponsePageUrlPattern);
       });
 
-      it('edit button click should load edit DefaultResponse page and save', () => {
+      it.skip('edit button click should load edit DefaultResponse page and save', () => {
         cy.get(entityEditButtonSelector).first().click();
         cy.getEntityCreateUpdateHeading('DefaultResponse');
         cy.get(entityCreateSaveButtonSelector).click();

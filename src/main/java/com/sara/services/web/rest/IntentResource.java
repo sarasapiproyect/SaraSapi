@@ -2,6 +2,9 @@ package com.sara.services.web.rest;
 
 import com.sara.services.domain.Intent;
 import com.sara.services.repository.IntentRepository;
+import com.sara.services.service.IntentQueryService;
+import com.sara.services.service.IntentService;
+import com.sara.services.service.criteria.IntentCriteria;
 import com.sara.services.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -13,10 +16,14 @@ import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
+import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
 /**
@@ -24,7 +31,6 @@ import tech.jhipster.web.util.ResponseUtil;
  */
 @RestController
 @RequestMapping("/api")
-@Transactional
 public class IntentResource {
 
     private final Logger log = LoggerFactory.getLogger(IntentResource.class);
@@ -34,10 +40,16 @@ public class IntentResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
+    private final IntentService intentService;
+
     private final IntentRepository intentRepository;
 
-    public IntentResource(IntentRepository intentRepository) {
+    private final IntentQueryService intentQueryService;
+
+    public IntentResource(IntentService intentService, IntentRepository intentRepository, IntentQueryService intentQueryService) {
+        this.intentService = intentService;
         this.intentRepository = intentRepository;
+        this.intentQueryService = intentQueryService;
     }
 
     /**
@@ -53,7 +65,7 @@ public class IntentResource {
         if (intent.getId() != null) {
             throw new BadRequestAlertException("A new intent cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Intent result = intentRepository.save(intent);
+        Intent result = intentService.save(intent);
         return ResponseEntity
             .created(new URI("/api/intents/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
@@ -87,7 +99,7 @@ public class IntentResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Intent result = intentRepository.save(intent);
+        Intent result = intentService.update(intent);
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, intent.getId().toString()))
@@ -122,31 +134,7 @@ public class IntentResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<Intent> result = intentRepository
-            .findById(intent.getId())
-            .map(existingIntent -> {
-                if (intent.getIntenType() != null) {
-                    existingIntent.setIntenType(intent.getIntenType());
-                }
-                if (intent.getName() != null) {
-                    existingIntent.setName(intent.getName());
-                }
-                if (intent.getDescription() != null) {
-                    existingIntent.setDescription(intent.getDescription());
-                }
-                if (intent.getUrlRequest() != null) {
-                    existingIntent.setUrlRequest(intent.getUrlRequest());
-                }
-                if (intent.getEnabled() != null) {
-                    existingIntent.setEnabled(intent.getEnabled());
-                }
-                if (intent.getCreationDate() != null) {
-                    existingIntent.setCreationDate(intent.getCreationDate());
-                }
-
-                return existingIntent;
-            })
-            .map(intentRepository::save);
+        Optional<Intent> result = intentService.partialUpdate(intent);
 
         return ResponseUtil.wrapOrNotFound(
             result,
@@ -157,17 +145,31 @@ public class IntentResource {
     /**
      * {@code GET  /intents} : get all the intents.
      *
-     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
+     * @param pageable the pagination information.
+     * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of intents in body.
      */
     @GetMapping("/intents")
-    public List<Intent> getAllIntents(@RequestParam(required = false, defaultValue = "false") boolean eagerload) {
-        log.debug("REST request to get all Intents");
-        if (eagerload) {
-            return intentRepository.findAllWithEagerRelationships();
-        } else {
-            return intentRepository.findAll();
-        }
+    public ResponseEntity<List<Intent>> getAllIntents(
+        IntentCriteria criteria,
+        @org.springdoc.api.annotations.ParameterObject Pageable pageable
+    ) {
+        log.debug("REST request to get Intents by criteria: {}", criteria);
+        Page<Intent> page = intentQueryService.findByCriteria(criteria, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    /**
+     * {@code GET  /intents/count} : count all the intents.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
+     */
+    @GetMapping("/intents/count")
+    public ResponseEntity<Long> countIntents(IntentCriteria criteria) {
+        log.debug("REST request to count Intents by criteria: {}", criteria);
+        return ResponseEntity.ok().body(intentQueryService.countByCriteria(criteria));
     }
 
     /**
@@ -179,7 +181,7 @@ public class IntentResource {
     @GetMapping("/intents/{id}")
     public ResponseEntity<Intent> getIntent(@PathVariable Long id) {
         log.debug("REST request to get Intent : {}", id);
-        Optional<Intent> intent = intentRepository.findOneWithEagerRelationships(id);
+        Optional<Intent> intent = intentService.findOne(id);
         return ResponseUtil.wrapOrNotFound(intent);
     }
 
@@ -192,7 +194,7 @@ public class IntentResource {
     @DeleteMapping("/intents/{id}")
     public ResponseEntity<Void> deleteIntent(@PathVariable Long id) {
         log.debug("REST request to delete Intent : {}", id);
-        intentRepository.deleteById(id);
+        intentService.delete(id);
         return ResponseEntity
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))

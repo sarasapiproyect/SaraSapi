@@ -2,6 +2,9 @@ package com.sara.services.web.rest;
 
 import com.sara.services.domain.UserExpresion;
 import com.sara.services.repository.UserExpresionRepository;
+import com.sara.services.service.UserExpresionQueryService;
+import com.sara.services.service.UserExpresionService;
+import com.sara.services.service.criteria.UserExpresionCriteria;
 import com.sara.services.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -13,10 +16,14 @@ import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
+import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
 /**
@@ -24,7 +31,6 @@ import tech.jhipster.web.util.ResponseUtil;
  */
 @RestController
 @RequestMapping("/api")
-@Transactional
 public class UserExpresionResource {
 
     private final Logger log = LoggerFactory.getLogger(UserExpresionResource.class);
@@ -34,10 +40,20 @@ public class UserExpresionResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
+    private final UserExpresionService userExpresionService;
+
     private final UserExpresionRepository userExpresionRepository;
 
-    public UserExpresionResource(UserExpresionRepository userExpresionRepository) {
+    private final UserExpresionQueryService userExpresionQueryService;
+
+    public UserExpresionResource(
+        UserExpresionService userExpresionService,
+        UserExpresionRepository userExpresionRepository,
+        UserExpresionQueryService userExpresionQueryService
+    ) {
+        this.userExpresionService = userExpresionService;
         this.userExpresionRepository = userExpresionRepository;
+        this.userExpresionQueryService = userExpresionQueryService;
     }
 
     /**
@@ -53,7 +69,10 @@ public class UserExpresionResource {
         if (userExpresion.getId() != null) {
             throw new BadRequestAlertException("A new userExpresion cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        UserExpresion result = userExpresionRepository.save(userExpresion);
+        List<UserExpresion> userExpresionValue= userExpresionRepository.findByValue(userExpresion.getValue());
+        if (!userExpresionValue.isEmpty())
+        	throw new BadRequestAlertException("UserExpresion exists", ENTITY_NAME, "userExpresionexists");
+        UserExpresion result = userExpresionService.save(userExpresion);
         return ResponseEntity
             .created(new URI("/api/user-expresions/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
@@ -87,7 +106,7 @@ public class UserExpresionResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        UserExpresion result = userExpresionRepository.save(userExpresion);
+        UserExpresion result = userExpresionService.update(userExpresion);
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, userExpresion.getId().toString()))
@@ -122,19 +141,7 @@ public class UserExpresionResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<UserExpresion> result = userExpresionRepository
-            .findById(userExpresion.getId())
-            .map(existingUserExpresion -> {
-                if (userExpresion.getValue() != null) {
-                    existingUserExpresion.setValue(userExpresion.getValue());
-                }
-                if (userExpresion.getPriority() != null) {
-                    existingUserExpresion.setPriority(userExpresion.getPriority());
-                }
-
-                return existingUserExpresion;
-            })
-            .map(userExpresionRepository::save);
+        Optional<UserExpresion> result = userExpresionService.partialUpdate(userExpresion);
 
         return ResponseUtil.wrapOrNotFound(
             result,
@@ -145,12 +152,31 @@ public class UserExpresionResource {
     /**
      * {@code GET  /user-expresions} : get all the userExpresions.
      *
+     * @param pageable the pagination information.
+     * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of userExpresions in body.
      */
     @GetMapping("/user-expresions")
-    public List<UserExpresion> getAllUserExpresions() {
-        log.debug("REST request to get all UserExpresions");
-        return userExpresionRepository.findAll();
+    public ResponseEntity<List<UserExpresion>> getAllUserExpresions(
+        UserExpresionCriteria criteria,
+        @org.springdoc.api.annotations.ParameterObject Pageable pageable
+    ) {
+        log.debug("REST request to get UserExpresions by criteria: {}", criteria);
+        Page<UserExpresion> page = userExpresionQueryService.findByCriteria(criteria, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    /**
+     * {@code GET  /user-expresions/count} : count all the userExpresions.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
+     */
+    @GetMapping("/user-expresions/count")
+    public ResponseEntity<Long> countUserExpresions(UserExpresionCriteria criteria) {
+        log.debug("REST request to count UserExpresions by criteria: {}", criteria);
+        return ResponseEntity.ok().body(userExpresionQueryService.countByCriteria(criteria));
     }
 
     /**
@@ -162,7 +188,7 @@ public class UserExpresionResource {
     @GetMapping("/user-expresions/{id}")
     public ResponseEntity<UserExpresion> getUserExpresion(@PathVariable Long id) {
         log.debug("REST request to get UserExpresion : {}", id);
-        Optional<UserExpresion> userExpresion = userExpresionRepository.findById(id);
+        Optional<UserExpresion> userExpresion = userExpresionService.findOne(id);
         return ResponseUtil.wrapOrNotFound(userExpresion);
     }
 
@@ -175,7 +201,7 @@ public class UserExpresionResource {
     @DeleteMapping("/user-expresions/{id}")
     public ResponseEntity<Void> deleteUserExpresion(@PathVariable Long id) {
         log.debug("REST request to delete UserExpresion : {}", id);
-        userExpresionRepository.deleteById(id);
+        userExpresionService.delete(id);
         return ResponseEntity
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))

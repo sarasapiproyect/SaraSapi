@@ -16,7 +16,8 @@ import org.springframework.stereotype.Repository;
  * For more information refer to https://github.com/jhipster/generator-jhipster/issues/17990.
  */
 @Repository
-public interface IntentRepository extends IntentRepositoryWithBagRelationships, JpaRepository<Intent, Long> {
+public interface IntentRepository
+    extends IntentRepositoryWithBagRelationships, JpaRepository<Intent, Long>, JpaSpecificationExecutor<Intent> {
     default Optional<Intent> findOneWithEagerRelationships(Long id) {
         return this.fetchBagRelationships(this.findOneWithToOneRelationships(id));
     }

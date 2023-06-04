@@ -41,7 +41,7 @@ export class UserExpresionFormService {
         }
       ),
       value: new FormControl(userExpresionRawValue.value, {
-        validators: [Validators.required, Validators.minLength(1), Validators.maxLength(300)],
+        validators: [Validators.required, Validators.minLength(1), Validators.maxLength(2000)],
       }),
       priority: new FormControl(userExpresionRawValue.priority),
       intents: new FormControl(userExpresionRawValue.intents ?? []),

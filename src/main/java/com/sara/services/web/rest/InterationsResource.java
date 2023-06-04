@@ -1,5 +1,37 @@
 package com.sara.services.web.rest;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.time.Instant;
+import java.util.Date;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.ws.rs.core.Context;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
 import com.sapi.services.integration.methods.Sapi;
 import com.sapi.services.integration.response.ResponseGeneral;
 import com.sara.services.domain.DefaultResponse;
@@ -13,30 +45,17 @@ import com.sara.services.repository.DefaultResponseRepository;
 import com.sara.services.repository.InterationsRepository;
 import com.sara.services.repository.TrainingRepository;
 import com.sara.services.repository.UserExpresionRepository;
+import com.sara.services.service.InterationsQueryService;
+import com.sara.services.service.InterationsService;
+import com.sara.services.service.UserExpresionService;
+import com.sara.services.service.criteria.InterationsCriteria;
 import com.sara.services.web.rest.Util.GeneralUtils;
 import com.sara.services.web.rest.errors.BadRequestAlertException;
 import com.sara.services.web.rest.request.ReceiveMessageRequest;
 import com.sara.services.web.rest.response.ResponseMessage;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.time.Instant;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
-import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.core.Context;
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.*;
 import tech.jhipster.web.util.HeaderUtil;
+import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
 /**
@@ -44,7 +63,6 @@ import tech.jhipster.web.util.ResponseUtil;
  */
 @RestController
 @RequestMapping("/api")
-@Transactional
 public class InterationsResource {
 
     private final Logger log = LoggerFactory.getLogger(InterationsResource.class);
@@ -54,18 +72,27 @@ public class InterationsResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
+    private final InterationsService interationsService;
+
     private final InterationsRepository interationsRepository;
+
+    private final InterationsQueryService interationsQueryService;
     
-    private final UserExpresionRepository userExpresionRepository;
+    private final UserExpresionService userExpresionService;
     
     private final DefaultResponseRepository defaultResponseRepository;
     
     private final TrainingRepository trainingRepository;
 
-    public InterationsResource(InterationsRepository interationsRepository, UserExpresionRepository userExpresionRepository,
-    		DefaultResponseRepository defaultResponseRepository, TrainingRepository trainingRepository) {
+    public InterationsResource(
+        InterationsService interationsService,InterationsRepository interationsRepository,
+        InterationsQueryService interationsQueryService, UserExpresionService userExpresionService,
+		DefaultResponseRepository defaultResponseRepository, TrainingRepository trainingRepository
+    ) {
+        this.interationsService = interationsService;
         this.interationsRepository = interationsRepository;
-        this.userExpresionRepository = userExpresionRepository;
+        this.interationsQueryService = interationsQueryService;
+        this.userExpresionService = userExpresionService;
         this.defaultResponseRepository = defaultResponseRepository;
         this.trainingRepository = trainingRepository;
     }
@@ -83,7 +110,7 @@ public class InterationsResource {
         if (interations.getId() != null) {
             throw new BadRequestAlertException("A new interations cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Interations result = interationsRepository.save(interations);
+        Interations result = interationsService.save(interations);
         return ResponseEntity
             .created(new URI("/api/interations/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
@@ -117,7 +144,7 @@ public class InterationsResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Interations result = interationsRepository.save(interations);
+        Interations result = interationsService.update(interations);
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, interations.getId().toString()))
@@ -152,25 +179,7 @@ public class InterationsResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<Interations> result = interationsRepository
-            .findById(interations.getId())
-            .map(existingInterations -> {
-                if (interations.getValueRequest() != null) {
-                    existingInterations.setValueRequest(interations.getValueRequest());
-                }
-                if (interations.getSourceInfo() != null) {
-                    existingInterations.setSourceInfo(interations.getSourceInfo());
-                }
-                if (interations.getValueResponse() != null) {
-                    existingInterations.setValueResponse(interations.getValueResponse());
-                }
-                if (interations.getSourceChannel() != null) {
-                    existingInterations.setSourceChannel(interations.getSourceChannel());
-                }
-
-                return existingInterations;
-            })
-            .map(interationsRepository::save);
+        Optional<Interations> result = interationsService.partialUpdate(interations);
 
         return ResponseUtil.wrapOrNotFound(
             result,
@@ -181,12 +190,31 @@ public class InterationsResource {
     /**
      * {@code GET  /interations} : get all the interations.
      *
+     * @param pageable the pagination information.
+     * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of interations in body.
      */
     @GetMapping("/interations")
-    public List<Interations> getAllInterations() {
-        log.debug("REST request to get all Interations");
-        return interationsRepository.findAll();
+    public ResponseEntity<List<Interations>> getAllInterations(
+        InterationsCriteria criteria,
+        @org.springdoc.api.annotations.ParameterObject Pageable pageable
+    ) {
+        log.debug("REST request to get Interations by criteria: {}", criteria);
+        Page<Interations> page = interationsQueryService.findByCriteria(criteria, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    /**
+     * {@code GET  /interations/count} : count all the interations.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
+     */
+    @GetMapping("/interations/count")
+    public ResponseEntity<Long> countInterations(InterationsCriteria criteria) {
+        log.debug("REST request to count Interations by criteria: {}", criteria);
+        return ResponseEntity.ok().body(interationsQueryService.countByCriteria(criteria));
     }
 
     /**
@@ -198,7 +226,7 @@ public class InterationsResource {
     @GetMapping("/interations/{id}")
     public ResponseEntity<Interations> getInterations(@PathVariable Long id) {
         log.debug("REST request to get Interations : {}", id);
-        Optional<Interations> interations = interationsRepository.findById(id);
+        Optional<Interations> interations = interationsService.findOne(id);
         return ResponseUtil.wrapOrNotFound(interations);
     }
 
@@ -211,7 +239,7 @@ public class InterationsResource {
     @DeleteMapping("/interations/{id}")
     public ResponseEntity<Void> deleteInterations(@PathVariable Long id) {
         log.debug("REST request to delete Interations : {}", id);
-        interationsRepository.deleteById(id);
+        interationsService.delete(id);
         return ResponseEntity
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
@@ -227,42 +255,57 @@ public class InterationsResource {
         interations.setSourceInfo(request.getSourceInfo());
         interations.setValueRequest(request.getValueRequest());
         String[] fields = request.getValueRequest().split("&");
-        List<UserExpresion> userExpresions= userExpresionRepository.findByValue(fields[0]);
+        List<UserExpresion> userExpresions= userExpresionService.findByValue(fields[0]);
         if (!userExpresions.isEmpty()) {
             log.info("Encontro userExpresion asociada");
             Set<Intent> setIntents = userExpresions.get(0).getIntents();
-        	
-            List<Intent> intents = GeneralUtils.convertToList(setIntents);
-            Intent intent = intents.get(0);
-            List<UserResponse> userResponses = GeneralUtils.convertToList(intent.getUserResponses());
-            UserResponse userResponse =  UserResponse.getRandomElement(userResponses);
-            if (userResponse.getResponseType().equals(ResponseType.QUERY)){
-                log.info("UserResponse de tipo Query");
-                interations.setValueResponse(userResponse.getValueResponse());
-            }else{           
-            	try {
-                    log.info("UserResponse de tipo Services");
-                    ResponseGeneral response = Sapi.getGeneric(6000,  fields[1], userResponse.getUrl());
+            if (!setIntents.isEmpty()){
+                List<Intent> intents = GeneralUtils.convertToList(setIntents);
+                Intent intent = intents.get(0);
+                List<UserResponse> userResponses = GeneralUtils.convertToList(intent.getUserResponses());
+                UserResponse userResponse =  UserResponse.getRandomElement(userResponses);
+                if (userResponse.getResponseType().equals(ResponseType.QUERY)){
+                    log.info("UserResponse de tipo Query");
+                    interations.setValueResponse(userResponse.getValueResponse());
+                }else{           
+                    try {
+                        log.info("UserResponse de tipo Services");
+                        ResponseGeneral response = Sapi.getGeneric(6000,  fields[1], userResponse.getUrl());
 
-                    if (response!=null && response.getResponseData()!=null && response.getResponseData().length>0){
-                        log.info("UserResponse respuesta"+ response.toString());
-                        log.info("UserResponse cantidad"+ response.getResponseData().length);
-                        userResponse.setValueResponse(response.toString());
-                        interations.setValueResponse(response.toString());
-                    }else{
-                        log.info("UserResponse vacio");
-                         userResponse.setValueResponse("Informacion no encontrada");
+                        if (response!=null && response.getResponseData()!=null && response.getResponseData().length>0){
+                            log.info("UserResponse respuesta"+ response.toString());
+                            log.info("UserResponse cantidad"+ response.getResponseData().length);
+                            userResponse.setValueResponse(response.toString());
+                            interations.setValueResponse(response.toString());
+                        }else{
+                            log.info("UserResponse vacio");
+                             userResponse.setValueResponse("Informacion no encontrada");
+                            interations.setValueResponse("Informacion no encontrada");
+                        }
+                        log.info("UserResponse sin excepcion");
+                    } catch (Exception e) {
+                        log.info("UserResponse Informacion no encontrada");
+                        userResponse.setValueResponse("Informacion no encontrada");
                         interations.setValueResponse("Informacion no encontrada");
                     }
-                    log.info("UserResponse sin excepcion");
-		} catch (Exception e) {
-                    log.info("UserResponse Informacion no encontrada");
-                    userResponse.setValueResponse("Informacion no encontrada");
-                    interations.setValueResponse("Informacion no encontrada");
-		}
-            }           
-            interationsRepository.save(interations);
-            return GeneralUtils.covertToResponseMessage(userResponse);
+                }           
+                interationsRepository.save(interations);
+                return GeneralUtils.covertToResponseMessage(userResponse);
+            } else {
+                Date date = new Date();
+                List<DefaultResponse> defaultResponses =defaultResponseRepository.findAll();
+                Training training = new Training();
+                training.setCreationDate(Instant.ofEpochMilli(date.getTime()));
+                training.setValue(request.getValueRequest());
+                training.setSourceInfo(request.getSourceInfo());
+                training.setSourceChannel(GeneralUtils.getOriginAplicationValue(request.getSourceChannel()));
+                training.setIp(ip);
+                trainingRepository.save(training);
+                DefaultResponse defaultResponse = DefaultResponse.getRandomElement(defaultResponses);
+                interations.setValueResponse(defaultResponse.getDefaultValueResponse());
+                interationsRepository.save(interations);
+                return GeneralUtils.covertToResponseMessage(defaultResponse);
+        }
         }else {
             Date date = new Date();
             List<DefaultResponse> defaultResponses =defaultResponseRepository.findAll();
@@ -279,6 +322,4 @@ public class InterationsResource {
             return GeneralUtils.covertToResponseMessage(defaultResponse);
         }
     }
-    
-
 }

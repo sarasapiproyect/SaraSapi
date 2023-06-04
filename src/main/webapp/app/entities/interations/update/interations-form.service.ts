@@ -48,7 +48,7 @@ export class InterationsFormService {
         validators: [Validators.required, Validators.minLength(1), Validators.maxLength(300)],
       }),
       valueResponse: new FormControl(interationsRawValue.valueResponse, {
-        validators: [Validators.required, Validators.minLength(1), Validators.maxLength(300)],
+        validators: [Validators.required, Validators.minLength(1), Validators.maxLength(2000)],
       }),
       sourceChannel: new FormControl(interationsRawValue.sourceChannel),
     });

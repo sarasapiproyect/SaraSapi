@@ -9,4 +9,4 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface InterationsRepository extends JpaRepository<Interations, Long> {}
+public interface InterationsRepository extends JpaRepository<Interations, Long>, JpaSpecificationExecutor<Interations> {}

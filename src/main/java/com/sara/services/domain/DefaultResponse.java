@@ -28,7 +28,7 @@ public class DefaultResponse implements Serializable {
     private Long id;
 
     @NotNull
-    @Size(max = 2000)
+    @Size(min = 1, max = 2000)
     @Column(name = "default_value_response", length = 2000, nullable = false)
     private String defaultValueResponse;
 

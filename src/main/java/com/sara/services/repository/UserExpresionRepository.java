@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface UserExpresionRepository extends JpaRepository<UserExpresion, Long> {
+public interface UserExpresionRepository extends JpaRepository<UserExpresion, Long>, JpaSpecificationExecutor<UserExpresion>  {
 	
 	  @Query(value = "SELECT * FROM user_expresion s WHERE s.value = ?1 order by s.id desc",
 	            nativeQuery = true)

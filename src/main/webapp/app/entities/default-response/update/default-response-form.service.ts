@@ -51,7 +51,7 @@ export class DefaultResponseFormService {
         }
       ),
       defaultValueResponse: new FormControl(defaultResponseRawValue.defaultValueResponse, {
-        validators: [Validators.required, Validators.minLength(1), Validators.maxLength(500)],
+        validators: [Validators.required, Validators.minLength(1), Validators.maxLength(2000)],
       }),
       priority: new FormControl(defaultResponseRawValue.priority),
       multimedia: new FormControl(defaultResponseRawValue.multimedia),

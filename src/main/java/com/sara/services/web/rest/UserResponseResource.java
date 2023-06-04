@@ -4,6 +4,9 @@ import com.sara.services.config.ApplicationProperties;
 import com.sara.services.config.Constants;
 import com.sara.services.domain.UserResponse;
 import com.sara.services.repository.UserResponseRepository;
+import com.sara.services.service.UserResponseQueryService;
+import com.sara.services.service.UserResponseService;
+import com.sara.services.service.criteria.UserResponseCriteria;
 import com.sara.services.web.rest.errors.BadRequestAlertException;
 import java.io.IOException;
 import java.net.URI;
@@ -21,10 +24,14 @@ import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
+import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
 /**
@@ -32,7 +39,6 @@ import tech.jhipster.web.util.ResponseUtil;
  */
 @RestController
 @RequestMapping("/api")
-@Transactional
 public class UserResponseResource {
 
     private final Logger log = LoggerFactory.getLogger(UserResponseResource.class);
@@ -42,12 +48,21 @@ public class UserResponseResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
-    private final ApplicationProperties applicationProperties;
+    private final UserResponseService userResponseService;
 
     private final UserResponseRepository userResponseRepository;
 
-    public UserResponseResource(UserResponseRepository userResponseRepository, ApplicationProperties applicationProperties) {
+    private final UserResponseQueryService userResponseQueryService;
+
+    private final ApplicationProperties applicationProperties;
+    
+    public UserResponseResource(
+        UserResponseService userResponseService, UserResponseRepository userResponseRepository,
+        UserResponseQueryService userResponseQueryService, ApplicationProperties applicationProperties
+    ) {
+        this.userResponseService = userResponseService;
         this.userResponseRepository = userResponseRepository;
+        this.userResponseQueryService = userResponseQueryService;
         this.applicationProperties = applicationProperties;
     }
 
@@ -55,9 +70,7 @@ public class UserResponseResource {
      * {@code POST  /user-responses} : Create a new userResponse.
      *
      * @param userResponse the userResponse to create.
-     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and
-     * with body the new userResponse, or with status {@code 400 (Bad Request)}
-     * if the userResponse has already an ID.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new userResponse, or with status {@code 400 (Bad Request)} if the userResponse has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/user-responses")
@@ -66,7 +79,6 @@ public class UserResponseResource {
         if (userResponse.getId() != null) {
             throw new BadRequestAlertException("A new userResponse cannot already have an ID", ENTITY_NAME, "idexists");
         }
-
         if (userResponse.getMultimedia() != null) {
             ///////guardando el archivo fisico/////////////////////////////Multimedia
             Date date = new Date();
@@ -116,8 +128,7 @@ public class UserResponseResource {
             String URL3 = applicationProperties.getCompliance().getAddress_image_profile() + Constants.SPRING_PATH + nameFile3;
             userResponse.setMultimediaVoiceUrl(URL3);
         }
-
-        UserResponse result = userResponseRepository.save(userResponse);
+        UserResponse result = userResponseService.save(userResponse);
         return ResponseEntity
             .created(new URI("/api/user-responses/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
@@ -150,7 +161,6 @@ public class UserResponseResource {
         if (!userResponseRepository.existsById(id)) {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
-
         if (userResponse.getMultimedia() != null) {
             ///////guardando el archivo fisico/////////////////////////////Multimedia
             Date date = new Date();
@@ -200,8 +210,7 @@ public class UserResponseResource {
             String URL3 = applicationProperties.getCompliance().getAddress_image_profile() + Constants.SPRING_PATH + nameFile3;
             userResponse.setMultimediaVoiceUrl(URL3);
         }
-
-        UserResponse result = userResponseRepository.save(userResponse);
+        UserResponse result = userResponseService.update(userResponse);
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, userResponse.getId().toString()))
@@ -236,40 +245,7 @@ public class UserResponseResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<UserResponse> result = userResponseRepository
-            .findById(userResponse.getId())
-            .map(existingUserResponse -> {
-                if (userResponse.getValueResponse() != null) {
-                    existingUserResponse.setValueResponse(userResponse.getValueResponse());
-                }
-                if (userResponse.getPriority() != null) {
-                    existingUserResponse.setPriority(userResponse.getPriority());
-                }
-                if (userResponse.getMultimedia() != null) {
-                    existingUserResponse.setMultimedia(userResponse.getMultimedia());
-                }
-                if (userResponse.getMultimediaContentType() != null) {
-                    existingUserResponse.setMultimediaContentType(userResponse.getMultimediaContentType());
-                }
-                if (userResponse.getMultimediaVoice() != null) {
-                    existingUserResponse.setMultimediaVoice(userResponse.getMultimediaVoice());
-                }
-                if (userResponse.getMultimediaVoiceContentType() != null) {
-                    existingUserResponse.setMultimediaVoiceContentType(userResponse.getMultimediaVoiceContentType());
-                }
-                if (userResponse.getSaraAnimation() != null) {
-                    existingUserResponse.setSaraAnimation(userResponse.getSaraAnimation());
-                }
-                if (userResponse.getSaraAnimationContentType() != null) {
-                    existingUserResponse.setSaraAnimationContentType(userResponse.getSaraAnimationContentType());
-                }
-                if (userResponse.getIsEndConversation() != null) {
-                    existingUserResponse.setIsEndConversation(userResponse.getIsEndConversation());
-                }
-
-                return existingUserResponse;
-            })
-            .map(userResponseRepository::save);
+        Optional<UserResponse> result = userResponseService.partialUpdate(userResponse);
 
         return ResponseUtil.wrapOrNotFound(
             result,
@@ -280,12 +256,31 @@ public class UserResponseResource {
     /**
      * {@code GET  /user-responses} : get all the userResponses.
      *
+     * @param pageable the pagination information.
+     * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of userResponses in body.
      */
     @GetMapping("/user-responses")
-    public List<UserResponse> getAllUserResponses() {
-        log.debug("REST request to get all UserResponses");
-        return userResponseRepository.findAll();
+    public ResponseEntity<List<UserResponse>> getAllUserResponses(
+        UserResponseCriteria criteria,
+        @org.springdoc.api.annotations.ParameterObject Pageable pageable
+    ) {
+        log.debug("REST request to get UserResponses by criteria: {}", criteria);
+        Page<UserResponse> page = userResponseQueryService.findByCriteria(criteria, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    /**
+     * {@code GET  /user-responses/count} : count all the userResponses.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
+     */
+    @GetMapping("/user-responses/count")
+    public ResponseEntity<Long> countUserResponses(UserResponseCriteria criteria) {
+        log.debug("REST request to count UserResponses by criteria: {}", criteria);
+        return ResponseEntity.ok().body(userResponseQueryService.countByCriteria(criteria));
     }
 
     /**
@@ -297,7 +292,7 @@ public class UserResponseResource {
     @GetMapping("/user-responses/{id}")
     public ResponseEntity<UserResponse> getUserResponse(@PathVariable Long id) {
         log.debug("REST request to get UserResponse : {}", id);
-        Optional<UserResponse> userResponse = userResponseRepository.findById(id);
+        Optional<UserResponse> userResponse = userResponseService.findOne(id);
         return ResponseUtil.wrapOrNotFound(userResponse);
     }
 
@@ -310,7 +305,7 @@ public class UserResponseResource {
     @DeleteMapping("/user-responses/{id}")
     public ResponseEntity<Void> deleteUserResponse(@PathVariable Long id) {
         log.debug("REST request to delete UserResponse : {}", id);
-        userResponseRepository.deleteById(id);
+        userResponseService.delete(id);
         return ResponseEntity
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))

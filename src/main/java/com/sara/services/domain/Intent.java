@@ -32,8 +32,8 @@ public class Intent implements Serializable {
     private IntentType intenType;
 
     @NotNull
-    @Size(min = 1, max = 300)
-    @Column(name = "name", length = 300, nullable = false)
+    @Size(min = 1, max = 2000)
+    @Column(name = "name", length = 2000, nullable = false)
     private String name;
 
     @NotNull
@@ -55,7 +55,7 @@ public class Intent implements Serializable {
     @ManyToOne
     private Language languaje;
 
-    @ManyToMany
+    @ManyToMany(fetch=FetchType.EAGER)
     @JoinTable(
         name = "rel_intent__user_expresion",
         joinColumns = @JoinColumn(name = "intent_id"),
@@ -65,7 +65,7 @@ public class Intent implements Serializable {
     @JsonIgnoreProperties(value = { "intents" }, allowSetters = true)
     private Set<UserExpresion> userExpresions = new HashSet<>();
 
-    @ManyToMany
+    @ManyToMany(fetch=FetchType.EAGER)
     @JoinTable(
         name = "rel_intent__user_response",
         joinColumns = @JoinColumn(name = "intent_id"),

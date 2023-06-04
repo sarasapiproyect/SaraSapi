@@ -27,15 +27,15 @@ public class UserExpresion implements Serializable {
     private Long id;
 
     @NotNull
-    @Size(min = 1, max = 300)
-    @Column(name = "value", length = 300, nullable = false)
+    @Size(min = 1, max = 2000)
+    @Column(name = "value", length = 2000, nullable = false)
     private String value;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "priority")
     private Priority priority;
 
-    @ManyToMany(mappedBy = "userExpresions")
+    @ManyToMany(mappedBy = "userExpresions",fetch=FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "languaje", "userExpresions", "userResponses" }, allowSetters = true)
     private Set<Intent> intents = new HashSet<>();

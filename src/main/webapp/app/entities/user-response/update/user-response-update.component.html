@@ -239,6 +239,17 @@
               {{ 'saraBusinessInteligenteApp.ResponseType.' + responseType | translate }}
             </option>
           </select>
+          <div
+            *ngIf="editForm.get('responseType')!.invalid && (editForm.get('responseType')!.dirty || editForm.get('responseType')!.touched)"
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('responseType')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
         </div>
 
         <div class="row mb-3">
@@ -304,6 +315,19 @@
               {{ 'saraBusinessInteligenteApp.MultimediaType.' + multimediaType | translate }}
             </option>
           </select>
+          <div
+            *ngIf="
+              editForm.get('multimediaType')!.invalid && (editForm.get('multimediaType')!.dirty || editForm.get('multimediaType')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('multimediaType')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
         </div>
       </div>
 

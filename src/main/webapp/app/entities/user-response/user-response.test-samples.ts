@@ -7,24 +7,29 @@ import { IUserResponse, NewUserResponse } from './user-response.model';
 export const sampleWithRequiredData: IUserResponse = {
   id: 3833,
   valueResponse: 'indigo Versatile',
+  responseType: ResponseType['SERVICIO'],
+  multimediaType: MultimediaType['AUDIO'],
 };
 
 export const sampleWithPartialData: IUserResponse = {
   id: 12875,
   valueResponse: 'product Avon',
-  priority: Priority['LOW'],
+  multimedia: '../fake-data/blob/hipster.png',
+  multimediaContentType: 'unknown',
+  multimediaVoice: '../fake-data/blob/hipster.png',
+  multimediaVoiceContentType: 'unknown',
   saraAnimation: '../fake-data/blob/hipster.png',
   saraAnimationContentType: 'unknown',
-  isEndConversation: true,
   responseType: ResponseType['QUERY'],
-  multimediaUrl: 'Mouse Ergonomic intelligence',
-  multimediaType: MultimediaType['AUDIO'],
+  url: 'https://adolfo.net',
+  saraAnimationUrl: 'Buckinghamshire',
+  multimediaType: MultimediaType['VISUAL'],
 };
 
 export const sampleWithFullData: IUserResponse = {
-  id: 81619,
-  valueResponse: 'multi-tasking',
-  priority: Priority['HIGHT'],
+  id: 8217,
+  valueResponse: 'Gloves',
+  priority: Priority['MEDIA'],
   multimedia: '../fake-data/blob/hipster.png',
   multimediaContentType: 'unknown',
   multimediaVoice: '../fake-data/blob/hipster.png',
@@ -33,15 +38,17 @@ export const sampleWithFullData: IUserResponse = {
   saraAnimationContentType: 'unknown',
   isEndConversation: false,
   responseType: ResponseType['SERVICIO'],
-  url: 'http://kacey.biz',
-  multimediaUrl: 'Avon Shoes',
-  multimediaVoiceUrl: 'Functionality',
-  saraAnimationUrl: 'Open-architected',
-  multimediaType: MultimediaType['AUDIO'],
+  url: 'http://earlene.name',
+  multimediaUrl: 'panel Concrete Steel',
+  multimediaVoiceUrl: 'Dynamic demand-driven',
+  saraAnimationUrl: 'Borders',
+  multimediaType: MultimediaType['VISUAL'],
 };
 
 export const sampleWithNewData: NewUserResponse = {
-  valueResponse: 'transmitter Tunisian solution',
+  valueResponse: 'open-source cross-platform SCSI',
+  responseType: ResponseType['QUERY'],
+  multimediaType: MultimediaType['AUDIO'],
   id: null,
 };
 

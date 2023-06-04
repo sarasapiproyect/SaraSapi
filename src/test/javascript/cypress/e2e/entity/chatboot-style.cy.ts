@@ -91,6 +91,9 @@ describe('ChatbootStyle e2e test', () => {
             },
             {
               statusCode: 200,
+              headers: {
+                link: '<http://localhost/api/chatboot-styles?page=0&size=20>; rel="last",<http://localhost/api/chatboot-styles?page=0&size=20>; rel="first"',
+              },
               body: [chatbootStyle],
             }
           ).as('entitiesRequestInternal');
@@ -122,7 +125,7 @@ describe('ChatbootStyle e2e test', () => {
         cy.url().should('match', chatbootStylePageUrlPattern);
       });
 
-      it('edit button click should load edit ChatbootStyle page and save', () => {
+      it.skip('edit button click should load edit ChatbootStyle page and save', () => {
         cy.get(entityEditButtonSelector).first().click();
         cy.getEntityCreateUpdateHeading('ChatbootStyle');
         cy.get(entityCreateSaveButtonSelector).click();

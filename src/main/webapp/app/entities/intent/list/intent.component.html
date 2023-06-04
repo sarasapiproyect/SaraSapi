@@ -24,6 +24,8 @@
 
   <jhi-alert></jhi-alert>
 
+  <jhi-filter [filters]="filters"></jhi-filter>
+
   <div class="alert alert-warning" id="no-result" *ngIf="intents?.length === 0">
     <span jhiTranslate="saraBusinessInteligenteApp.intent.home.notFound">No Intents found</span>
   </div>
@@ -80,18 +82,6 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" jhiSortBy="userExpresion.value">
-            <div class="d-flex">
-              <span jhiTranslate="saraBusinessInteligenteApp.intent.userExpresion">User Expresion</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="userResponse.valueResponse">
-            <div class="d-flex">
-              <span jhiTranslate="saraBusinessInteligenteApp.intent.userResponse">User Response</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -110,18 +100,6 @@
             <div *ngIf="intent.languaje">
               <a [routerLink]="['/language', intent.languaje.id, 'view']">{{ intent.languaje.name }}</a>
             </div>
-          </td>
-          <td>
-            <span *ngFor="let userExpresion of intent.userExpresions; let last = last">
-              <a class="form-control-static" [routerLink]="['/user-expresion', userExpresion.id, 'view']">{{ userExpresion.value }}</a
-              >{{ last ? '' : ', ' }}
-            </span>
-          </td>
-          <td>
-            <span *ngFor="let userResponse of intent.userResponses; let last = last">
-              <a class="form-control-static" [routerLink]="['/user-response', userResponse.id, 'view']">{{ userResponse.valueResponse }}</a
-              >{{ last ? '' : ', ' }}
-            </span>
           </td>
           <td class="text-end">
             <div class="btn-group">
@@ -144,5 +122,23 @@
         </tr>
       </tbody>
     </table>
+  </div>
+
+  <div *ngIf="intents && intents.length > 0">
+    <div class="d-flex justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [page]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="navigateToPage($event)"
+      ></ngb-pagination>
+    </div>
   </div>
 </div>

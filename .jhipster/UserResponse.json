@@ -9,7 +9,7 @@
       "fieldName": "valueResponse",
       "fieldType": "String",
       "fieldValidateRules": ["required", "minlength", "maxlength"],
-      "fieldValidateRulesMaxlength": "300",
+      "fieldValidateRulesMaxlength": "2000",
       "fieldValidateRulesMinlength": "1"
     },
     {
@@ -39,6 +39,7 @@
     {
       "fieldName": "responseType",
       "fieldType": "ResponseType",
+      "fieldValidateRules": ["required"],
       "fieldValues": "QUERY,SERVICIO"
     },
     {
@@ -60,13 +61,14 @@
     {
       "fieldName": "multimediaType",
       "fieldType": "MultimediaType",
+      "fieldValidateRules": ["required"],
       "fieldValues": "AUDIO,VISUAL"
     }
   ],
   "fluentMethods": true,
-  "jpaMetamodelFiltering": false,
+  "jpaMetamodelFiltering": true,
   "name": "UserResponse",
-  "pagination": "no",
+  "pagination": "pagination",
   "readOnly": false,
   "relationships": [
     {
@@ -77,5 +79,5 @@
       "relationshipType": "many-to-many"
     }
   ],
-  "service": "no"
+  "service": "serviceClass"
 }

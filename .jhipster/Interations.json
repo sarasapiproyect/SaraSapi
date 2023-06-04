@@ -9,7 +9,7 @@
       "fieldName": "valueRequest",
       "fieldType": "String",
       "fieldValidateRules": ["required", "minlength", "maxlength"],
-      "fieldValidateRulesMaxlength": "300",
+      "fieldValidateRulesMaxlength": "2000",
       "fieldValidateRulesMinlength": "1"
     },
     {
@@ -23,7 +23,7 @@
       "fieldName": "valueResponse",
       "fieldType": "String",
       "fieldValidateRules": ["required", "minlength", "maxlength"],
-      "fieldValidateRulesMaxlength": "300",
+      "fieldValidateRulesMaxlength": "2000",
       "fieldValidateRulesMinlength": "1"
     },
     {
@@ -33,10 +33,10 @@
     }
   ],
   "fluentMethods": true,
-  "jpaMetamodelFiltering": false,
+  "jpaMetamodelFiltering": true,
   "name": "Interations",
-  "pagination": "no",
+  "pagination": "pagination",
   "readOnly": false,
   "relationships": [],
-  "service": "no"
+  "service": "serviceClass"
 }

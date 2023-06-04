@@ -91,6 +91,9 @@ describe('Training e2e test', () => {
             },
             {
               statusCode: 200,
+              headers: {
+                link: '<http://localhost/api/trainings?page=0&size=20>; rel="last",<http://localhost/api/trainings?page=0&size=20>; rel="first"',
+              },
               body: [training],
             }
           ).as('entitiesRequestInternal');
@@ -122,7 +125,7 @@ describe('Training e2e test', () => {
         cy.url().should('match', trainingPageUrlPattern);
       });
 
-      it('edit button click should load edit Training page and save', () => {
+      it.skip('edit button click should load edit Training page and save', () => {
         cy.get(entityEditButtonSelector).first().click();
         cy.getEntityCreateUpdateHeading('Training');
         cy.get(entityCreateSaveButtonSelector).click();

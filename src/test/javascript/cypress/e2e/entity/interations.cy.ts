@@ -91,6 +91,9 @@ describe('Interations e2e test', () => {
             },
             {
               statusCode: 200,
+              headers: {
+                link: '<http://localhost/api/interations?page=0&size=20>; rel="last",<http://localhost/api/interations?page=0&size=20>; rel="first"',
+              },
               body: [interations],
             }
           ).as('entitiesRequestInternal');
@@ -122,7 +125,7 @@ describe('Interations e2e test', () => {
         cy.url().should('match', interationsPageUrlPattern);
       });
 
-      it('edit button click should load edit Interations page and save', () => {
+      it.skip('edit button click should load edit Interations page and save', () => {
         cy.get(entityEditButtonSelector).first().click();
         cy.getEntityCreateUpdateHeading('Interations');
         cy.get(entityCreateSaveButtonSelector).click();

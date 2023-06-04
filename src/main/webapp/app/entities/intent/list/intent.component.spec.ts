@@ -8,11 +8,13 @@ import { of } from 'rxjs';
 import { IntentService } from '../service/intent.service';
 
 import { IntentComponent } from './intent.component';
+import SpyInstance = jest.SpyInstance;
 
 describe('Intent Management Component', () => {
   let comp: IntentComponent;
   let fixture: ComponentFixture<IntentComponent>;
   let service: IntentService;
+  let routerNavigateSpy: SpyInstance<Promise<boolean>>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -30,6 +32,7 @@ describe('Intent Management Component', () => {
                 page: '1',
                 size: '1',
                 sort: 'id,desc',
+                'filter[someId.in]': 'dc4279ea-cfb9-11ec-9d64-0242ac120002',
               })
             ),
             snapshot: { queryParams: {} },
@@ -43,6 +46,7 @@ describe('Intent Management Component', () => {
     fixture = TestBed.createComponent(IntentComponent);
     comp = fixture.componentInstance;
     service = TestBed.inject(IntentService);
+    routerNavigateSpy = jest.spyOn(comp.router, 'navigate');
 
     const headers = new HttpHeaders();
     jest.spyOn(service, 'query').mockReturnValue(
@@ -72,5 +76,47 @@ describe('Intent Management Component', () => {
       expect(service.getIntentIdentifier).toHaveBeenCalledWith(entity);
       expect(id).toBe(entity.id);
     });
+  });
+
+  it('should load a page', () => {
+    // WHEN
+    comp.navigateToPage(1);
+
+    // THEN
+    expect(routerNavigateSpy).toHaveBeenCalled();
+  });
+
+  it('should calculate the sort attribute for an id', () => {
+    // WHEN
+    comp.ngOnInit();
+
+    // THEN
+    expect(service.query).toHaveBeenLastCalledWith(expect.objectContaining({ sort: ['id,desc'] }));
+  });
+
+  it('should calculate the sort attribute for a non-id attribute', () => {
+    // GIVEN
+    comp.predicate = 'name';
+
+    // WHEN
+    comp.navigateToWithComponentValues();
+
+    // THEN
+    expect(routerNavigateSpy).toHaveBeenLastCalledWith(
+      expect.anything(),
+      expect.objectContaining({
+        queryParams: expect.objectContaining({
+          sort: ['name,asc'],
+        }),
+      })
+    );
+  });
+
+  it('should calculate the filter attribute', () => {
+    // WHEN
+    comp.ngOnInit();
+
+    // THEN
+    expect(service.query).toHaveBeenLastCalledWith(expect.objectContaining({ 'someId.in': ['dc4279ea-cfb9-11ec-9d64-0242ac120002'] }));
   });
 });

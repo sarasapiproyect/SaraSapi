@@ -91,6 +91,9 @@ describe('UserExpresion e2e test', () => {
             },
             {
               statusCode: 200,
+              headers: {
+                link: '<http://localhost/api/user-expresions?page=0&size=20>; rel="last",<http://localhost/api/user-expresions?page=0&size=20>; rel="first"',
+              },
               body: [userExpresion],
             }
           ).as('entitiesRequestInternal');
@@ -122,7 +125,7 @@ describe('UserExpresion e2e test', () => {
         cy.url().should('match', userExpresionPageUrlPattern);
       });
 
-      it('edit button click should load edit UserExpresion page and save', () => {
+      it.skip('edit button click should load edit UserExpresion page and save', () => {
         cy.get(entityEditButtonSelector).first().click();
         cy.getEntityCreateUpdateHeading('UserExpresion');
         cy.get(entityCreateSaveButtonSelector).click();

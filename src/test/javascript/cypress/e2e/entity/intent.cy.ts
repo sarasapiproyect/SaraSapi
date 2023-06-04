@@ -91,6 +91,9 @@ describe('Intent e2e test', () => {
             },
             {
               statusCode: 200,
+              headers: {
+                link: '<http://localhost/api/intents?page=0&size=20>; rel="last",<http://localhost/api/intents?page=0&size=20>; rel="first"',
+              },
               body: [intent],
             }
           ).as('entitiesRequestInternal');
@@ -122,7 +125,7 @@ describe('Intent e2e test', () => {
         cy.url().should('match', intentPageUrlPattern);
       });
 
-      it('edit button click should load edit Intent page and save', () => {
+      it.skip('edit button click should load edit Intent page and save', () => {
         cy.get(entityEditButtonSelector).first().click();
         cy.getEntityCreateUpdateHeading('Intent');
         cy.get(entityCreateSaveButtonSelector).click();

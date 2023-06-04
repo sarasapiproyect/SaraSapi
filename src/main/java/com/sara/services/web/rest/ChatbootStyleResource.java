@@ -2,6 +2,9 @@ package com.sara.services.web.rest;
 
 import com.sara.services.domain.ChatbootStyle;
 import com.sara.services.repository.ChatbootStyleRepository;
+import com.sara.services.service.ChatbootStyleQueryService;
+import com.sara.services.service.ChatbootStyleService;
+import com.sara.services.service.criteria.ChatbootStyleCriteria;
 import com.sara.services.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -13,10 +16,14 @@ import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
+import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
 /**
@@ -24,7 +31,6 @@ import tech.jhipster.web.util.ResponseUtil;
  */
 @RestController
 @RequestMapping("/api")
-@Transactional
 public class ChatbootStyleResource {
 
     private final Logger log = LoggerFactory.getLogger(ChatbootStyleResource.class);
@@ -34,10 +40,20 @@ public class ChatbootStyleResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
+    private final ChatbootStyleService chatbootStyleService;
+
     private final ChatbootStyleRepository chatbootStyleRepository;
 
-    public ChatbootStyleResource(ChatbootStyleRepository chatbootStyleRepository) {
+    private final ChatbootStyleQueryService chatbootStyleQueryService;
+
+    public ChatbootStyleResource(
+        ChatbootStyleService chatbootStyleService,
+        ChatbootStyleRepository chatbootStyleRepository,
+        ChatbootStyleQueryService chatbootStyleQueryService
+    ) {
+        this.chatbootStyleService = chatbootStyleService;
         this.chatbootStyleRepository = chatbootStyleRepository;
+        this.chatbootStyleQueryService = chatbootStyleQueryService;
     }
 
     /**
@@ -53,7 +69,7 @@ public class ChatbootStyleResource {
         if (chatbootStyle.getId() != null) {
             throw new BadRequestAlertException("A new chatbootStyle cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        ChatbootStyle result = chatbootStyleRepository.save(chatbootStyle);
+        ChatbootStyle result = chatbootStyleService.save(chatbootStyle);
         return ResponseEntity
             .created(new URI("/api/chatboot-styles/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
@@ -87,7 +103,7 @@ public class ChatbootStyleResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        ChatbootStyle result = chatbootStyleRepository.save(chatbootStyle);
+        ChatbootStyle result = chatbootStyleService.update(chatbootStyle);
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, chatbootStyle.getId().toString()))
@@ -122,25 +138,7 @@ public class ChatbootStyleResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<ChatbootStyle> result = chatbootStyleRepository
-            .findById(chatbootStyle.getId())
-            .map(existingChatbootStyle -> {
-                if (chatbootStyle.getNameProperties() != null) {
-                    existingChatbootStyle.setNameProperties(chatbootStyle.getNameProperties());
-                }
-                if (chatbootStyle.getValue() != null) {
-                    existingChatbootStyle.setValue(chatbootStyle.getValue());
-                }
-                if (chatbootStyle.getMultimedia() != null) {
-                    existingChatbootStyle.setMultimedia(chatbootStyle.getMultimedia());
-                }
-                if (chatbootStyle.getMultimediaContentType() != null) {
-                    existingChatbootStyle.setMultimediaContentType(chatbootStyle.getMultimediaContentType());
-                }
-
-                return existingChatbootStyle;
-            })
-            .map(chatbootStyleRepository::save);
+        Optional<ChatbootStyle> result = chatbootStyleService.partialUpdate(chatbootStyle);
 
         return ResponseUtil.wrapOrNotFound(
             result,
@@ -151,12 +149,31 @@ public class ChatbootStyleResource {
     /**
      * {@code GET  /chatboot-styles} : get all the chatbootStyles.
      *
+     * @param pageable the pagination information.
+     * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of chatbootStyles in body.
      */
     @GetMapping("/chatboot-styles")
-    public List<ChatbootStyle> getAllChatbootStyles() {
-        log.debug("REST request to get all ChatbootStyles");
-        return chatbootStyleRepository.findAll();
+    public ResponseEntity<List<ChatbootStyle>> getAllChatbootStyles(
+        ChatbootStyleCriteria criteria,
+        @org.springdoc.api.annotations.ParameterObject Pageable pageable
+    ) {
+        log.debug("REST request to get ChatbootStyles by criteria: {}", criteria);
+        Page<ChatbootStyle> page = chatbootStyleQueryService.findByCriteria(criteria, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    /**
+     * {@code GET  /chatboot-styles/count} : count all the chatbootStyles.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
+     */
+    @GetMapping("/chatboot-styles/count")
+    public ResponseEntity<Long> countChatbootStyles(ChatbootStyleCriteria criteria) {
+        log.debug("REST request to count ChatbootStyles by criteria: {}", criteria);
+        return ResponseEntity.ok().body(chatbootStyleQueryService.countByCriteria(criteria));
     }
 
     /**
@@ -168,7 +185,7 @@ public class ChatbootStyleResource {
     @GetMapping("/chatboot-styles/{id}")
     public ResponseEntity<ChatbootStyle> getChatbootStyle(@PathVariable Long id) {
         log.debug("REST request to get ChatbootStyle : {}", id);
-        Optional<ChatbootStyle> chatbootStyle = chatbootStyleRepository.findById(id);
+        Optional<ChatbootStyle> chatbootStyle = chatbootStyleService.findOne(id);
         return ResponseUtil.wrapOrNotFound(chatbootStyle);
     }
 
@@ -181,7 +198,7 @@ public class ChatbootStyleResource {
     @DeleteMapping("/chatboot-styles/{id}")
     public ResponseEntity<Void> deleteChatbootStyle(@PathVariable Long id) {
         log.debug("REST request to delete ChatbootStyle : {}", id);
-        chatbootStyleRepository.deleteById(id);
+        chatbootStyleService.delete(id);
         return ResponseEntity
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))

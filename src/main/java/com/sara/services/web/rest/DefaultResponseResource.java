@@ -4,8 +4,10 @@ import com.sara.services.config.ApplicationProperties;
 import com.sara.services.config.Constants;
 import com.sara.services.domain.DefaultResponse;
 import com.sara.services.repository.DefaultResponseRepository;
+import com.sara.services.service.DefaultResponseQueryService;
+import com.sara.services.service.DefaultResponseService;
+import com.sara.services.service.criteria.DefaultResponseCriteria;
 import com.sara.services.web.rest.errors.BadRequestAlertException;
-
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -17,16 +19,19 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.logging.Level;
-
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
+import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
 /**
@@ -34,7 +39,6 @@ import tech.jhipster.web.util.ResponseUtil;
  */
 @RestController
 @RequestMapping("/api")
-@Transactional
 public class DefaultResponseResource {
 
     private final Logger log = LoggerFactory.getLogger(DefaultResponseResource.class);
@@ -44,13 +48,21 @@ public class DefaultResponseResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
-    private final DefaultResponseRepository defaultResponseRepository;
-    
-    private final ApplicationProperties applicationProperties;
+    private final DefaultResponseService defaultResponseService;
 
-    public DefaultResponseResource(DefaultResponseRepository defaultResponseRepository,
-    		ApplicationProperties applicationProperties) {
+    private final DefaultResponseRepository defaultResponseRepository;
+
+    private final DefaultResponseQueryService defaultResponseQueryService;
+
+    private final ApplicationProperties applicationProperties;
+    
+    public DefaultResponseResource(
+        DefaultResponseService defaultResponseService, DefaultResponseRepository defaultResponseRepository,
+        DefaultResponseQueryService defaultResponseQueryService,ApplicationProperties applicationProperties
+    ) {
+        this.defaultResponseService = defaultResponseService;
         this.defaultResponseRepository = defaultResponseRepository;
+        this.defaultResponseQueryService = defaultResponseQueryService;
         this.applicationProperties = applicationProperties;
     }
 
@@ -117,7 +129,7 @@ public class DefaultResponseResource {
             String URL3 = applicationProperties.getCompliance().getAddress_image_profile() + Constants.SPRING_PATH + nameFile3;
             defaultResponse.setMultimediaVoiceUrl(URL3);
         }
-        DefaultResponse result = defaultResponseRepository.save(defaultResponse);
+        DefaultResponse result = defaultResponseService.save(defaultResponse);
         return ResponseEntity
             .created(new URI("/api/default-responses/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
@@ -199,7 +211,7 @@ public class DefaultResponseResource {
             String URL3 = applicationProperties.getCompliance().getAddress_image_profile() + Constants.SPRING_PATH + nameFile3;
             defaultResponse.setMultimediaVoiceUrl(URL3);
         }
-        DefaultResponse result = defaultResponseRepository.save(defaultResponse);
+        DefaultResponse result = defaultResponseService.update(defaultResponse);
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, defaultResponse.getId().toString()))
@@ -234,40 +246,7 @@ public class DefaultResponseResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<DefaultResponse> result = defaultResponseRepository
-            .findById(defaultResponse.getId())
-            .map(existingDefaultResponse -> {
-                if (defaultResponse.getDefaultValueResponse() != null) {
-                    existingDefaultResponse.setDefaultValueResponse(defaultResponse.getDefaultValueResponse());
-                }
-                if (defaultResponse.getPriority() != null) {
-                    existingDefaultResponse.setPriority(defaultResponse.getPriority());
-                }
-                if (defaultResponse.getMultimedia() != null) {
-                    existingDefaultResponse.setMultimedia(defaultResponse.getMultimedia());
-                }
-                if (defaultResponse.getMultimediaContentType() != null) {
-                    existingDefaultResponse.setMultimediaContentType(defaultResponse.getMultimediaContentType());
-                }
-                if (defaultResponse.getMultimediaVoice() != null) {
-                    existingDefaultResponse.setMultimediaVoice(defaultResponse.getMultimediaVoice());
-                }
-                if (defaultResponse.getMultimediaVoiceContentType() != null) {
-                    existingDefaultResponse.setMultimediaVoiceContentType(defaultResponse.getMultimediaVoiceContentType());
-                }
-                if (defaultResponse.getSaraAnimation() != null) {
-                    existingDefaultResponse.setSaraAnimation(defaultResponse.getSaraAnimation());
-                }
-                if (defaultResponse.getSaraAnimationContentType() != null) {
-                    existingDefaultResponse.setSaraAnimationContentType(defaultResponse.getSaraAnimationContentType());
-                }
-                if (defaultResponse.getIsEndConversation() != null) {
-                    existingDefaultResponse.setIsEndConversation(defaultResponse.getIsEndConversation());
-                }
-
-                return existingDefaultResponse;
-            })
-            .map(defaultResponseRepository::save);
+        Optional<DefaultResponse> result = defaultResponseService.partialUpdate(defaultResponse);
 
         return ResponseUtil.wrapOrNotFound(
             result,
@@ -278,12 +257,31 @@ public class DefaultResponseResource {
     /**
      * {@code GET  /default-responses} : get all the defaultResponses.
      *
+     * @param pageable the pagination information.
+     * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of defaultResponses in body.
      */
     @GetMapping("/default-responses")
-    public List<DefaultResponse> getAllDefaultResponses() {
-        log.debug("REST request to get all DefaultResponses");
-        return defaultResponseRepository.findAll();
+    public ResponseEntity<List<DefaultResponse>> getAllDefaultResponses(
+        DefaultResponseCriteria criteria,
+        @org.springdoc.api.annotations.ParameterObject Pageable pageable
+    ) {
+        log.debug("REST request to get DefaultResponses by criteria: {}", criteria);
+        Page<DefaultResponse> page = defaultResponseQueryService.findByCriteria(criteria, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    /**
+     * {@code GET  /default-responses/count} : count all the defaultResponses.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
+     */
+    @GetMapping("/default-responses/count")
+    public ResponseEntity<Long> countDefaultResponses(DefaultResponseCriteria criteria) {
+        log.debug("REST request to count DefaultResponses by criteria: {}", criteria);
+        return ResponseEntity.ok().body(defaultResponseQueryService.countByCriteria(criteria));
     }
 
     /**
@@ -295,7 +293,7 @@ public class DefaultResponseResource {
     @GetMapping("/default-responses/{id}")
     public ResponseEntity<DefaultResponse> getDefaultResponse(@PathVariable Long id) {
         log.debug("REST request to get DefaultResponse : {}", id);
-        Optional<DefaultResponse> defaultResponse = defaultResponseRepository.findById(id);
+        Optional<DefaultResponse> defaultResponse = defaultResponseService.findOne(id);
         return ResponseUtil.wrapOrNotFound(defaultResponse);
     }
 
@@ -308,7 +306,7 @@ public class DefaultResponseResource {
     @DeleteMapping("/default-responses/{id}")
     public ResponseEntity<Void> deleteDefaultResponse(@PathVariable Long id) {
         log.debug("REST request to delete DefaultResponse : {}", id);
-        defaultResponseRepository.deleteById(id);
+        defaultResponseService.delete(id);
         return ResponseEntity
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))

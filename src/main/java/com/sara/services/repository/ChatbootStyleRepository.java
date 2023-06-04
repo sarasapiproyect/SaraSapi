@@ -9,4 +9,4 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface ChatbootStyleRepository extends JpaRepository<ChatbootStyle, Long> {}
+public interface ChatbootStyleRepository extends JpaRepository<ChatbootStyle, Long>, JpaSpecificationExecutor<ChatbootStyle> {}

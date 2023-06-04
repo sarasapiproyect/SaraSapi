@@ -23,18 +23,18 @@ public class Interations implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    
     @Size(max = 2000)
     @Column(name = "value_request", length = 2000)
     private String valueRequest;
 
     @NotNull
-    @Size(min = 0, max = 300)
+    @Size(min = 1, max = 300)
     @Column(name = "source_info", length = 300, nullable = false)
     private String sourceInfo;
 
-    @Size(max = 2000)
-    @Column(name = "value_response", length = 2000)
+    @NotNull
+    @Size(min = 1, max = 2000)
+    @Column(name = "value_response", length = 2000, nullable = false)
     private String valueResponse;
 
     @Enumerated(EnumType.STRING)

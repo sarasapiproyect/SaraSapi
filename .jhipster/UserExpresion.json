@@ -9,7 +9,7 @@
       "fieldName": "value",
       "fieldType": "String",
       "fieldValidateRules": ["required", "minlength", "maxlength"],
-      "fieldValidateRulesMaxlength": "300",
+      "fieldValidateRulesMaxlength": "2000",
       "fieldValidateRulesMinlength": "1"
     },
     {
@@ -19,9 +19,9 @@
     }
   ],
   "fluentMethods": true,
-  "jpaMetamodelFiltering": false,
+  "jpaMetamodelFiltering": true,
   "name": "UserExpresion",
-  "pagination": "no",
+  "pagination": "pagination",
   "readOnly": false,
   "relationships": [
     {
@@ -32,5 +32,5 @@
       "relationshipType": "many-to-many"
     }
   ],
-  "service": "no"
+  "service": "serviceClass"
 }

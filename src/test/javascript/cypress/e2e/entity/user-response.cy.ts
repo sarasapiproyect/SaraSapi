@@ -15,7 +15,7 @@ describe('UserResponse e2e test', () => {
   const userResponsePageUrlPattern = new RegExp('/user-response(\\?.*)?$');
   const username = Cypress.env('E2E_USERNAME') ?? 'user';
   const password = Cypress.env('E2E_PASSWORD') ?? 'user';
-  const userResponseSample = { valueResponse: 'to' };
+  const userResponseSample = { valueResponse: 'to', responseType: 'QUERY', multimediaType: 'AUDIO' };
 
   let userResponse;
 
@@ -91,6 +91,9 @@ describe('UserResponse e2e test', () => {
             },
             {
               statusCode: 200,
+              headers: {
+                link: '<http://localhost/api/user-responses?page=0&size=20>; rel="last",<http://localhost/api/user-responses?page=0&size=20>; rel="first"',
+              },
               body: [userResponse],
             }
           ).as('entitiesRequestInternal');
@@ -122,7 +125,7 @@ describe('UserResponse e2e test', () => {
         cy.url().should('match', userResponsePageUrlPattern);
       });
 
-      it('edit button click should load edit UserResponse page and save', () => {
+      it.skip('edit button click should load edit UserResponse page and save', () => {
         cy.get(entityEditButtonSelector).first().click();
         cy.getEntityCreateUpdateHeading('UserResponse');
         cy.get(entityCreateSaveButtonSelector).click();

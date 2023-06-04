@@ -9,7 +9,7 @@
       "fieldName": "defaultValueResponse",
       "fieldType": "String",
       "fieldValidateRules": ["required", "minlength", "maxlength"],
-      "fieldValidateRulesMaxlength": "500",
+      "fieldValidateRulesMaxlength": "2000",
       "fieldValidateRulesMinlength": "1"
     },
     {
@@ -55,10 +55,10 @@
     }
   ],
   "fluentMethods": true,
-  "jpaMetamodelFiltering": false,
+  "jpaMetamodelFiltering": true,
   "name": "DefaultResponse",
-  "pagination": "no",
+  "pagination": "pagination",
   "readOnly": false,
   "relationships": [],
-  "service": "no"
+  "service": "serviceClass"
 }

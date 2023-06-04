@@ -30,7 +30,8 @@ public class UserResponse implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @Size(max = 2000)
+    @NotNull
+    @Size(min = 1, max = 2000)
     @Column(name = "value_response", length = 2000, nullable = false)
     private String valueResponse;
 
@@ -62,8 +63,9 @@ public class UserResponse implements Serializable {
     @Column(name = "is_end_conversation")
     private Boolean isEndConversation;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "response_type")
+    @Column(name = "response_type", nullable = false)
     private ResponseType responseType;
 
     @Column(name = "url")
@@ -78,11 +80,12 @@ public class UserResponse implements Serializable {
     @Column(name = "sara_animation_url")
     private String saraAnimationUrl;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "multimedia_type")
+    @Column(name = "multimedia_type", nullable = false)
     private MultimediaType multimediaType;
 
-    @ManyToMany(mappedBy = "userResponses")
+    @ManyToMany(mappedBy = "userResponses",fetch=FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "languaje", "userExpresions", "userResponses" }, allowSetters = true)
     private Set<Intent> intents = new HashSet<>();

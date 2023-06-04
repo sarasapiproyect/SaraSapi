@@ -54,7 +54,7 @@ export class UserResponseFormService {
         }
       ),
       valueResponse: new FormControl(userResponseRawValue.valueResponse, {
-        validators: [Validators.required, Validators.minLength(1), Validators.maxLength(300)],
+        validators: [Validators.required, Validators.minLength(1), Validators.maxLength(2000)],
       }),
       priority: new FormControl(userResponseRawValue.priority),
       multimedia: new FormControl(userResponseRawValue.multimedia),
@@ -64,12 +64,16 @@ export class UserResponseFormService {
       saraAnimation: new FormControl(userResponseRawValue.saraAnimation),
       saraAnimationContentType: new FormControl(userResponseRawValue.saraAnimationContentType),
       isEndConversation: new FormControl(userResponseRawValue.isEndConversation),
-      responseType: new FormControl(userResponseRawValue.responseType),
+      responseType: new FormControl(userResponseRawValue.responseType, {
+        validators: [Validators.required],
+      }),
       url: new FormControl(userResponseRawValue.url),
       multimediaUrl: new FormControl(userResponseRawValue.multimediaUrl),
       multimediaVoiceUrl: new FormControl(userResponseRawValue.multimediaVoiceUrl),
       saraAnimationUrl: new FormControl(userResponseRawValue.saraAnimationUrl),
-      multimediaType: new FormControl(userResponseRawValue.multimediaType),
+      multimediaType: new FormControl(userResponseRawValue.multimediaType, {
+        validators: [Validators.required],
+      }),
       intents: new FormControl(userResponseRawValue.intents ?? []),
     });
   }
