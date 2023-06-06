@@ -28,6 +28,10 @@ export class UserResponseComponent implements OnInit {
   itemsPerPage = ITEMS_PER_PAGE;
   totalItems = 0;
   page = 1;
+  searchvalue = '';
+  searchResponseType = '';
+  searchPriority = '';
+  searchMultimediaType = '';
 
   constructor(
     protected userResponseService: UserResponseService,
@@ -126,11 +130,24 @@ export class UserResponseComponent implements OnInit {
     const queryObject: any = {
       page: pageToLoad - 1,
       size: this.itemsPerPage,
-      sort: this.getSortQueryParam(predicate, ascending),
+      sort: this.getSortQueryParam(predicate, ascending)
     };
+    
+    if (this.searchvalue) {
+       queryObject['valueResponse.contains'] = this.searchvalue;
+    }
+    if (this.searchResponseType) {
+       queryObject['responseType.equals'] = this.searchResponseType;
+    }
+    if (this.searchMultimediaType) {
+        queryObject['multimediaType.equals'] = this.searchMultimediaType;
+    }
+    if (this.searchPriority) {
+        queryObject['priority.equals'] = this.searchPriority;
+    }
     filterOptions?.forEach(filterOption => {
       queryObject[filterOption.name] = filterOption.values;
-    });
+    });    
     return this.userResponseService.query(queryObject).pipe(tap(() => (this.isLoading = false)));
   }
 
@@ -158,5 +175,19 @@ export class UserResponseComponent implements OnInit {
     } else {
       return [predicate + ',' + ascendingQueryParam];
     }
+  }
+  
+  search(): void {
+    this.load();
+  }
+
+
+  reset(): void {
+    this.searchvalue = '';
+    this.searchResponseType = '';
+    this.searchMultimediaType = '';
+    this.searchPriority = '';
+   
+    this.load();
   }
 }

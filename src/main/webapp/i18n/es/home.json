@@ -7,13 +7,13 @@
     },
     "question": "Si tiene preguntas sobre el Modulo de de entrenamiento:",
     "link": {
-      "homepage": "Página de inicio de JHipster",
-      "stackoverflow": "JHipster en Stack Overflow",
-      "bugtracker": "JHipster seguimiento de errores",
-      "chat": "Sala de chat pública de JHipster",
-      "follow": "contacto @jhipster en Twitter"
+      "homepage": "Página de inicio de Sapi",
+      "stackoverflow": "Sara en Stack Overflow",
+      "bugtracker": "Sara seguimiento de errores",
+      "chat": "Sala de chat pública de Sara",
+      "follow": "contacto @sapi en Twitter"
     },
-    "like": "Si te gusta JHipster, danos una estrella en",
+    "like": "Si te gusta Sara, danos una estrella en",
     "github": "GitHub"
   }
 }

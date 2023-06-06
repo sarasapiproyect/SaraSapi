@@ -6,7 +6,11 @@
         "refreshListLabel": "Refrescar lista",
         "createLabel": "Crear nuevo User Response",
         "createOrEditLabel": "Crear o editar User Response",
-        "notFound": "Ningún User Responses encontrado"
+        "notFound": "Ningún User Responses encontrado",
+        "searchvalue": "Value",
+        "searchPriority": "Prioridad",
+        "searchResponseType": "Tipo de Respuesta",
+        "searchMultimediaType": "Tipo de Multimedia"
       },
       "created": "Un nuevo User Response ha sido creado con el identificador {{ param }}",
       "updated": "Un User Response ha sido actualizado con el identificador {{ param }}",
