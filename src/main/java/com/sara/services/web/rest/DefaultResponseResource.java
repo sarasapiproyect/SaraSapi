@@ -129,6 +129,9 @@ public class DefaultResponseResource {
             String URL3 = applicationProperties.getCompliance().getAddress_image_profile() + Constants.SPRING_PATH + nameFile3;
             defaultResponse.setMultimediaVoiceUrl(URL3);
         }
+        defaultResponse.setMultimedia(null);
+        defaultResponse.setMultimediaVoice(null);
+        defaultResponse.setSaraAnimation(null);
         DefaultResponse result = defaultResponseService.save(defaultResponse);
         return ResponseEntity
             .created(new URI("/api/default-responses/" + result.getId()))
@@ -211,6 +214,9 @@ public class DefaultResponseResource {
             String URL3 = applicationProperties.getCompliance().getAddress_image_profile() + Constants.SPRING_PATH + nameFile3;
             defaultResponse.setMultimediaVoiceUrl(URL3);
         }
+        defaultResponse.setMultimedia(null);
+        defaultResponse.setMultimediaVoice(null);
+        defaultResponse.setSaraAnimation(null);
         DefaultResponse result = defaultResponseService.update(defaultResponse);
         return ResponseEntity
             .ok()

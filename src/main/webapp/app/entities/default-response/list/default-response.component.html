@@ -52,24 +52,6 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" jhiSortBy="multimedia">
-            <div class="d-flex">
-              <span jhiTranslate="saraBusinessInteligenteApp.defaultResponse.multimedia">Multimedia</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="multimediaVoice">
-            <div class="d-flex">
-              <span jhiTranslate="saraBusinessInteligenteApp.defaultResponse.multimediaVoice">Multimedia Voice</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="saraAnimation">
-            <div class="d-flex">
-              <span jhiTranslate="saraBusinessInteligenteApp.defaultResponse.saraAnimation">Sara Animation</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
           <th scope="col" jhiSortBy="isEndConversation">
             <div class="d-flex">
               <span jhiTranslate="saraBusinessInteligenteApp.defaultResponse.isEndConversation">Is End Conversation</span>
@@ -110,43 +92,9 @@
           </td>
           <td>{{ defaultResponse.defaultValueResponse }}</td>
           <td jhiTranslate="{{ 'saraBusinessInteligenteApp.Priority.' + defaultResponse.priority }}">{{ defaultResponse.priority }}</td>
-          <td>
-            <a
-              *ngIf="defaultResponse.multimedia"
-              (click)="openFile(defaultResponse.multimedia, defaultResponse.multimediaContentType)"
-              jhiTranslate="entity.action.open"
-              >Open</a
-            >
-            <span *ngIf="defaultResponse.multimedia"
-              >{{ defaultResponse.multimediaContentType }}, {{ byteSize(defaultResponse.multimedia) }}</span
-            >
-          </td>
-          <td>
-            <a
-              *ngIf="defaultResponse.multimediaVoice"
-              (click)="openFile(defaultResponse.multimediaVoice, defaultResponse.multimediaVoiceContentType)"
-              jhiTranslate="entity.action.open"
-              >Open</a
-            >
-            <span *ngIf="defaultResponse.multimediaVoice"
-              >{{ defaultResponse.multimediaVoiceContentType }}, {{ byteSize(defaultResponse.multimediaVoice) }}</span
-            >
-          </td>
-          <td>
-            <a
-              *ngIf="defaultResponse.saraAnimation"
-              (click)="openFile(defaultResponse.saraAnimation, defaultResponse.saraAnimationContentType)"
-            >
-              <img
-                [src]="'data:' + defaultResponse.saraAnimationContentType + ';base64,' + defaultResponse.saraAnimation"
-                style="max-height: 30px"
-                alt="defaultResponse image"
-              />
-            </a>
-            <span *ngIf="defaultResponse.saraAnimation"
-              >{{ defaultResponse.saraAnimationContentType }}, {{ byteSize(defaultResponse.saraAnimation) }}</span
-            >
-          </td>
+         
+          
+       
           <td>{{ defaultResponse.isEndConversation }}</td>
           <td>{{ defaultResponse.multimediaUrl }}</td>
           <td>{{ defaultResponse.multimediaVoiceUrl }}</td>

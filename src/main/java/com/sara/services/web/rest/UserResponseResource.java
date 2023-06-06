@@ -128,6 +128,9 @@ public class UserResponseResource {
             String URL3 = applicationProperties.getCompliance().getAddress_image_profile() + Constants.SPRING_PATH + nameFile3;
             userResponse.setMultimediaVoiceUrl(URL3);
         }
+        userResponse.setMultimedia(null);
+        userResponse.setMultimediaVoice(null);
+        userResponse.setSaraAnimation(null);
         UserResponse result = userResponseService.save(userResponse);
         return ResponseEntity
             .created(new URI("/api/user-responses/" + result.getId()))
@@ -210,6 +213,9 @@ public class UserResponseResource {
             String URL3 = applicationProperties.getCompliance().getAddress_image_profile() + Constants.SPRING_PATH + nameFile3;
             userResponse.setMultimediaVoiceUrl(URL3);
         }
+        userResponse.setMultimedia(null);
+        userResponse.setMultimediaVoice(null);
+        userResponse.setSaraAnimation(null);
         UserResponse result = userResponseService.update(userResponse);
         return ResponseEntity
             .ok()
