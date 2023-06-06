@@ -119,7 +119,7 @@ export class IntentUpdateComponent implements OnInit {
       .subscribe((languages: ILanguage[]) => (this.languagesSharedCollection = languages));
 
     this.userExpresionService
-      .query()
+      .queryCombo()
       .pipe(map((res: HttpResponse<IUserExpresion[]>) => res.body ?? []))
       .pipe(
         map((userExpresions: IUserExpresion[]) =>
@@ -132,7 +132,7 @@ export class IntentUpdateComponent implements OnInit {
       .subscribe((userExpresions: IUserExpresion[]) => (this.userExpresionsSharedCollection = userExpresions));
 
     this.userResponseService
-      .query()
+      .queryCombo()
       .pipe(map((res: HttpResponse<IUserResponse[]>) => res.body ?? []))
       .pipe(
         map((userResponses: IUserResponse[]) =>

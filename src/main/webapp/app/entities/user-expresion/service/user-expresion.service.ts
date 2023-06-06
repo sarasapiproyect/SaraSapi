@@ -6,6 +6,8 @@ import { isPresent } from 'app/core/util/operators';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
 import { IUserExpresion, NewUserExpresion } from '../user-expresion.model';
+import { HttpParams } from '@angular/common/http';
+
 
 export type PartialUpdateUserExpresion = Partial<IUserExpresion> & Pick<IUserExpresion, 'id'>;
 
@@ -41,6 +43,17 @@ export class UserExpresionService {
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http.get<IUserExpresion[]>(this.resourceUrl, { params: options, observe: 'response' });
+  }
+
+  queryCombo(req?: any): Observable<EntityArrayResponseType> {
+    const page = 0; // Número de página deseada
+	const size = 150; // Tamaño de página deseado
+
+// Construir los parámetros de paginación
+	let params = new HttpParams();
+	params = params.set('page', page.toString());
+	params = params.set('size', size.toString());
+    return this.http.get<IUserExpresion[]>(this.resourceUrl, { params: params, observe: 'response' });
   }
 
   delete(id: number): Observable<HttpResponse<{}>> {

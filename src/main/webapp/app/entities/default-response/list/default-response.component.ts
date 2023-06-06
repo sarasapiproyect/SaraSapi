@@ -125,7 +125,7 @@ export class DefaultResponseComponent implements OnInit {
     const pageToLoad: number = page ?? 1;
     const queryObject: any = {
       page: pageToLoad - 1,
-      size: this.itemsPerPage,
+      size: 200,
       sort: this.getSortQueryParam(predicate, ascending),
     };
     filterOptions?.forEach(filterOption => {
