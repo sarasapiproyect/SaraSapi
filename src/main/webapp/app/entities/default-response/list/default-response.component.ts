@@ -28,6 +28,9 @@ export class DefaultResponseComponent implements OnInit {
   itemsPerPage = ITEMS_PER_PAGE;
   totalItems = 0;
   page = 1;
+  searchvalue = '';
+  searchPriority = '';
+  searchMultimediaType = '';
 
   constructor(
     protected defaultResponseService: DefaultResponseService,
@@ -128,6 +131,15 @@ export class DefaultResponseComponent implements OnInit {
       size: 200,
       sort: this.getSortQueryParam(predicate, ascending),
     };
+	if (this.searchvalue) {
+       queryObject['defaultValueResponse.contains'] = this.searchvalue;
+    }
+    if (this.searchMultimediaType) {
+        queryObject['multimediaType.equals'] = this.searchMultimediaType;
+    }
+    if (this.searchPriority) {
+        queryObject['priority.equals'] = this.searchPriority;
+    }
     filterOptions?.forEach(filterOption => {
       queryObject[filterOption.name] = filterOption.values;
     });
@@ -158,5 +170,18 @@ export class DefaultResponseComponent implements OnInit {
     } else {
       return [predicate + ',' + ascendingQueryParam];
     }
+  }
+
+ search(): void {
+    this.load();
+  }
+
+
+  reset(): void {
+    this.searchvalue = '';
+    this.searchMultimediaType = '';
+    this.searchPriority = '';
+   
+    this.load();
   }
 }

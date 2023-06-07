@@ -6,7 +6,10 @@
         "refreshListLabel": "Refrescar lista",
         "createLabel": "Crear nuevo Default Response",
         "createOrEditLabel": "Crear o editar Default Response",
-        "notFound": "Ningún Default Responses encontrado"
+        "notFound": "Ningún Default Responses encontrado",
+        "searchvalue": "Value",
+        "searchPriority": "Prioridad",
+        "searchMultimediaType": "Tipo de Multimedia"
       },
       "created": "Un nuevo Default Response ha sido creado con el identificador {{ param }}",
       "updated": "Un Default Response ha sido actualizado con el identificador {{ param }}",

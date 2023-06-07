@@ -6,7 +6,9 @@
         "refreshListLabel": "Refrescar lista",
         "createLabel": "Crear nuevo User Expresion",
         "createOrEditLabel": "Crear o editar User Expresion",
-        "notFound": "Ningún User Expresions encontrado"
+        "notFound": "Ningún User Expresions encontrado",
+        "searchvalue": "Value",
+        "searchPriority": "Prioridad"
       },
       "created": "Un nuevo User Expresion ha sido creado con el identificador {{ param }}",
       "updated": "Un User Expresion ha sido actualizado con el identificador {{ param }}",

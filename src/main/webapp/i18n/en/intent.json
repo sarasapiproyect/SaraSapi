@@ -6,7 +6,13 @@
         "refreshListLabel": "Refresh list",
         "createLabel": "Create a new Intent",
         "createOrEditLabel": "Create or edit a Intent",
-        "notFound": "No Intents found"
+        "notFound": "No Intents found",
+        "searchName": "Name",
+        "searchDescription": "Description",
+        "searchUrl": "Url",
+        "searchEnable": "Estatus",
+        "true": "true",
+        "false": "false"
       },
       "created": "A new Intent is created with identifier {{ param }}",
       "updated": "A Intent is updated with identifier {{ param }}",

@@ -27,7 +27,10 @@ export class IntentComponent implements OnInit {
   itemsPerPage = ITEMS_PER_PAGE;
   totalItems = 0;
   page = 1;
-
+  searchName = '';
+  searchDescription = '';
+  searchUrl = '';
+  searchEnable = '';
   constructor(
     protected intentService: IntentService,
     protected activatedRoute: ActivatedRoute,
@@ -119,6 +122,18 @@ export class IntentComponent implements OnInit {
       eagerload: true,
       sort: this.getSortQueryParam(predicate, ascending),
     };
+	if (this.searchName) {
+       queryObject['name.contains'] = this.searchName;
+    }
+    if (this.searchDescription) {
+       queryObject['description.equals'] = this.searchDescription;
+    }
+    if (this.searchUrl) {
+        queryObject['urlRequest.contains'] = this.searchUrl;
+    }
+    if (this.searchEnable) {
+        queryObject['enable.equals'] = this.searchEnable;
+    }
     filterOptions?.forEach(filterOption => {
       queryObject[filterOption.name] = filterOption.values;
     });
@@ -149,5 +164,18 @@ export class IntentComponent implements OnInit {
     } else {
       return [predicate + ',' + ascendingQueryParam];
     }
+  }
+
+search(): void {
+    this.load();
+  }
+
+ reset(): void {
+    this.searchName = '';
+    this.searchDescription = '';
+    this.searchUrl = '';
+    this.searchEnable = '';
+   
+    this.load();
   }
 }

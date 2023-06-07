@@ -1,7 +1,29 @@
 <div>
   <h2 id="page-heading" data-cy="UserExpresionHeading">
     <span jhiTranslate="saraBusinessInteligenteApp.userExpresion.home.title">User Expresions</span>
-
+ <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+            <div class="input-group">
+                <input  class="form-control bg-light border-1 small" type="text" placeholder="{{ 'saraBusinessInteligenteApp.userExpresion.home.searchvalue' | translate }}" aria-label="Buscar " aria-describedby="basic-addon2" [(ngModel)]=searchvalue name="searchvalue"/>
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="button" (click)="search()"><fa-icon [icon]="['fas', 'search']"></fa-icon></button>
+                </div>
+                 <div class="input-group-append">
+                    <button class="btn btn-danger" type="button" (click)="reset()"><fa-icon [icon]="['fas', 'ban']"></fa-icon></button>
+                </div>
+                <select class="form-control" name="searchPriority"  id="field_searchPriority" [(ngModel)]="searchPriority" >
+                        <option value="LOW">{{ 'saraBusinessInteligenteApp.Priority.LOW' | translate }}</option>
+                        <option value="MEDIA">{{ 'saraBusinessInteligenteApp.Priority.MEDIA' | translate }}</option>
+                        <option value="HIGHT">{{ 'saraBusinessInteligenteApp.Priority.HIGHT' | translate }}</option>
+                </select>              
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="button" (click)="search()"><fa-icon [icon]="['fas', 'search']"></fa-icon></button>
+                </div>
+                 <div class="input-group-append">
+                    <button class="btn btn-danger" type="button" (click)="reset()"><fa-icon [icon]="['fas', 'ban']"></fa-icon></button>
+                </div> 
+                
+            </div>
+        </form>
     <div class="d-flex justify-content-end">
       <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
         <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
