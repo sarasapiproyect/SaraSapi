@@ -1,19 +1,40 @@
 package com.sara.services.web.rest;
 
+import com.sapi.services.integration.methods.Sapi;
+import com.sapi.services.integration.response.ResponseGeneral;
+import com.sara.services.domain.DefaultResponse;
+import com.sara.services.domain.Intent;
+import com.sara.services.domain.Interations;
+import com.sara.services.domain.Training;
+import com.sara.services.domain.UserExpresion;
+import com.sara.services.domain.UserResponse;
+import com.sara.services.domain.enumeration.ResponseType;
+import com.sara.services.repository.DefaultResponseRepository;
+import com.sara.services.repository.IntentRepository;
+import com.sara.services.repository.InterationsRepository;
+import com.sara.services.repository.TrainingRepository;
+import com.sara.services.repository.UserExpresionRepository;
+import com.sara.services.service.InterationsQueryService;
+import com.sara.services.service.InterationsService;
+import com.sara.services.service.UserExpresionService;
+import com.sara.services.service.criteria.InterationsCriteria;
+import com.sara.services.web.rest.Util.GeneralUtils;
+import com.sara.services.web.rest.errors.BadRequestAlertException;
+import com.sara.services.web.rest.request.ReceiveMessageRequest;
+import com.sara.services.web.rest.response.ResponseMessage;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.core.Context;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,29 +52,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-import com.sapi.services.integration.methods.Sapi;
-import com.sapi.services.integration.response.ResponseGeneral;
-import com.sara.services.domain.DefaultResponse;
-import com.sara.services.domain.Intent;
-import com.sara.services.domain.Interations;
-import com.sara.services.domain.Training;
-import com.sara.services.domain.UserExpresion;
-import com.sara.services.domain.UserResponse;
-import com.sara.services.domain.enumeration.ResponseType;
-import com.sara.services.repository.DefaultResponseRepository;
-import com.sara.services.repository.InterationsRepository;
-import com.sara.services.repository.TrainingRepository;
-import com.sara.services.repository.UserExpresionRepository;
-import com.sara.services.service.InterationsQueryService;
-import com.sara.services.service.InterationsService;
-import com.sara.services.service.UserExpresionService;
-import com.sara.services.service.criteria.InterationsCriteria;
-import com.sara.services.web.rest.Util.GeneralUtils;
-import com.sara.services.web.rest.errors.BadRequestAlertException;
-import com.sara.services.web.rest.request.ReceiveMessageRequest;
-import com.sara.services.web.rest.response.ResponseMessage;
-
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
@@ -76,18 +74,24 @@ public class InterationsResource {
 
     private final InterationsRepository interationsRepository;
 
+    private final IntentRepository intentRepository;
+
     private final InterationsQueryService interationsQueryService;
-    
+
     private final UserExpresionService userExpresionService;
-    
+
     private final DefaultResponseRepository defaultResponseRepository;
-    
+
     private final TrainingRepository trainingRepository;
 
     public InterationsResource(
-        InterationsService interationsService,InterationsRepository interationsRepository,
-        InterationsQueryService interationsQueryService, UserExpresionService userExpresionService,
-		DefaultResponseRepository defaultResponseRepository, TrainingRepository trainingRepository
+        InterationsService interationsService,
+        InterationsRepository interationsRepository,
+        InterationsQueryService interationsQueryService,
+        IntentRepository intentRepository,
+        UserExpresionService userExpresionService,
+        DefaultResponseRepository defaultResponseRepository,
+        TrainingRepository trainingRepository
     ) {
         this.interationsService = interationsService;
         this.interationsRepository = interationsRepository;
@@ -95,6 +99,7 @@ public class InterationsResource {
         this.userExpresionService = userExpresionService;
         this.defaultResponseRepository = defaultResponseRepository;
         this.trainingRepository = trainingRepository;
+        this.intentRepository = intentRepository;
     }
 
     /**
@@ -245,41 +250,49 @@ public class InterationsResource {
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
     }
-    
+
     @PostMapping("/receiveMessage")
-    public ResponseMessage receiveMessage(@Valid @RequestBody ReceiveMessageRequest request, @Context HttpServletRequest ipRequest) throws URISyntaxException {
+    public ResponseMessage receiveMessage(@Valid @RequestBody ReceiveMessageRequest request, @Context HttpServletRequest ipRequest)
+        throws URISyntaxException {
         log.debug("REST request to receiveMessage : {}", request);
-        String ip =  GeneralUtils.getClientIpAddress(ipRequest); 
+        String ip = GeneralUtils.getClientIpAddress(ipRequest);
         Interations interations = new Interations();
         interations.setSourceChannel(GeneralUtils.getOriginAplicationValue(request.getSourceChannel()));
         interations.setSourceInfo(request.getSourceInfo());
         interations.setValueRequest(request.getValueRequest());
         String[] fields = request.getValueRequest().split("&");
-        List<UserExpresion> userExpresions= userExpresionService.findByValue(fields[0]);
+        List<UserExpresion> userExpresions = userExpresionService.findByValue(fields[0]);
+        log.info("Encontro userExpresion asociada=" + userExpresions.get(0).getValue());
         if (!userExpresions.isEmpty()) {
-            log.info("Encontro userExpresion asociada");
+            List<Intent> intents = new ArrayList<Intent>();
+
+            intents = intentRepository.getIntentByUserResponse(userExpresions.get(0).getId());
+
+            log.info("Por lo menos llega el ID  asociado=....." + intents.size());
+
+            log.info("Encontro userExpresion asociada=....." + userExpresions.get(0).getIntents());
             Set<Intent> setIntents = userExpresions.get(0).getIntents();
-            if (!setIntents.isEmpty()){
-                List<Intent> intents = GeneralUtils.convertToList(setIntents);
+            if (!intents.isEmpty()) {
+                log.info("Encontro intent asociada" + intents.get(0).getName());
                 Intent intent = intents.get(0);
                 List<UserResponse> userResponses = GeneralUtils.convertToList(intent.getUserResponses());
-                UserResponse userResponse =  UserResponse.getRandomElement(userResponses);
-                if (userResponse.getResponseType().equals(ResponseType.QUERY)){
+                UserResponse userResponse = UserResponse.getRandomElement(userResponses);
+                if (userResponse.getResponseType().equals(ResponseType.QUERY)) {
                     log.info("UserResponse de tipo Query");
                     interations.setValueResponse(userResponse.getValueResponse());
-                }else{           
+                } else {
                     try {
                         log.info("UserResponse de tipo Services");
-                        ResponseGeneral response = Sapi.getGeneric(6000,  fields[1], userResponse.getUrl());
+                        ResponseGeneral response = Sapi.getGeneric(6000, fields[1], userResponse.getUrl());
 
-                        if (response!=null && response.getResponseData()!=null && response.getResponseData().length>0){
-                            log.info("UserResponse respuesta"+ response.toString());
-                            log.info("UserResponse cantidad"+ response.getResponseData().length);
+                        if (response != null && response.getResponseData() != null && response.getResponseData().length > 0) {
+                            log.info("UserResponse respuesta" + response.toString());
+                            log.info("UserResponse cantidad" + response.getResponseData().length);
                             userResponse.setValueResponse(response.toString());
                             interations.setValueResponse(response.toString());
-                        }else{
+                        } else {
                             log.info("UserResponse vacio");
-                             userResponse.setValueResponse("Informacion no encontrada");
+                            userResponse.setValueResponse("Informacion no encontrada");
                             interations.setValueResponse("Informacion no encontrada");
                         }
                         log.info("UserResponse sin excepcion");
@@ -288,12 +301,12 @@ public class InterationsResource {
                         userResponse.setValueResponse("Informacion no encontrada");
                         interations.setValueResponse("Informacion no encontrada");
                     }
-                }           
+                }
                 interationsRepository.save(interations);
                 return GeneralUtils.covertToResponseMessage(userResponse);
             } else {
                 Date date = new Date();
-                List<DefaultResponse> defaultResponses =defaultResponseRepository.findAll();
+                List<DefaultResponse> defaultResponses = defaultResponseRepository.findAll();
                 Training training = new Training();
                 training.setCreationDate(Instant.ofEpochMilli(date.getTime()));
                 training.setValue(request.getValueRequest());
@@ -305,10 +318,10 @@ public class InterationsResource {
                 interations.setValueResponse(defaultResponse.getDefaultValueResponse());
                 interationsRepository.save(interations);
                 return GeneralUtils.covertToResponseMessage(defaultResponse);
-        }
-        }else {
+            }
+        } else {
             Date date = new Date();
-            List<DefaultResponse> defaultResponses =defaultResponseRepository.findAll();
+            List<DefaultResponse> defaultResponses = defaultResponseRepository.findAll();
             Training training = new Training();
             training.setCreationDate(Instant.ofEpochMilli(date.getTime()));
             training.setValue(request.getValueRequest());
