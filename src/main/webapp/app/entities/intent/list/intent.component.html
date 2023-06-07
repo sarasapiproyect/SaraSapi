@@ -28,8 +28,8 @@
                     <button class="btn btn-danger" type="button" (click)="reset()"><fa-icon [icon]="['fas', 'ban']"></fa-icon></button>
                 </div>
                 <select class="form-control" name="searchEnable"  id="field_searchEnable" [(ngModel)]="searchEnable" >
-                        <option value="TRUE">{{ 'saraBusinessInteligenteApp.intent.home.true' | translate }}</option>
-                        <option value="FALE">{{ 'saraBusinessInteligenteApp.intent.home.false' | translate }}</option>
+                        <option value="true">{{ 'saraBusinessInteligenteApp.intent.home.true' | translate }}</option>
+                        <option value="false">{{ 'saraBusinessInteligenteApp.intent.home.false' | translate }}</option>
                 </select>              
                 <div class="input-group-append">
                     <button class="btn btn-primary" type="button" (click)="search()"><fa-icon [icon]="['fas', 'search']"></fa-icon></button>

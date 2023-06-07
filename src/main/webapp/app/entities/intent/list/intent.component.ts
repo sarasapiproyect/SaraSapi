@@ -126,13 +126,13 @@ export class IntentComponent implements OnInit {
        queryObject['name.contains'] = this.searchName;
     }
     if (this.searchDescription) {
-       queryObject['description.equals'] = this.searchDescription;
+       queryObject['description.contains'] = this.searchDescription;
     }
     if (this.searchUrl) {
         queryObject['urlRequest.contains'] = this.searchUrl;
     }
     if (this.searchEnable) {
-        queryObject['enable.equals'] = this.searchEnable;
+        queryObject['enabled.equals'] = this.searchEnable;
     }
     filterOptions?.forEach(filterOption => {
       queryObject[filterOption.name] = filterOption.values;

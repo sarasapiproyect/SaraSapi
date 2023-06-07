@@ -33,12 +33,15 @@ public class GeneralUtils {
             ResponseMessage responseMessage = new ResponseMessage();
             responseMessage.setIsEndConversation(userResponse.getIsEndConversation());
             responseMessage.setMultimedia(userResponse.getMultimedia());
-            responseMessage.setMultimediaContentType(userResponse.getMultimediaContentType());
+            responseMessage.setMultimediaContentType(userResponse.getMultimediaContentType()!=null?
+                    userResponse.getMultimediaContentType():null);
             responseMessage.setMultimediaVoice(userResponse.getMultimediaVoice());
-            responseMessage.setMultimediaVoiceContentType(userResponse.getMultimediaVoiceContentType());
+            responseMessage.setMultimediaVoiceContentType(userResponse.getMultimediaVoiceContentType()!=null?
+                    userResponse.getMultimediaVoiceContentType():userResponse.getMultimediaVoiceContentType());
             responseMessage.setPriority(userResponse.getPriority());
             responseMessage.setSaraAnimation(userResponse.getSaraAnimation());
-            responseMessage.setSaraAnimationContentType(userResponse.getSaraAnimationContentType());
+            responseMessage.setSaraAnimationContentType(userResponse.getSaraAnimationContentType()!=null?
+                    userResponse.getSaraAnimationContentType():null);
             responseMessage.setValueResponse(userResponse.getValueResponse());
             responseMessage.setMultimediaUrl(userResponse.getMultimediaUrl());
             responseMessage.setMultimediaVoiceUrl(userResponse.getMultimediaVoiceUrl());
@@ -51,12 +54,15 @@ public class GeneralUtils {
             ResponseMessage responseMessage = new ResponseMessage();
             responseMessage.setIsEndConversation(defaultResponse.getIsEndConversation());
             responseMessage.setMultimedia(defaultResponse.getMultimedia());
-            responseMessage.setMultimediaContentType(defaultResponse.getMultimediaContentType());
+            responseMessage.setMultimediaContentType(defaultResponse.getMultimediaContentType()!=null?
+                    defaultResponse.getMultimediaContentType():null);
             responseMessage.setMultimediaVoice(defaultResponse.getMultimediaVoice());
-            responseMessage.setMultimediaVoiceContentType(defaultResponse.getMultimediaVoiceContentType());
+            responseMessage.setMultimediaVoiceContentType(defaultResponse.getMultimediaVoiceContentType()!=null?
+                    defaultResponse.getMultimediaVoiceContentType():null);
             responseMessage.setPriority(defaultResponse.getPriority());
             responseMessage.setSaraAnimation(defaultResponse.getSaraAnimation());
-            responseMessage.setSaraAnimationContentType(defaultResponse.getSaraAnimationContentType());
+            responseMessage.setSaraAnimationContentType(defaultResponse.getSaraAnimationContentType()!=null?
+                    defaultResponse.getSaraAnimationContentType():null);
             responseMessage.setValueResponse(defaultResponse.getDefaultValueResponse());
             responseMessage.setMultimediaUrl(defaultResponse.getMultimediaUrl());
             responseMessage.setMultimediaVoiceUrl(defaultResponse.getMultimediaVoiceUrl());
