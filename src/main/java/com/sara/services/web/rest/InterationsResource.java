@@ -262,7 +262,7 @@ public class InterationsResource {
         interations.setValueRequest(request.getValueRequest());
         String[] fields = request.getValueRequest().split("&");
         List<UserExpresion> userExpresions = userExpresionService.findByValue(fields[0]);
-        log.info("Encontro userExpresion asociada=" + userExpresions.get(0).getValue());
+
         if (!userExpresions.isEmpty()) {
             List<Intent> intents = new ArrayList<Intent>();
 
