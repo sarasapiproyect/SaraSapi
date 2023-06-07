@@ -69,9 +69,8 @@ public class UserExpresionResource {
         if (userExpresion.getId() != null) {
             throw new BadRequestAlertException("A new userExpresion cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        List<UserExpresion> userExpresionValue= userExpresionRepository.findByValue(userExpresion.getValue());
-        if (!userExpresionValue.isEmpty())
-        	throw new BadRequestAlertException("UserExpresion exists", ENTITY_NAME, "userExpresionexists");
+        List<UserExpresion> userExpresionValue = userExpresionRepository.findByValue(userExpresion.getValue());
+        if (!userExpresionValue.isEmpty()) throw new BadRequestAlertException("UserExpresion exists", ENTITY_NAME, "userExpresionexists");
         UserExpresion result = userExpresionService.save(userExpresion);
         return ResponseEntity
             .created(new URI("/api/user-expresions/" + result.getId()))
@@ -162,7 +161,9 @@ public class UserExpresionResource {
         @org.springdoc.api.annotations.ParameterObject Pageable pageable
     ) {
         log.debug("REST request to get UserExpresions by criteria: {}", criteria);
+
         Page<UserExpresion> page = userExpresionQueryService.findByCriteria(criteria, pageable);
+
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }

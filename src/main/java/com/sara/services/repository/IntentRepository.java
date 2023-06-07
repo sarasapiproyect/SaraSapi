@@ -41,4 +41,10 @@ public interface IntentRepository
 
     @Query("select intent from Intent intent left join fetch intent.languaje where intent.id =:id")
     Optional<Intent> findOneWithToOneRelationships(@Param("id") Long id);
+
+    @Query(
+        value = "SELECT * FROM SaraBusinessInteligente.intent i WHERE i.id in (SELECT ue.intent_id FROM SaraBusinessInteligente.rel_intent__user_expresion ue WHERE ue.user_expresion_id=:id);",
+        nativeQuery = true
+    )
+    List<Intent> getIntentByUserResponse(@Param("id") Long id);
 }

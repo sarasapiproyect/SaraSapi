@@ -1,9 +1,7 @@
 package com.sara.services.repository;
 
 import com.sara.services.domain.UserExpresion;
-
 import java.util.List;
-
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 
@@ -12,9 +10,10 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface UserExpresionRepository extends JpaRepository<UserExpresion, Long>, JpaSpecificationExecutor<UserExpresion>  {
-	
-	  @Query(value = "SELECT * FROM user_expresion s WHERE s.value = ?1 order by s.id desc",
-	            nativeQuery = true)
-	List<UserExpresion> findByValue(String value);
+public interface UserExpresionRepository extends JpaRepository<UserExpresion, Long>, JpaSpecificationExecutor<UserExpresion> {
+    @Query(value = "SELECT * FROM user_expresion s WHERE s.value = ?1 order by s.id desc", nativeQuery = true)
+    List<UserExpresion> findByValue(String value);
+
+    @Query(value = "SELECT * FROM user_expresion s order by s.id desc", nativeQuery = true)
+    List<UserExpresion> findall();
 }
