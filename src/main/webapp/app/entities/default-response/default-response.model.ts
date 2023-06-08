@@ -16,6 +16,7 @@ export interface IDefaultResponse {
   multimediaVoiceUrl?: string | null;
   saraAnimationUrl?: string | null;
   multimediaType?: MultimediaType | null;
+  showMultimedia?: boolean | null;
 }
 
 export type NewDefaultResponse = Omit<IDefaultResponse, 'id'> & { id: null };

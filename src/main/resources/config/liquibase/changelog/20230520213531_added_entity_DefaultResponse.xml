@@ -100,4 +100,11 @@
         newDataType="varchar(2000)"
         tableName="default_response"/> 
 	</changeSet>
+	  <changeSet author="jhipster" id="20230520213531-5">
+   		  <addColumn tableName="default_response">
+	       	 <column name="show_multimedia" type="boolean">
+                <constraints nullable="true" />
+            </column>              
+	    </addColumn>
+	</changeSet>
 </databaseChangeLog>

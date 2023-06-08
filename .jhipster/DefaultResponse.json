@@ -52,6 +52,10 @@
       "fieldName": "multimediaType",
       "fieldType": "MultimediaType",
       "fieldValues": "AUDIO,VISUAL"
+    },
+    {
+      "fieldName": "showMultimedia",
+      "fieldType": "Boolean"
     }
   ],
   "fluentMethods": true,

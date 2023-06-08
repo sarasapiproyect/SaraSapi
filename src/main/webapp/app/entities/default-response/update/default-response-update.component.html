@@ -100,7 +100,6 @@
             <input
               type="file"
               id="file_multimedia"
-              accept=".png"
               data-cy="multimedia"
               (change)="setFileData($event, 'multimedia', false)"
               jhiTranslate="entity.action.addblob"
@@ -298,6 +297,20 @@
               {{ 'saraBusinessInteligenteApp.MultimediaType.' + multimediaType | translate }}
             </option>
           </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="saraBusinessInteligenteApp.defaultResponse.showMultimedia" for="field_showMultimedia"
+            >Show Multimedia</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="showMultimedia"
+            id="field_showMultimedia"
+            data-cy="showMultimedia"
+            formControlName="showMultimedia"
+          />
         </div>
       </div>
 

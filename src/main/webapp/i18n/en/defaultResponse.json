@@ -30,7 +30,8 @@
       "multimediaUrl": "Multimedia Url",
       "multimediaVoiceUrl": "Multimedia Voice Url",
       "saraAnimationUrl": "Sara Animation Url",
-      "multimediaType": "Multimedia Type"
+      "multimediaType": "Multimedia Type",
+      "showMultimedia": "Show Multimedia"
     }
   }
 }

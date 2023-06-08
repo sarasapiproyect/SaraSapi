@@ -109,6 +109,9 @@ public class DefaultResponseQueryService extends QueryService<DefaultResponse> {
             if (criteria.getMultimediaType() != null) {
                 specification = specification.and(buildSpecification(criteria.getMultimediaType(), DefaultResponse_.multimediaType));
             }
+            if (criteria.getShowMultimedia() != null) {
+                specification = specification.and(buildSpecification(criteria.getShowMultimedia(), DefaultResponse_.showMultimedia));
+            }
         }
         return specification;
     }

@@ -73,6 +73,8 @@ public class DefaultResponseCriteria implements Serializable, Criteria {
 
     private MultimediaTypeFilter multimediaType;
 
+    private BooleanFilter showMultimedia;
+
     private Boolean distinct;
 
     public DefaultResponseCriteria() {}
@@ -86,6 +88,7 @@ public class DefaultResponseCriteria implements Serializable, Criteria {
         this.multimediaVoiceUrl = other.multimediaVoiceUrl == null ? null : other.multimediaVoiceUrl.copy();
         this.saraAnimationUrl = other.saraAnimationUrl == null ? null : other.saraAnimationUrl.copy();
         this.multimediaType = other.multimediaType == null ? null : other.multimediaType.copy();
+        this.showMultimedia = other.showMultimedia == null ? null : other.showMultimedia.copy();
         this.distinct = other.distinct;
     }
 
@@ -214,6 +217,21 @@ public class DefaultResponseCriteria implements Serializable, Criteria {
         this.multimediaType = multimediaType;
     }
 
+    public BooleanFilter getShowMultimedia() {
+        return showMultimedia;
+    }
+
+    public BooleanFilter showMultimedia() {
+        if (showMultimedia == null) {
+            showMultimedia = new BooleanFilter();
+        }
+        return showMultimedia;
+    }
+
+    public void setShowMultimedia(BooleanFilter showMultimedia) {
+        this.showMultimedia = showMultimedia;
+    }
+
     public Boolean getDistinct() {
         return distinct;
     }
@@ -240,6 +258,7 @@ public class DefaultResponseCriteria implements Serializable, Criteria {
             Objects.equals(multimediaVoiceUrl, that.multimediaVoiceUrl) &&
             Objects.equals(saraAnimationUrl, that.saraAnimationUrl) &&
             Objects.equals(multimediaType, that.multimediaType) &&
+            Objects.equals(showMultimedia, that.showMultimedia) &&
             Objects.equals(distinct, that.distinct)
         );
     }
@@ -255,6 +274,7 @@ public class DefaultResponseCriteria implements Serializable, Criteria {
             multimediaVoiceUrl,
             saraAnimationUrl,
             multimediaType,
+            showMultimedia,
             distinct
         );
     }
@@ -271,6 +291,7 @@ public class DefaultResponseCriteria implements Serializable, Criteria {
             (multimediaVoiceUrl != null ? "multimediaVoiceUrl=" + multimediaVoiceUrl + ", " : "") +
             (saraAnimationUrl != null ? "saraAnimationUrl=" + saraAnimationUrl + ", " : "") +
             (multimediaType != null ? "multimediaType=" + multimediaType + ", " : "") +
+            (showMultimedia != null ? "showMultimedia=" + showMultimedia + ", " : "") +
             (distinct != null ? "distinct=" + distinct + ", " : "") +
             "}";
     }

@@ -98,6 +98,9 @@ public class DefaultResponseService {
                 if (defaultResponse.getMultimediaType() != null) {
                     existingDefaultResponse.setMultimediaType(defaultResponse.getMultimediaType());
                 }
+                if (defaultResponse.getShowMultimedia() != null) {
+                    existingDefaultResponse.setShowMultimedia(defaultResponse.getShowMultimedia());
+                }
 
                 return existingDefaultResponse;
             })

@@ -14,7 +14,7 @@ type PartialWithRequiredKeyOf<T extends { id: unknown }> = Partial<Omit<T, 'id'>
  */
 type DefaultResponseFormGroupInput = IDefaultResponse | PartialWithRequiredKeyOf<NewDefaultResponse>;
 
-type DefaultResponseFormDefaults = Pick<NewDefaultResponse, 'id' | 'isEndConversation'>;
+type DefaultResponseFormDefaults = Pick<NewDefaultResponse, 'id' | 'isEndConversation' | 'showMultimedia'>;
 
 type DefaultResponseFormGroupContent = {
   id: FormControl<IDefaultResponse['id'] | NewDefaultResponse['id']>;
@@ -31,6 +31,7 @@ type DefaultResponseFormGroupContent = {
   multimediaVoiceUrl: FormControl<IDefaultResponse['multimediaVoiceUrl']>;
   saraAnimationUrl: FormControl<IDefaultResponse['saraAnimationUrl']>;
   multimediaType: FormControl<IDefaultResponse['multimediaType']>;
+  showMultimedia: FormControl<IDefaultResponse['showMultimedia']>;
 };
 
 export type DefaultResponseFormGroup = FormGroup<DefaultResponseFormGroupContent>;
@@ -65,6 +66,7 @@ export class DefaultResponseFormService {
       multimediaVoiceUrl: new FormControl(defaultResponseRawValue.multimediaVoiceUrl),
       saraAnimationUrl: new FormControl(defaultResponseRawValue.saraAnimationUrl),
       multimediaType: new FormControl(defaultResponseRawValue.multimediaType),
+      showMultimedia: new FormControl(defaultResponseRawValue.showMultimedia),
     });
   }
 
@@ -86,6 +88,7 @@ export class DefaultResponseFormService {
     return {
       id: null,
       isEndConversation: false,
+      showMultimedia: false,
     };
   }
 }

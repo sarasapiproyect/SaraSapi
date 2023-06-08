@@ -9,19 +9,19 @@ export const sampleWithRequiredData: IDefaultResponse = {
 };
 
 export const sampleWithPartialData: IDefaultResponse = {
-  id: 37570,
-  defaultValueResponse: 'Quality-focused',
+  id: 8254,
+  defaultValueResponse: 'Burundi',
   multimediaVoice: '../fake-data/blob/hipster.png',
   multimediaVoiceContentType: 'unknown',
   saraAnimation: '../fake-data/blob/hipster.png',
   saraAnimationContentType: 'unknown',
-  multimediaVoiceUrl: 'Future-proofed',
-  saraAnimationUrl: 'Functionality',
+  multimediaVoiceUrl: 'robust',
+  saraAnimationUrl: 'Extended Pants overriding',
 };
 
 export const sampleWithFullData: IDefaultResponse = {
-  id: 63684,
-  defaultValueResponse: 'Arkansas',
+  id: 47787,
+  defaultValueResponse: '6th driver',
   priority: Priority['HIGHT'],
   multimedia: '../fake-data/blob/hipster.png',
   multimediaContentType: 'unknown',
@@ -30,14 +30,15 @@ export const sampleWithFullData: IDefaultResponse = {
   saraAnimation: '../fake-data/blob/hipster.png',
   saraAnimationContentType: 'unknown',
   isEndConversation: true,
-  multimediaUrl: 'Multi-layered',
-  multimediaVoiceUrl: 'Chair',
-  saraAnimationUrl: 'Specialist frame Unbranded',
+  multimediaUrl: 'Plastic',
+  multimediaVoiceUrl: 'Unbranded Maine Buckinghamshire',
+  saraAnimationUrl: 'enable',
   multimediaType: MultimediaType['VISUAL'],
+  showMultimedia: true,
 };
 
 export const sampleWithNewData: NewDefaultResponse = {
-  defaultValueResponse: 'Operations SSL',
+  defaultValueResponse: 'Producer target',
   id: null,
 };
 

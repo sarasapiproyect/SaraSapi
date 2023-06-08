@@ -1,7 +1,7 @@
 <div>
   <h2 id="page-heading" data-cy="DefaultResponseHeading">
     <span jhiTranslate="saraBusinessInteligenteApp.defaultResponse.home.title">Default Responses</span>
- <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+<form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
             <div class="input-group">
                 <input  class="form-control bg-light border-1 small" type="text" placeholder="{{ 'saraBusinessInteligenteApp.defaultResponse.home.searchvalue' | translate }}" aria-label="Buscar " aria-describedby="basic-addon2" [(ngModel)]=searchvalue name="searchvalue"/>
                 <div class="input-group-append">
@@ -86,7 +86,7 @@
               <span jhiTranslate="saraBusinessInteligenteApp.defaultResponse.priority">Priority</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
+          </th>       
           <th scope="col" jhiSortBy="isEndConversation">
             <div class="d-flex">
               <span jhiTranslate="saraBusinessInteligenteApp.defaultResponse.isEndConversation">Is End Conversation</span>
@@ -117,6 +117,12 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
+          <th scope="col" jhiSortBy="showMultimedia">
+            <div class="d-flex">
+              <span jhiTranslate="saraBusinessInteligenteApp.defaultResponse.showMultimedia">Show Multimedia</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -128,8 +134,6 @@
           <td>{{ defaultResponse.defaultValueResponse }}</td>
           <td jhiTranslate="{{ 'saraBusinessInteligenteApp.Priority.' + defaultResponse.priority }}">{{ defaultResponse.priority }}</td>
          
-          
-       
           <td>{{ defaultResponse.isEndConversation }}</td>
           <td>{{ defaultResponse.multimediaUrl }}</td>
           <td>{{ defaultResponse.multimediaVoiceUrl }}</td>
@@ -137,6 +141,7 @@
           <td jhiTranslate="{{ 'saraBusinessInteligenteApp.MultimediaType.' + defaultResponse.multimediaType }}">
             {{ defaultResponse.multimediaType }}
           </td>
+          <td>{{ defaultResponse.showMultimedia }}</td>
           <td class="text-end">
             <div class="btn-group">
               <button

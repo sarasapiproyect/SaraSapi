@@ -5,7 +5,6 @@ import com.sara.services.domain.enumeration.Priority;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Random;
-
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
@@ -72,6 +71,9 @@ public class DefaultResponse implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "multimedia_type")
     private MultimediaType multimediaType;
+
+    @Column(name = "show_multimedia")
+    private Boolean showMultimedia;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -257,6 +259,19 @@ public class DefaultResponse implements Serializable {
         this.multimediaType = multimediaType;
     }
 
+    public Boolean getShowMultimedia() {
+        return this.showMultimedia;
+    }
+
+    public DefaultResponse showMultimedia(Boolean showMultimedia) {
+        this.setShowMultimedia(showMultimedia);
+        return this;
+    }
+
+    public void setShowMultimedia(Boolean showMultimedia) {
+        this.showMultimedia = showMultimedia;
+    }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -294,6 +309,7 @@ public class DefaultResponse implements Serializable {
             ", multimediaVoiceUrl='" + getMultimediaVoiceUrl() + "'" +
             ", saraAnimationUrl='" + getSaraAnimationUrl() + "'" +
             ", multimediaType='" + getMultimediaType() + "'" +
+            ", showMultimedia='" + getShowMultimedia() + "'" +
             "}";
     }
     
