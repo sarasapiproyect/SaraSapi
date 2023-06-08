@@ -270,7 +270,6 @@ public class InterationsResource {
 
             log.info("Por lo menos llega el ID  asociado=....." + intents.size());
 
-            log.info("Encontro userExpresion asociada=....." + userExpresions.get(0).getIntents());
             Set<Intent> setIntents = userExpresions.get(0).getIntents();
             if (!intents.isEmpty()) {
                 log.info("Encontro intent asociada" + intents.get(0).getName());
