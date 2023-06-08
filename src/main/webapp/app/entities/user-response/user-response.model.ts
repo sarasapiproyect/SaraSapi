@@ -20,6 +20,7 @@ export interface IUserResponse {
   multimediaVoiceUrl?: string | null;
   saraAnimationUrl?: string | null;
   multimediaType?: MultimediaType | null;
+  showMultimedia?: boolean | null;
   intents?: Pick<IIntent, 'id'>[] | null;
 }
 

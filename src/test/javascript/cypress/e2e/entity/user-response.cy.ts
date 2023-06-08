@@ -15,7 +15,7 @@ describe('UserResponse e2e test', () => {
   const userResponsePageUrlPattern = new RegExp('/user-response(\\?.*)?$');
   const username = Cypress.env('E2E_USERNAME') ?? 'user';
   const password = Cypress.env('E2E_PASSWORD') ?? 'user';
-  const userResponseSample = { valueResponse: 'to', responseType: 'QUERY', multimediaType: 'AUDIO' };
+  const userResponseSample = { valueResponse: 'encompassing', responseType: 'QUERY', multimediaType: 'AUDIO' };
 
   let userResponse;
 
@@ -92,7 +92,7 @@ describe('UserResponse e2e test', () => {
             {
               statusCode: 200,
               headers: {
-                link: '<http://localhost/api/user-responses?page=0&size=200>; rel="last",<http://localhost/api/user-responses?page=0&size=200>; rel="first"',
+                link: '<http://localhost/api/user-responses?page=0&size=20>; rel="last",<http://localhost/api/user-responses?page=0&size=20>; rel="first"',
               },
               body: [userResponse],
             }
@@ -184,6 +184,9 @@ describe('UserResponse e2e test', () => {
       cy.get(`[data-cy="saraAnimationUrl"]`).type('open-source').should('have.value', 'open-source');
 
       cy.get(`[data-cy="multimediaType"]`).select('VISUAL');
+
+      cy.get(`[data-cy="showMultimedia"]`).should('not.be.checked');
+      cy.get(`[data-cy="showMultimedia"]`).click().should('be.checked');
 
       // since cypress clicks submit too fast before the blob fields are validated
       cy.wait(200); // eslint-disable-line cypress/no-unnecessary-waiting

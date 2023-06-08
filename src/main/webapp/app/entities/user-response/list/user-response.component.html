@@ -1,7 +1,7 @@
 <div>
   <h2 id="page-heading" data-cy="UserResponseHeading">
     <span jhiTranslate="saraBusinessInteligenteApp.userResponse.home.title">User Responses</span>
-        <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+<form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
             <div class="input-group">
                 <input  class="form-control bg-light border-1 small" type="text" placeholder="{{ 'saraBusinessInteligenteApp.userResponse.home.searchvalue' | translate }}" aria-label="Buscar " aria-describedby="basic-addon2" [(ngModel)]=searchvalue name="searchvalue"/>
                 <div class="input-group-append">
@@ -140,6 +140,12 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
+          <th scope="col" jhiSortBy="showMultimedia">
+            <div class="d-flex">
+              <span jhiTranslate="saraBusinessInteligenteApp.userResponse.showMultimedia">Show Multimedia</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -149,7 +155,7 @@
             <a [routerLink]="['/user-response', userResponse.id, 'view']">{{ userResponse.id }}</a>
           </td>
           <td>{{ userResponse.valueResponse }}</td>
-          <td jhiTranslate="{{ 'saraBusinessInteligenteApp.Priority.' + userResponse.priority }}">{{ userResponse.priority }}</td>
+          <td jhiTranslate="{{ 'saraBusinessInteligenteApp.Priority.' + userResponse.priority }}">{{ userResponse.priority }}</td>        
           <td>{{ userResponse.isEndConversation }}</td>
           <td jhiTranslate="{{ 'saraBusinessInteligenteApp.ResponseType.' + userResponse.responseType }}">
             {{ userResponse.responseType }}
@@ -161,6 +167,7 @@
           <td jhiTranslate="{{ 'saraBusinessInteligenteApp.MultimediaType.' + userResponse.multimediaType }}">
             {{ userResponse.multimediaType }}
           </td>
+          <td>{{ userResponse.showMultimedia }}</td>
           <td class="text-end">
             <div class="btn-group">
               <button

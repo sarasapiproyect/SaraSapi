@@ -14,7 +14,7 @@ type PartialWithRequiredKeyOf<T extends { id: unknown }> = Partial<Omit<T, 'id'>
  */
 type UserResponseFormGroupInput = IUserResponse | PartialWithRequiredKeyOf<NewUserResponse>;
 
-type UserResponseFormDefaults = Pick<NewUserResponse, 'id' | 'isEndConversation' | 'intents'>;
+type UserResponseFormDefaults = Pick<NewUserResponse, 'id' | 'isEndConversation' | 'showMultimedia' | 'intents'>;
 
 type UserResponseFormGroupContent = {
   id: FormControl<IUserResponse['id'] | NewUserResponse['id']>;
@@ -33,6 +33,7 @@ type UserResponseFormGroupContent = {
   multimediaVoiceUrl: FormControl<IUserResponse['multimediaVoiceUrl']>;
   saraAnimationUrl: FormControl<IUserResponse['saraAnimationUrl']>;
   multimediaType: FormControl<IUserResponse['multimediaType']>;
+  showMultimedia: FormControl<IUserResponse['showMultimedia']>;
   intents: FormControl<IUserResponse['intents']>;
 };
 
@@ -74,6 +75,7 @@ export class UserResponseFormService {
       multimediaType: new FormControl(userResponseRawValue.multimediaType, {
         validators: [Validators.required],
       }),
+      showMultimedia: new FormControl(userResponseRawValue.showMultimedia),
       intents: new FormControl(userResponseRawValue.intents ?? []),
     });
   }
@@ -96,6 +98,7 @@ export class UserResponseFormService {
     return {
       id: null,
       isEndConversation: false,
+      showMultimedia: false,
       intents: [],
     };
   }

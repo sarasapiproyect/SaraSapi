@@ -113,6 +113,9 @@ public class UserResponseQueryService extends QueryService<UserResponse> {
             if (criteria.getMultimediaType() != null) {
                 specification = specification.and(buildSpecification(criteria.getMultimediaType(), UserResponse_.multimediaType));
             }
+            if (criteria.getShowMultimedia() != null) {
+                specification = specification.and(buildSpecification(criteria.getShowMultimedia(), UserResponse_.showMultimedia));
+            }
             if (criteria.getIntentId() != null) {
                 specification =
                     specification.and(

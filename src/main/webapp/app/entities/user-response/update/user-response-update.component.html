@@ -22,9 +22,8 @@
             >Value Response</label
           >
           <input
-            type="textarea"
+            type="text"
             class="form-control"
-            cols="40" rows="5"
             name="valueResponse"
             id="field_valueResponse"
             data-cy="valueResponse"
@@ -98,7 +97,6 @@
               type="file"
               id="file_multimedia"
               data-cy="multimedia"
-              accept=".png"
               (change)="setFileData($event, 'multimedia', false)"
               jhiTranslate="entity.action.addblob"
             />
@@ -330,6 +328,20 @@
               This field is required.
             </small>
           </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="saraBusinessInteligenteApp.userResponse.showMultimedia" for="field_showMultimedia"
+            >Show Multimedia</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="showMultimedia"
+            id="field_showMultimedia"
+            data-cy="showMultimedia"
+            formControlName="showMultimedia"
+          />
         </div>
       </div>
 

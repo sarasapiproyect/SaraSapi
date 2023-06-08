@@ -63,6 +63,10 @@
       "fieldType": "MultimediaType",
       "fieldValidateRules": ["required"],
       "fieldValues": "AUDIO,VISUAL"
+    },
+    {
+      "fieldName": "showMultimedia",
+      "fieldType": "Boolean"
     }
   ],
   "fluentMethods": true,

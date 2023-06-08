@@ -104,6 +104,9 @@ public class UserResponseService {
                 if (userResponse.getMultimediaType() != null) {
                     existingUserResponse.setMultimediaType(userResponse.getMultimediaType());
                 }
+                if (userResponse.getShowMultimedia() != null) {
+                    existingUserResponse.setShowMultimedia(userResponse.getShowMultimedia());
+                }
 
                 return existingUserResponse;
             })

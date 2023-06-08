@@ -85,6 +85,9 @@ public class UserResponse implements Serializable {
     @Column(name = "multimedia_type", nullable = false)
     private MultimediaType multimediaType;
 
+    @Column(name = "show_multimedia")
+    private Boolean showMultimedia;
+
     @ManyToMany(mappedBy = "userResponses",fetch=FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "languaje", "userExpresions", "userResponses" }, allowSetters = true)
@@ -300,6 +303,19 @@ public class UserResponse implements Serializable {
         this.multimediaType = multimediaType;
     }
 
+    public Boolean getShowMultimedia() {
+        return this.showMultimedia;
+    }
+
+    public UserResponse showMultimedia(Boolean showMultimedia) {
+        this.setShowMultimedia(showMultimedia);
+        return this;
+    }
+
+    public void setShowMultimedia(Boolean showMultimedia) {
+        this.showMultimedia = showMultimedia;
+    }
+
     public Set<Intent> getIntents() {
         return this.intents;
     }
@@ -370,9 +386,9 @@ public class UserResponse implements Serializable {
             ", multimediaVoiceUrl='" + getMultimediaVoiceUrl() + "'" +
             ", saraAnimationUrl='" + getSaraAnimationUrl() + "'" +
             ", multimediaType='" + getMultimediaType() + "'" +
+            ", showMultimedia='" + getShowMultimedia() + "'" +
             "}";
     }
-    
     public static UserResponse getRandomElement(List<UserResponse> userResponses)
     {
         Random rand = new Random();

@@ -110,4 +110,11 @@
             </column>
 	    </addColumn>
 	  </changeSet>
+	   <changeSet id="20230520213431-6" author="jhipster">
+		<addColumn tableName="user_response">
+	          <column name="show_multimedia" type="boolean">
+                <constraints nullable="true" />
+            </column>
+	    </addColumn>
+	  </changeSet>
 </databaseChangeLog>

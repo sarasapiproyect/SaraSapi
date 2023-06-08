@@ -32,6 +32,7 @@ describe('UserResponse Form Service', () => {
             multimediaVoiceUrl: expect.any(Object),
             saraAnimationUrl: expect.any(Object),
             multimediaType: expect.any(Object),
+            showMultimedia: expect.any(Object),
             intents: expect.any(Object),
           })
         );
@@ -55,6 +56,7 @@ describe('UserResponse Form Service', () => {
             multimediaVoiceUrl: expect.any(Object),
             saraAnimationUrl: expect.any(Object),
             multimediaType: expect.any(Object),
+            showMultimedia: expect.any(Object),
             intents: expect.any(Object),
           })
         );

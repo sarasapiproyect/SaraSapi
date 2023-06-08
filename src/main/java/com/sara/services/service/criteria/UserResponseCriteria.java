@@ -95,6 +95,8 @@ public class UserResponseCriteria implements Serializable, Criteria {
 
     private MultimediaTypeFilter multimediaType;
 
+    private BooleanFilter showMultimedia;
+
     private LongFilter intentId;
 
     private Boolean distinct;
@@ -112,6 +114,7 @@ public class UserResponseCriteria implements Serializable, Criteria {
         this.multimediaVoiceUrl = other.multimediaVoiceUrl == null ? null : other.multimediaVoiceUrl.copy();
         this.saraAnimationUrl = other.saraAnimationUrl == null ? null : other.saraAnimationUrl.copy();
         this.multimediaType = other.multimediaType == null ? null : other.multimediaType.copy();
+        this.showMultimedia = other.showMultimedia == null ? null : other.showMultimedia.copy();
         this.intentId = other.intentId == null ? null : other.intentId.copy();
         this.distinct = other.distinct;
     }
@@ -271,6 +274,21 @@ public class UserResponseCriteria implements Serializable, Criteria {
         this.multimediaType = multimediaType;
     }
 
+    public BooleanFilter getShowMultimedia() {
+        return showMultimedia;
+    }
+
+    public BooleanFilter showMultimedia() {
+        if (showMultimedia == null) {
+            showMultimedia = new BooleanFilter();
+        }
+        return showMultimedia;
+    }
+
+    public void setShowMultimedia(BooleanFilter showMultimedia) {
+        this.showMultimedia = showMultimedia;
+    }
+
     public LongFilter getIntentId() {
         return intentId;
     }
@@ -314,6 +332,7 @@ public class UserResponseCriteria implements Serializable, Criteria {
             Objects.equals(multimediaVoiceUrl, that.multimediaVoiceUrl) &&
             Objects.equals(saraAnimationUrl, that.saraAnimationUrl) &&
             Objects.equals(multimediaType, that.multimediaType) &&
+            Objects.equals(showMultimedia, that.showMultimedia) &&
             Objects.equals(intentId, that.intentId) &&
             Objects.equals(distinct, that.distinct)
         );
@@ -332,6 +351,7 @@ public class UserResponseCriteria implements Serializable, Criteria {
             multimediaVoiceUrl,
             saraAnimationUrl,
             multimediaType,
+            showMultimedia,
             intentId,
             distinct
         );
@@ -351,6 +371,7 @@ public class UserResponseCriteria implements Serializable, Criteria {
             (multimediaVoiceUrl != null ? "multimediaVoiceUrl=" + multimediaVoiceUrl + ", " : "") +
             (saraAnimationUrl != null ? "saraAnimationUrl=" + saraAnimationUrl + ", " : "") +
             (multimediaType != null ? "multimediaType=" + multimediaType + ", " : "") +
+            (showMultimedia != null ? "showMultimedia=" + showMultimedia + ", " : "") +
             (intentId != null ? "intentId=" + intentId + ", " : "") +
             (distinct != null ? "distinct=" + distinct + ", " : "") +
             "}";

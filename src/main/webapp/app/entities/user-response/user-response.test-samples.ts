@@ -12,8 +12,8 @@ export const sampleWithRequiredData: IUserResponse = {
 };
 
 export const sampleWithPartialData: IUserResponse = {
-  id: 12875,
-  valueResponse: 'product Avon',
+  id: 48365,
+  valueResponse: 'calculate',
   multimedia: '../fake-data/blob/hipster.png',
   multimediaContentType: 'unknown',
   multimediaVoice: '../fake-data/blob/hipster.png',
@@ -21,33 +21,34 @@ export const sampleWithPartialData: IUserResponse = {
   saraAnimation: '../fake-data/blob/hipster.png',
   saraAnimationContentType: 'unknown',
   responseType: ResponseType['QUERY'],
-  url: 'https://adolfo.net',
-  saraAnimationUrl: 'Buckinghamshire',
+  url: 'http://bennett.net',
+  saraAnimationUrl: 'protocol',
   multimediaType: MultimediaType['VISUAL'],
 };
 
 export const sampleWithFullData: IUserResponse = {
-  id: 8217,
-  valueResponse: 'Gloves',
-  priority: Priority['MEDIA'],
+  id: 17876,
+  valueResponse: 'Ergonomic intelligence Bacon',
+  priority: Priority['LOW'],
   multimedia: '../fake-data/blob/hipster.png',
   multimediaContentType: 'unknown',
   multimediaVoice: '../fake-data/blob/hipster.png',
   multimediaVoiceContentType: 'unknown',
   saraAnimation: '../fake-data/blob/hipster.png',
   saraAnimationContentType: 'unknown',
-  isEndConversation: false,
+  isEndConversation: true,
   responseType: ResponseType['SERVICIO'],
-  url: 'http://earlene.name',
-  multimediaUrl: 'panel Concrete Steel',
-  multimediaVoiceUrl: 'Dynamic demand-driven',
-  saraAnimationUrl: 'Borders',
+  url: 'https://brandon.net',
+  multimediaUrl: 'Cyprus',
+  multimediaVoiceUrl: 'Steel Cambridgeshire',
+  saraAnimationUrl: 'demand-driven Open-architected customized',
   multimediaType: MultimediaType['VISUAL'],
+  showMultimedia: false,
 };
 
 export const sampleWithNewData: NewUserResponse = {
-  valueResponse: 'open-source cross-platform SCSI',
-  responseType: ResponseType['QUERY'],
+  valueResponse: 'cross-platform SCSI Ball',
+  responseType: ResponseType['SERVICIO'],
   multimediaType: MultimediaType['AUDIO'],
   id: null,
 };
