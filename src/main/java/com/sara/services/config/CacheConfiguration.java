@@ -63,6 +63,7 @@ public class CacheConfiguration {
             createCache(cm, com.sara.services.domain.Training.class.getName());
             createCache(cm, com.sara.services.domain.Interations.class.getName());
             createCache(cm, com.sara.services.domain.ChatbootStyle.class.getName());
+            createCache(cm, com.sara.services.domain.Channel.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }
