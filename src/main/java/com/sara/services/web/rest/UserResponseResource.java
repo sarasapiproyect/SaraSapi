@@ -131,7 +131,7 @@ public class UserResponseResource {
         userResponse.setMultimedia(null);
         userResponse.setMultimediaVoice(null);
         userResponse.setSaraAnimation(null);
-        if (!userResponse.getMultimediaContentType().equals("image/png"))
+        if (userResponse.getMultimediaContentType()!= null && !userResponse.getMultimediaContentType().equals("image/png"))
             throw new BadRequestAlertException("Invalid image format", ENTITY_NAME, "extInvalid");
         UserResponse result = userResponseService.save(userResponse);
         return ResponseEntity
@@ -218,7 +218,7 @@ public class UserResponseResource {
         userResponse.setMultimedia(null);
         userResponse.setMultimediaVoice(null);
         userResponse.setSaraAnimation(null);
-        if (!userResponse.getMultimediaContentType().equals("image/png"))
+        if (userResponse.getMultimediaContentType()!= null && !userResponse.getMultimediaContentType().equals("image/png"))
             throw new BadRequestAlertException("Invalid image format", ENTITY_NAME, "extInvalid");
         UserResponse result = userResponseService.update(userResponse);
         return ResponseEntity

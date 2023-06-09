@@ -132,7 +132,7 @@ public class DefaultResponseResource {
         defaultResponse.setMultimedia(null);
         defaultResponse.setMultimediaVoice(null);
         defaultResponse.setSaraAnimation(null);
-        if (!defaultResponse.getMultimediaContentType().equals("image/png"))
+        if (defaultResponse.getMultimediaContentType()!= null && !defaultResponse.getMultimediaContentType().equals("image/png"))
             throw new BadRequestAlertException("Invalid image format", ENTITY_NAME, "extInvalid");
         DefaultResponse result = defaultResponseService.save(defaultResponse);
         return ResponseEntity
@@ -219,7 +219,7 @@ public class DefaultResponseResource {
         defaultResponse.setMultimedia(null);
         defaultResponse.setMultimediaVoice(null);
         defaultResponse.setSaraAnimation(null);
-        if (!defaultResponse.getMultimediaContentType().equals("image/png"))
+        if (defaultResponse.getMultimediaContentType()!= null && !defaultResponse.getMultimediaContentType().equals("image/png"))
             throw new BadRequestAlertException("Invalid image format", ENTITY_NAME, "extInvalid");
         DefaultResponse result = defaultResponseService.update(defaultResponse);
         return ResponseEntity
