@@ -31,7 +31,10 @@
       "multimediaVoiceUrl": "Multimedia Voice Url",
       "saraAnimationUrl": "Sara Animation Url",
       "multimediaType": "Multimedia Type",
-      "showMultimedia": "Show Multimedia"
+      "showMultimedia": "Show Multimedia",
+      "channelMultimedia": "Channel Multimedia",
+      "channelVoice": "Channel Voice",
+      "channelAnimation": "Channel Animation"
     }
   }
 }

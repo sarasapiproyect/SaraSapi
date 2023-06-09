@@ -63,6 +63,31 @@
   "name": "DefaultResponse",
   "pagination": "pagination",
   "readOnly": false,
-  "relationships": [],
+  "relationships": [
+    {
+      "otherEntityField": "description",
+      "otherEntityName": "channel",
+      "otherEntityRelationshipName": "defaultResponseMultimedia",
+      "ownerSide": true,
+      "relationshipName": "channelMultimedia",
+      "relationshipType": "many-to-many"
+    },
+    {
+      "otherEntityField": "description",
+      "otherEntityName": "channel",
+      "otherEntityRelationshipName": "defaultResponseVoice",
+      "ownerSide": true,
+      "relationshipName": "channelVoice",
+      "relationshipType": "many-to-many"
+    },
+    {
+      "otherEntityField": "description",
+      "otherEntityName": "channel",
+      "otherEntityRelationshipName": "defaulResponseAnimation",
+      "ownerSide": true,
+      "relationshipName": "channelAnimation",
+      "relationshipType": "many-to-many"
+    }
+  ],
   "service": "serviceClass"
 }

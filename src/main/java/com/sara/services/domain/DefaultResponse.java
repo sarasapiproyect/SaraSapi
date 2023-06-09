@@ -5,6 +5,8 @@ import com.sara.services.domain.enumeration.Priority;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Random;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
@@ -74,6 +76,33 @@ public class DefaultResponse implements Serializable {
 
     @Column(name = "show_multimedia")
     private Boolean showMultimedia;
+
+    @ManyToMany
+    @JoinTable(
+        name = "rel_default_response__channel_multimedia",
+        joinColumns = @JoinColumn(name = "default_response_id"),
+        inverseJoinColumns = @JoinColumn(name = "channel_multimedia_id")
+    )
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    private Set<Channel> channelMultimedias = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(
+        name = "rel_default_response__channel_voice",
+        joinColumns = @JoinColumn(name = "default_response_id"),
+        inverseJoinColumns = @JoinColumn(name = "channel_voice_id")
+    )
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    private Set<Channel> channelVoices = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(
+        name = "rel_default_response__channel_animation",
+        joinColumns = @JoinColumn(name = "default_response_id"),
+        inverseJoinColumns = @JoinColumn(name = "channel_animation_id")
+    )
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    private Set<Channel> channelAnimations = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -270,6 +299,75 @@ public class DefaultResponse implements Serializable {
 
     public void setShowMultimedia(Boolean showMultimedia) {
         this.showMultimedia = showMultimedia;
+    }
+
+    public Set<Channel> getChannelMultimedias() {
+        return this.channelMultimedias;
+    }
+
+    public void setChannelMultimedias(Set<Channel> channels) {
+        this.channelMultimedias = channels;
+    }
+
+    public DefaultResponse channelMultimedias(Set<Channel> channels) {
+        this.setChannelMultimedias(channels);
+        return this;
+    }
+
+    public DefaultResponse addChannelMultimedia(Channel channel) {
+        this.channelMultimedias.add(channel);
+        return this;
+    }
+
+    public DefaultResponse removeChannelMultimedia(Channel channel) {
+        this.channelMultimedias.remove(channel);
+        return this;
+    }
+
+    public Set<Channel> getChannelVoices() {
+        return this.channelVoices;
+    }
+
+    public void setChannelVoices(Set<Channel> channels) {
+        this.channelVoices = channels;
+    }
+
+    public DefaultResponse channelVoices(Set<Channel> channels) {
+        this.setChannelVoices(channels);
+        return this;
+    }
+
+    public DefaultResponse addChannelVoice(Channel channel) {
+        this.channelVoices.add(channel);
+        return this;
+    }
+
+    public DefaultResponse removeChannelVoice(Channel channel) {
+        this.channelVoices.remove(channel);
+        return this;
+    }
+
+    public Set<Channel> getChannelAnimations() {
+        return this.channelAnimations;
+    }
+
+    public void setChannelAnimations(Set<Channel> channels) {
+        this.channelAnimations = channels;
+    }
+
+    public DefaultResponse channelAnimations(Set<Channel> channels) {
+        this.setChannelAnimations(channels);
+        return this;
+    }
+
+    public DefaultResponse addChannelAnimation(Channel channel) {
+        this.channelAnimations.add(channel);
+        return this;
+    }
+
+    public DefaultResponse removeChannelAnimation(Channel channel) {
+        this.channelAnimations.remove(channel);
+        return this;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

@@ -112,6 +112,33 @@ public class DefaultResponseQueryService extends QueryService<DefaultResponse> {
             if (criteria.getShowMultimedia() != null) {
                 specification = specification.and(buildSpecification(criteria.getShowMultimedia(), DefaultResponse_.showMultimedia));
             }
+            if (criteria.getChannelMultimediaId() != null) {
+                specification =
+                    specification.and(
+                        buildSpecification(
+                            criteria.getChannelMultimediaId(),
+                            root -> root.join(DefaultResponse_.channelMultimedias, JoinType.LEFT).get(Channel_.id)
+                        )
+                    );
+            }
+            if (criteria.getChannelVoiceId() != null) {
+                specification =
+                    specification.and(
+                        buildSpecification(
+                            criteria.getChannelVoiceId(),
+                            root -> root.join(DefaultResponse_.channelVoices, JoinType.LEFT).get(Channel_.id)
+                        )
+                    );
+            }
+            if (criteria.getChannelAnimationId() != null) {
+                specification =
+                    specification.and(
+                        buildSpecification(
+                            criteria.getChannelAnimationId(),
+                            root -> root.join(DefaultResponse_.channelAnimations, JoinType.LEFT).get(Channel_.id)
+                        )
+                    );
+            }
         }
         return specification;
     }

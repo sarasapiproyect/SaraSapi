@@ -128,10 +128,11 @@ export class DefaultResponseComponent implements OnInit {
     const pageToLoad: number = page ?? 1;
     const queryObject: any = {
       page: pageToLoad - 1,
-      size: 200,
+      size: this.itemsPerPage,
+      eagerload: true,
       sort: this.getSortQueryParam(predicate, ascending),
     };
-	if (this.searchvalue) {
+    if (this.searchvalue) {
        queryObject['defaultValueResponse.contains'] = this.searchvalue;
     }
     if (this.searchMultimediaType) {
@@ -171,8 +172,7 @@ export class DefaultResponseComponent implements OnInit {
       return [predicate + ',' + ascendingQueryParam];
     }
   }
-
- search(): void {
+  search(): void {
     this.load();
   }
 

@@ -1,3 +1,4 @@
+import { IChannel } from 'app/entities/channel/channel.model';
 import { Priority } from 'app/entities/enumerations/priority.model';
 import { MultimediaType } from 'app/entities/enumerations/multimedia-type.model';
 
@@ -17,6 +18,9 @@ export interface IDefaultResponse {
   saraAnimationUrl?: string | null;
   multimediaType?: MultimediaType | null;
   showMultimedia?: boolean | null;
+  channelMultimedias?: Pick<IChannel, 'id' | 'description'>[] | null;
+  channelVoices?: Pick<IChannel, 'id' | 'description'>[] | null;
+  channelAnimations?: Pick<IChannel, 'id' | 'description'>[] | null;
 }
 
 export type NewDefaultResponse = Omit<IDefaultResponse, 'id'> & { id: null };

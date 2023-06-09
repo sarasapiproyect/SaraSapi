@@ -33,6 +33,13 @@
             {{ defaultResponse.multimediaContentType }}, {{ byteSize(defaultResponse.multimedia) }}
           </div>
         </dd>
+        <dt><span jhiTranslate="saraBusinessInteligenteApp.defaultResponse.channelMultimedia">Channel Multimedia</span></dt>
+        <dd>
+          <span *ngFor="let channelMultimedia of defaultResponse.channelMultimedias; let last = last">
+            <a [routerLink]="['/channel', channelMultimedia.id, 'view']">{{ channelMultimedia.description }}</a
+            >{{ last ? '' : ', ' }}
+          </span>
+        </dd>
         <dt><span jhiTranslate="saraBusinessInteligenteApp.defaultResponse.multimediaVoice">Multimedia Voice</span></dt>
         <dd>
           <div *ngIf="defaultResponse.multimediaVoice">
@@ -43,6 +50,13 @@
             >
             {{ defaultResponse.multimediaVoiceContentType }}, {{ byteSize(defaultResponse.multimediaVoice) }}
           </div>
+        </dd>
+                <dt><span jhiTranslate="saraBusinessInteligenteApp.defaultResponse.channelVoice">Channel Voice</span></dt>
+        <dd>
+          <span *ngFor="let channelVoice of defaultResponse.channelVoices; let last = last">
+            <a [routerLink]="['/channel', channelVoice.id, 'view']">{{ channelVoice.description }}</a
+            >{{ last ? '' : ', ' }}
+          </span>
         </dd>
         <dt><span jhiTranslate="saraBusinessInteligenteApp.defaultResponse.saraAnimation">Sara Animation</span></dt>
         <dd>
@@ -56,7 +70,15 @@
             </a>
             {{ defaultResponse.saraAnimationContentType }}, {{ byteSize(defaultResponse.saraAnimation) }}
           </div>
+            </dd>
+        <dt><span jhiTranslate="saraBusinessInteligenteApp.defaultResponse.channelAnimation">Channel Animation</span></dt>
+        <dd>
+          <span *ngFor="let channelAnimation of defaultResponse.channelAnimations; let last = last">
+            <a [routerLink]="['/channel', channelAnimation.id, 'view']">{{ channelAnimation.description }}</a
+            >{{ last ? '' : ', ' }}
+          </span>
         </dd>
+     
         <dt><span jhiTranslate="saraBusinessInteligenteApp.defaultResponse.isEndConversation">Is End Conversation</span></dt>
         <dd>
           <span>{{ defaultResponse.isEndConversation }}</span>
