@@ -74,6 +74,41 @@
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>
+     <changeSet id="20230520213431-1-relations" author="jhipster">
+
+        <createTable tableName="rel_user_response__channel_multimedia">
+            <column name="channel_multimedia_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_response_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="user_response_id, channel_multimedia_id" tableName="rel_user_response__channel_multimedia"/>
+
+        <createTable tableName="rel_user_response__channel_voice">
+            <column name="channel_voice_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_response_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="user_response_id, channel_voice_id" tableName="rel_user_response__channel_voice"/>
+
+        <createTable tableName="rel_user_response__channel_animation">
+            <column name="channel_animation_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_response_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="user_response_id, channel_animation_id" tableName="rel_user_response__channel_animation"/>
+    </changeSet>
      <changeSet id="20230520213431-2" author="jhipster">
 			<addColumn tableName="user_response">
 	         <column name="response_type" type="varchar(255)">

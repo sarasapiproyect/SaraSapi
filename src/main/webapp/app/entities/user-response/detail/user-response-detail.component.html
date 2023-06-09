@@ -31,6 +31,13 @@
             {{ userResponse.multimediaContentType }}, {{ byteSize(userResponse.multimedia) }}
           </div>
         </dd>
+        <dt><span jhiTranslate="saraBusinessInteligenteApp.userResponse.channelMultimedia">Channel Multimedia</span></dt>
+        <dd>
+          <span *ngFor="let channelMultimedia of userResponse.channelMultimedias; let last = last">
+            <a [routerLink]="['/channel', channelMultimedia.id, 'view']">{{ channelMultimedia.description }}</a
+            >{{ last ? '' : ', ' }}
+          </span>
+        </dd>
         <dt><span jhiTranslate="saraBusinessInteligenteApp.userResponse.multimediaVoice">Multimedia Voice</span></dt>
         <dd>
           <div *ngIf="userResponse.multimediaVoice">
@@ -39,6 +46,13 @@
             >
             {{ userResponse.multimediaVoiceContentType }}, {{ byteSize(userResponse.multimediaVoice) }}
           </div>
+        </dd>
+        <dt><span jhiTranslate="saraBusinessInteligenteApp.userResponse.channelVoice">Channel Voice</span></dt>
+        <dd>
+          <span *ngFor="let channelVoice of userResponse.channelVoices; let last = last">
+            <a [routerLink]="['/channel', channelVoice.id, 'view']">{{ channelVoice.description }}</a
+            >{{ last ? '' : ', ' }}
+          </span>
         </dd>
         <dt><span jhiTranslate="saraBusinessInteligenteApp.userResponse.saraAnimation">Sara Animation</span></dt>
         <dd>
@@ -52,6 +66,13 @@
             </a>
             {{ userResponse.saraAnimationContentType }}, {{ byteSize(userResponse.saraAnimation) }}
           </div>
+        </dd>
+         <dt><span jhiTranslate="saraBusinessInteligenteApp.userResponse.channelAnimation">Channel Animation</span></dt>
+        <dd>
+          <span *ngFor="let channelAnimation of userResponse.channelAnimations; let last = last">
+            <a [routerLink]="['/channel', channelAnimation.id, 'view']">{{ channelAnimation.description }}</a
+            >{{ last ? '' : ', ' }}
+          </span>
         </dd>
         <dt><span jhiTranslate="saraBusinessInteligenteApp.userResponse.isEndConversation">Is End Conversation</span></dt>
         <dd>

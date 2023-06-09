@@ -81,6 +81,30 @@
       "ownerSide": false,
       "relationshipName": "intent",
       "relationshipType": "many-to-many"
+    },
+    {
+      "otherEntityField": "description",
+      "otherEntityName": "channel",
+      "otherEntityRelationshipName": "userResponseMultimedia",
+      "ownerSide": true,
+      "relationshipName": "channelMultimedia",
+      "relationshipType": "many-to-many"
+    },
+    {
+      "otherEntityField": "description",
+      "otherEntityName": "channel",
+      "otherEntityRelationshipName": "userResponseVoice",
+      "ownerSide": true,
+      "relationshipName": "channelVoice",
+      "relationshipType": "many-to-many"
+    },
+    {
+      "otherEntityField": "description",
+      "otherEntityName": "channel",
+      "otherEntityRelationshipName": "UserResponseAnimation",
+      "ownerSide": true,
+      "relationshipName": "channelAnimation",
+      "relationshipType": "many-to-many"
     }
   ],
   "service": "serviceClass"

@@ -14,7 +14,10 @@ type PartialWithRequiredKeyOf<T extends { id: unknown }> = Partial<Omit<T, 'id'>
  */
 type UserResponseFormGroupInput = IUserResponse | PartialWithRequiredKeyOf<NewUserResponse>;
 
-type UserResponseFormDefaults = Pick<NewUserResponse, 'id' | 'isEndConversation' | 'showMultimedia' | 'intents'>;
+type UserResponseFormDefaults = Pick<
+  NewUserResponse,
+  'id' | 'isEndConversation' | 'showMultimedia' | 'intents' | 'channelMultimedias' | 'channelVoices' | 'channelAnimations'
+>;
 
 type UserResponseFormGroupContent = {
   id: FormControl<IUserResponse['id'] | NewUserResponse['id']>;
@@ -35,6 +38,9 @@ type UserResponseFormGroupContent = {
   multimediaType: FormControl<IUserResponse['multimediaType']>;
   showMultimedia: FormControl<IUserResponse['showMultimedia']>;
   intents: FormControl<IUserResponse['intents']>;
+  channelMultimedias: FormControl<IUserResponse['channelMultimedias']>;
+  channelVoices: FormControl<IUserResponse['channelVoices']>;
+  channelAnimations: FormControl<IUserResponse['channelAnimations']>;
 };
 
 export type UserResponseFormGroup = FormGroup<UserResponseFormGroupContent>;
@@ -77,6 +83,9 @@ export class UserResponseFormService {
       }),
       showMultimedia: new FormControl(userResponseRawValue.showMultimedia),
       intents: new FormControl(userResponseRawValue.intents ?? []),
+      channelMultimedias: new FormControl(userResponseRawValue.channelMultimedias ?? []),
+      channelVoices: new FormControl(userResponseRawValue.channelVoices ?? []),
+      channelAnimations: new FormControl(userResponseRawValue.channelAnimations ?? []),
     });
   }
 
@@ -100,6 +109,9 @@ export class UserResponseFormService {
       isEndConversation: false,
       showMultimedia: false,
       intents: [],
+      channelMultimedias: [],
+      channelVoices: [],
+      channelAnimations: [],
     };
   }
 }

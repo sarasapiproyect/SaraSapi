@@ -2,7 +2,7 @@ import { Component, OnInit, ElementRef } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { finalize } from 'rxjs/operators';
+import { finalize, map } from 'rxjs/operators';
 
 import { UserResponseFormService, UserResponseFormGroup } from './user-response-form.service';
 import { IUserResponse } from '../user-response.model';
@@ -10,6 +10,8 @@ import { UserResponseService } from '../service/user-response.service';
 import { AlertError } from 'app/shared/alert/alert-error.model';
 import { EventManager, EventWithContent } from 'app/core/util/event-manager.service';
 import { DataUtils, FileLoadError } from 'app/core/util/data-util.service';
+import { IChannel } from 'app/entities/channel/channel.model';
+import { ChannelService } from 'app/entities/channel/service/channel.service';
 import { Priority } from 'app/entities/enumerations/priority.model';
 import { ResponseType } from 'app/entities/enumerations/response-type.model';
 import { MultimediaType } from 'app/entities/enumerations/multimedia-type.model';
@@ -25,6 +27,8 @@ export class UserResponseUpdateComponent implements OnInit {
   responseTypeValues = Object.keys(ResponseType);
   multimediaTypeValues = Object.keys(MultimediaType);
 
+  channelsSharedCollection: IChannel[] = [];
+
   editForm: UserResponseFormGroup = this.userResponseFormService.createUserResponseFormGroup();
 
   constructor(
@@ -32,9 +36,12 @@ export class UserResponseUpdateComponent implements OnInit {
     protected eventManager: EventManager,
     protected userResponseService: UserResponseService,
     protected userResponseFormService: UserResponseFormService,
+    protected channelService: ChannelService,
     protected elementRef: ElementRef,
     protected activatedRoute: ActivatedRoute
   ) {}
+
+  compareChannel = (o1: IChannel | null, o2: IChannel | null): boolean => this.channelService.compareChannel(o1, o2);
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ userResponse }) => {
@@ -42,6 +49,8 @@ export class UserResponseUpdateComponent implements OnInit {
       if (userResponse) {
         this.updateForm(userResponse);
       }
+
+      this.loadRelationshipsOptions();
     });
   }
 
@@ -108,5 +117,29 @@ export class UserResponseUpdateComponent implements OnInit {
   protected updateForm(userResponse: IUserResponse): void {
     this.userResponse = userResponse;
     this.userResponseFormService.resetForm(this.editForm, userResponse);
+
+    this.channelsSharedCollection = this.channelService.addChannelToCollectionIfMissing<IChannel>(
+      this.channelsSharedCollection,
+      ...(userResponse.channelMultimedias ?? []),
+      ...(userResponse.channelVoices ?? []),
+      ...(userResponse.channelAnimations ?? [])
+    );
+  }
+
+  protected loadRelationshipsOptions(): void {
+    this.channelService
+      .query()
+      .pipe(map((res: HttpResponse<IChannel[]>) => res.body ?? []))
+      .pipe(
+        map((channels: IChannel[]) =>
+          this.channelService.addChannelToCollectionIfMissing<IChannel>(
+            channels,
+            ...(this.userResponse?.channelMultimedias ?? []),
+            ...(this.userResponse?.channelVoices ?? []),
+            ...(this.userResponse?.channelAnimations ?? [])
+          )
+        )
+      )
+      .subscribe((channels: IChannel[]) => (this.channelsSharedCollection = channels));
   }
 }
