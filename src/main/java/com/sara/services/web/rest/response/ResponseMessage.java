@@ -29,6 +29,8 @@ public class ResponseMessage {
 	private Boolean isEndConversation;
 	
 	private String multimediaType;
+	
+	private Boolean showMultimedia;
 
 	public ResponseMessage() {
 		super();
@@ -137,6 +139,14 @@ public class ResponseMessage {
         public void setMultimediaType(String multimediaType) {
             this.multimediaType = multimediaType;
         }
+
+		public Boolean getShowMultimedia() {
+			return showMultimedia;
+		}
+
+		public void setShowMultimedia(Boolean showMultimedia) {
+			this.showMultimedia = showMultimedia;
+		}
 	
 	
 

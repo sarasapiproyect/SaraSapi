@@ -47,6 +47,7 @@ public class GeneralUtils {
             responseMessage.setMultimediaVoiceUrl(userResponse.getMultimediaVoiceUrl());
             responseMessage.setSaraAnimationeUrl(userResponse.getSaraAnimationUrl());
             responseMessage.setMultimediaType(userResponse.getMultimediaType()!=null?userResponse.getMultimediaType().getValue():null);
+            responseMessage.setShowMultimedia(userResponse.getShowMultimedia()!=null?userResponse.getShowMultimedia():false);
             return responseMessage;
          }
          
@@ -68,6 +69,7 @@ public class GeneralUtils {
             responseMessage.setMultimediaVoiceUrl(defaultResponse.getMultimediaVoiceUrl());
             responseMessage.setSaraAnimationeUrl(defaultResponse.getSaraAnimationUrl());
             responseMessage.setMultimediaType(defaultResponse.getMultimediaType()!=null?defaultResponse.getMultimediaType().getValue():null);
+            responseMessage.setShowMultimedia(defaultResponse.getShowMultimedia()!=null?defaultResponse.getShowMultimedia():false);
             return responseMessage;
          }
           
