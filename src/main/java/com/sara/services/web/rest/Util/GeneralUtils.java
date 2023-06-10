@@ -1,5 +1,6 @@
 package com.sara.services.web.rest.Util;
 
+import com.sara.services.domain.Channel;
 import com.sara.services.domain.DefaultResponse;
 import com.sara.services.domain.UserResponse;
 import java.util.List;
@@ -29,7 +30,8 @@ public class GeneralUtils {
 	        return aList;	
 	   }
 
-         public static ResponseMessage covertToResponseMessage(UserResponse userResponse){
+         public static ResponseMessage covertToResponseMessage(UserResponse userResponse,  List<Channel> channelsMultimedia,
+        		 List<Channel> channelsVoice,List<Channel> channelsAnimation){
             ResponseMessage responseMessage = new ResponseMessage();
             responseMessage.setIsEndConversation(userResponse.getIsEndConversation());
             responseMessage.setMultimedia(userResponse.getMultimedia());
@@ -48,10 +50,14 @@ public class GeneralUtils {
             responseMessage.setSaraAnimationeUrl(userResponse.getSaraAnimationUrl());
             responseMessage.setMultimediaType(userResponse.getMultimediaType()!=null?userResponse.getMultimediaType().getValue():null);
             responseMessage.setShowMultimedia(userResponse.getShowMultimedia()!=null?userResponse.getShowMultimedia():false);
+            responseMessage.setChannelsMultimedia(channelsMultimedia);
+            responseMessage.setChannelsVoice(channelsVoice);
+            responseMessage.setChannelsAnimation(channelsAnimation);
             return responseMessage;
          }
          
-          public static ResponseMessage covertToResponseMessage(DefaultResponse defaultResponse){
+          public static ResponseMessage covertToResponseMessage(DefaultResponse defaultResponse,List<Channel> channelsMultimedia,
+         		 List<Channel> channelsVoice,List<Channel> channelsAnimation){
             ResponseMessage responseMessage = new ResponseMessage();
             responseMessage.setIsEndConversation(defaultResponse.getIsEndConversation());
             responseMessage.setMultimedia(defaultResponse.getMultimedia());
@@ -70,6 +76,9 @@ public class GeneralUtils {
             responseMessage.setSaraAnimationeUrl(defaultResponse.getSaraAnimationUrl());
             responseMessage.setMultimediaType(defaultResponse.getMultimediaType()!=null?defaultResponse.getMultimediaType().getValue():null);
             responseMessage.setShowMultimedia(defaultResponse.getShowMultimedia()!=null?defaultResponse.getShowMultimedia():false);
+            responseMessage.setChannelsMultimedia(channelsMultimedia);
+            responseMessage.setChannelsVoice(channelsVoice);
+            responseMessage.setChannelsAnimation(channelsAnimation);
             return responseMessage;
          }
           

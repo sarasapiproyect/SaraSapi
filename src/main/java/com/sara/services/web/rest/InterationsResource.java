@@ -2,6 +2,7 @@ package com.sara.services.web.rest;
 
 import com.sapi.services.integration.methods.Sapi;
 import com.sapi.services.integration.response.ResponseGeneral;
+import com.sara.services.domain.Channel;
 import com.sara.services.domain.DefaultResponse;
 import com.sara.services.domain.Intent;
 import com.sara.services.domain.Interations;
@@ -9,6 +10,7 @@ import com.sara.services.domain.Training;
 import com.sara.services.domain.UserExpresion;
 import com.sara.services.domain.UserResponse;
 import com.sara.services.domain.enumeration.ResponseType;
+import com.sara.services.repository.ChannelRepository;
 import com.sara.services.repository.DefaultResponseRepository;
 import com.sara.services.repository.IntentRepository;
 import com.sara.services.repository.InterationsRepository;
@@ -83,6 +85,8 @@ public class InterationsResource {
     private final DefaultResponseRepository defaultResponseRepository;
 
     private final TrainingRepository trainingRepository;
+    
+    private final ChannelRepository channelRepository;
 
     public InterationsResource(
         InterationsService interationsService,
@@ -91,7 +95,8 @@ public class InterationsResource {
         IntentRepository intentRepository,
         UserExpresionService userExpresionService,
         DefaultResponseRepository defaultResponseRepository,
-        TrainingRepository trainingRepository
+        TrainingRepository trainingRepository,
+        ChannelRepository channelRepository
     ) {
         this.interationsService = interationsService;
         this.interationsRepository = interationsRepository;
@@ -100,6 +105,7 @@ public class InterationsResource {
         this.defaultResponseRepository = defaultResponseRepository;
         this.trainingRepository = trainingRepository;
         this.intentRepository = intentRepository;
+        this.channelRepository = channelRepository;
     }
 
     /**
@@ -276,6 +282,9 @@ public class InterationsResource {
                 Intent intent = intents.get(0);
                 List<UserResponse> userResponses = GeneralUtils.convertToList(intent.getUserResponses());
                 UserResponse userResponse = UserResponse.getRandomElement(userResponses);
+                List<Channel> channelsMultimedia =channelRepository.getChannelMultimediaByUserResponseId(userResponse.getId());
+                List<Channel> channelsVoice =channelRepository.getChannelVoiceByUserResponseId(userResponse.getId());
+                List<Channel> channelsAnimation =channelRepository.getChannelAnimationByUserResponseId(userResponse.getId());
                 if (userResponse.getResponseType().equals(ResponseType.QUERY)) {
                     log.info("UserResponse de tipo Query");
                     interations.setValueResponse(userResponse.getValueResponse());
@@ -302,7 +311,7 @@ public class InterationsResource {
                     }
                 }
                 interationsRepository.save(interations);
-                return GeneralUtils.covertToResponseMessage(userResponse);
+                return GeneralUtils.covertToResponseMessage(userResponse,channelsMultimedia,channelsVoice, channelsAnimation);
             } else {
                 Date date = new Date();
                 List<DefaultResponse> defaultResponses = defaultResponseRepository.findAll();
@@ -316,7 +325,10 @@ public class InterationsResource {
                 DefaultResponse defaultResponse = DefaultResponse.getRandomElement(defaultResponses);
                 interations.setValueResponse(defaultResponse.getDefaultValueResponse());
                 interationsRepository.save(interations);
-                return GeneralUtils.covertToResponseMessage(defaultResponse);
+                List<Channel> channelsMultimedia =channelRepository.getChannelMultimediaByUserResponseId(defaultResponse.getId());
+                List<Channel> channelsVoice =channelRepository.getChannelVoiceByUserResponseId(defaultResponse.getId());
+                List<Channel> channelsAnimation =channelRepository.getChannelAnimationByUserResponseId(defaultResponse.getId());
+                return GeneralUtils.covertToResponseMessage(defaultResponse,channelsMultimedia,channelsVoice, channelsAnimation);
             }
         } else {
             Date date = new Date();
@@ -331,7 +343,10 @@ public class InterationsResource {
             DefaultResponse defaultResponse = DefaultResponse.getRandomElement(defaultResponses);
             interations.setValueResponse(defaultResponse.getDefaultValueResponse());
             interationsRepository.save(interations);
-            return GeneralUtils.covertToResponseMessage(defaultResponse);
+            List<Channel> channelsMultimedia =channelRepository.getChannelMultimediaByUserResponseId(defaultResponse.getId());
+            List<Channel> channelsVoice =channelRepository.getChannelVoiceByUserResponseId(defaultResponse.getId());
+            List<Channel> channelsAnimation =channelRepository.getChannelAnimationByUserResponseId(defaultResponse.getId());
+            return GeneralUtils.covertToResponseMessage(defaultResponse,channelsMultimedia,channelsVoice, channelsAnimation);
         }
     }
 }
