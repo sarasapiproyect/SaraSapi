@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity DefaultResponse.
+    -->
+    <changeSet id="20230520213531-6" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="default_response_id"
+                                 baseTableName="rel_default_response__channel_multimedia"
+                                 constraintName="fk_rel_default_response__channe__default_response_3b_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="default_response"/>
+
+        <addForeignKeyConstraint baseColumnNames="channel_multimedia_id"
+                                 baseTableName="rel_default_response__channel_multimedia"
+                                 constraintName="fk_rel_default_response__channe__channel_multimedia_e1_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="channel"/>
+
+        <addForeignKeyConstraint baseColumnNames="default_response_id"
+                                 baseTableName="rel_default_response__channel_voice"
+                                 constraintName="fk_rel_default_response__channel_voice__default_response_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="default_response"/>
+
+        <addForeignKeyConstraint baseColumnNames="channel_voice_id"
+                                 baseTableName="rel_default_response__channel_voice"
+                                 constraintName="fk_rel_default_response__channel_voice__channel_voice_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="channel"/>
+
+        <addForeignKeyConstraint baseColumnNames="default_response_id"
+                                 baseTableName="rel_default_response__channel_animation"
+                                 constraintName="fk_rel_default_response__channel_animation__default_response_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="default_response"/>
+
+        <addForeignKeyConstraint baseColumnNames="channel_animation_id"
+                                 baseTableName="rel_default_response__channel_animation"
+                                 constraintName="fk_rel_default_response__channe__channel_animation_be_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="channel"/>
+    </changeSet>
+</databaseChangeLog>

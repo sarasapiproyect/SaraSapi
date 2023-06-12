@@ -9,6 +9,8 @@ import { of, Subject, from } from 'rxjs';
 import { DefaultResponseFormService } from './default-response-form.service';
 import { DefaultResponseService } from '../service/default-response.service';
 import { IDefaultResponse } from '../default-response.model';
+import { IChannel } from 'app/entities/channel/channel.model';
+import { ChannelService } from 'app/entities/channel/service/channel.service';
 
 import { DefaultResponseUpdateComponent } from './default-response-update.component';
 
@@ -18,6 +20,7 @@ describe('DefaultResponse Management Update Component', () => {
   let activatedRoute: ActivatedRoute;
   let defaultResponseFormService: DefaultResponseFormService;
   let defaultResponseService: DefaultResponseService;
+  let channelService: ChannelService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -40,17 +43,53 @@ describe('DefaultResponse Management Update Component', () => {
     activatedRoute = TestBed.inject(ActivatedRoute);
     defaultResponseFormService = TestBed.inject(DefaultResponseFormService);
     defaultResponseService = TestBed.inject(DefaultResponseService);
+    channelService = TestBed.inject(ChannelService);
 
     comp = fixture.componentInstance;
   });
 
   describe('ngOnInit', () => {
-    it('Should update editForm', () => {
+    it('Should call Channel query and add missing value', () => {
       const defaultResponse: IDefaultResponse = { id: 456 };
+      const channelMultimedias: IChannel[] = [{ id: 20041 }];
+      defaultResponse.channelMultimedias = channelMultimedias;
+      const channelVoices: IChannel[] = [{ id: 98099 }];
+      defaultResponse.channelVoices = channelVoices;
+      const channelAnimations: IChannel[] = [{ id: 25652 }];
+      defaultResponse.channelAnimations = channelAnimations;
+
+      const channelCollection: IChannel[] = [{ id: 70399 }];
+      jest.spyOn(channelService, 'query').mockReturnValue(of(new HttpResponse({ body: channelCollection })));
+      const additionalChannels = [...channelMultimedias, ...channelVoices, ...channelAnimations];
+      const expectedCollection: IChannel[] = [...additionalChannels, ...channelCollection];
+      jest.spyOn(channelService, 'addChannelToCollectionIfMissing').mockReturnValue(expectedCollection);
 
       activatedRoute.data = of({ defaultResponse });
       comp.ngOnInit();
 
+      expect(channelService.query).toHaveBeenCalled();
+      expect(channelService.addChannelToCollectionIfMissing).toHaveBeenCalledWith(
+        channelCollection,
+        ...additionalChannels.map(expect.objectContaining)
+      );
+      expect(comp.channelsSharedCollection).toEqual(expectedCollection);
+    });
+
+    it('Should update editForm', () => {
+      const defaultResponse: IDefaultResponse = { id: 456 };
+      const channelMultimedia: IChannel = { id: 16885 };
+      defaultResponse.channelMultimedias = [channelMultimedia];
+      const channelVoice: IChannel = { id: 83491 };
+      defaultResponse.channelVoices = [channelVoice];
+      const channelAnimation: IChannel = { id: 60470 };
+      defaultResponse.channelAnimations = [channelAnimation];
+
+      activatedRoute.data = of({ defaultResponse });
+      comp.ngOnInit();
+
+      expect(comp.channelsSharedCollection).toContain(channelMultimedia);
+      expect(comp.channelsSharedCollection).toContain(channelVoice);
+      expect(comp.channelsSharedCollection).toContain(channelAnimation);
       expect(comp.defaultResponse).toEqual(defaultResponse);
     });
   });
@@ -120,6 +159,18 @@ describe('DefaultResponse Management Update Component', () => {
       expect(defaultResponseService.update).toHaveBeenCalled();
       expect(comp.isSaving).toEqual(false);
       expect(comp.previousState).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('Compare relationships', () => {
+    describe('compareChannel', () => {
+      it('Should forward to channelService', () => {
+        const entity = { id: 123 };
+        const entity2 = { id: 456 };
+        jest.spyOn(channelService, 'compareChannel');
+        comp.compareChannel(entity, entity2);
+        expect(channelService.compareChannel).toHaveBeenCalledWith(entity, entity2);
+      });
     });
   });
 });

@@ -31,6 +31,9 @@ describe('DefaultResponse Form Service', () => {
             saraAnimationUrl: expect.any(Object),
             multimediaType: expect.any(Object),
             showMultimedia: expect.any(Object),
+            channelMultimedias: expect.any(Object),
+            channelVoices: expect.any(Object),
+            channelAnimations: expect.any(Object),
           })
         );
       });
@@ -52,6 +55,9 @@ describe('DefaultResponse Form Service', () => {
             saraAnimationUrl: expect.any(Object),
             multimediaType: expect.any(Object),
             showMultimedia: expect.any(Object),
+            channelMultimedias: expect.any(Object),
+            channelVoices: expect.any(Object),
+            channelAnimations: expect.any(Object),
           })
         );
       });

@@ -122,6 +122,24 @@
             formControlName="multimediaContentType"
           />
         </div>
+ <div class="row mb-3">
+          <label jhiTranslate="saraBusinessInteligenteApp.defaultResponse.channelMultimedia" for="field_channelMultimedias"
+            >Channel Multimedia</label
+          >
+          <select
+            class="form-control"
+            id="field_channelMultimedias"
+            data-cy="channelMultimedia"
+            multiple
+            name="channelMultimedias"
+            formControlName="channelMultimedias"
+            [compareWith]="compareChannel"
+          >
+            <option [ngValue]="channelOption" *ngFor="let channelOption of channelsSharedCollection">
+              {{ channelOption.description }}
+            </option>
+          </select>
+        </div>
 
         <div class="row mb-3">
           <label class="form-label" jhiTranslate="saraBusinessInteligenteApp.defaultResponse.multimediaVoice" for="field_multimediaVoice"
@@ -169,6 +187,23 @@
             id="field_multimediaVoiceContentType"
             formControlName="multimediaVoiceContentType"
           />
+        </div>
+        
+                <div class="row mb-3">
+          <label jhiTranslate="saraBusinessInteligenteApp.defaultResponse.channelVoice" for="field_channelVoices">Channel Voice</label>
+          <select
+            class="form-control"
+            id="field_channelVoices"
+            data-cy="channelVoice"
+            multiple
+            name="channelVoices"
+            formControlName="channelVoices"
+            [compareWith]="compareChannel"
+          >
+            <option [ngValue]="channelOption" *ngFor="let channelOption of channelsSharedCollection">
+              {{ channelOption.description }}
+            </option>
+          </select>
         </div>
 
         <div class="row mb-3">
@@ -219,6 +254,26 @@
             formControlName="saraAnimationContentType"
           />
         </div>
+        
+                <div class="row mb-3">
+          <label jhiTranslate="saraBusinessInteligenteApp.defaultResponse.channelAnimation" for="field_channelAnimations"
+            >Channel Animation</label
+          >
+          <select
+            class="form-control"
+            id="field_channelAnimations"
+            data-cy="channelAnimation"
+            multiple
+            name="channelAnimations"
+            formControlName="channelAnimations"
+            [compareWith]="compareChannel"
+          >
+            <option [ngValue]="channelOption" *ngFor="let channelOption of channelsSharedCollection">
+              {{ channelOption.description }}
+            </option>
+          </select>
+        </div>
+      </div>
 
         <div class="row mb-3">
           <label
@@ -313,9 +368,8 @@
             formControlName="showMultimedia"
           />
         </div>
-      </div>
 
-      <div>
+        <div>
         <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
           <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
         </button>

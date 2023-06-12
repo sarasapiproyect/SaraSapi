@@ -45,6 +45,41 @@
         </createTable>
     </changeSet>
 
+<changeSet id="20230520213531-1-relations" author="jhipster">
+
+        <createTable tableName="rel_default_response__channel_multimedia">
+            <column name="channel_multimedia_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="default_response_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="default_response_id, channel_multimedia_id" tableName="rel_default_response__channel_multimedia"/>
+
+        <createTable tableName="rel_default_response__channel_voice">
+            <column name="channel_voice_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="default_response_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="default_response_id, channel_voice_id" tableName="rel_default_response__channel_voice"/>
+
+        <createTable tableName="rel_default_response__channel_animation">
+            <column name="channel_animation_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="default_response_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="default_response_id, channel_animation_id" tableName="rel_default_response__channel_animation"/>
+    </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
 
     <!--

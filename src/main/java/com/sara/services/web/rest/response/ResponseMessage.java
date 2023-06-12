@@ -1,9 +1,12 @@
 package com.sara.services.web.rest.response;
 
+import java.util.List;
+
+import com.sara.services.domain.Channel;
 import com.sara.services.domain.enumeration.Priority;
 
 public class ResponseMessage {
-	
+
 	private String valueResponse;
 
 	private Priority priority;
@@ -11,25 +14,31 @@ public class ResponseMessage {
 	private byte[] multimedia;
 
 	private String multimediaContentType;
-	
+
+	List<Channel> channelsMultimedia;
+
 	private String multimediaUrl;
 
 	private byte[] multimediaVoice;
-	
+
+	List<Channel> channelsVoice;
+
 	private String multimediaVoiceUrl;
 
 	private String multimediaVoiceContentType;
 
 	private byte[] saraAnimation;
-	
+
+	List<Channel> channelsAnimation;
+
 	private String saraAnimationeUrl;
 
 	private String saraAnimationContentType;
 
 	private Boolean isEndConversation;
-	
+
 	private String multimediaType;
-	
+
 	private Boolean showMultimedia;
 
 	public ResponseMessage() {
@@ -132,22 +141,44 @@ public class ResponseMessage {
 		this.saraAnimationeUrl = saraAnimationeUrl;
 	}
 
-        public String getMultimediaType() {
-            return multimediaType;
-        }
+	public String getMultimediaType() {
+		return multimediaType;
+	}
 
-        public void setMultimediaType(String multimediaType) {
-            this.multimediaType = multimediaType;
-        }
+	public void setMultimediaType(String multimediaType) {
+		this.multimediaType = multimediaType;
+	}
 
-		public Boolean getShowMultimedia() {
-			return showMultimedia;
-		}
+	public Boolean getShowMultimedia() {
+		return showMultimedia;
+	}
 
-		public void setShowMultimedia(Boolean showMultimedia) {
-			this.showMultimedia = showMultimedia;
-		}
-	
-	
+	public void setShowMultimedia(Boolean showMultimedia) {
+		this.showMultimedia = showMultimedia;
+	}
+
+	public List<Channel> getChannelsMultimedia() {
+		return channelsMultimedia;
+	}
+
+	public void setChannelsMultimedia(List<Channel> channelsMultimedia) {
+		this.channelsMultimedia = channelsMultimedia;
+	}
+
+	public List<Channel> getChannelsVoice() {
+		return channelsVoice;
+	}
+
+	public void setChannelsVoice(List<Channel> channelsVoice) {
+		this.channelsVoice = channelsVoice;
+	}
+
+	public List<Channel> getChannelsAnimation() {
+		return channelsAnimation;
+	}
+
+	public void setChannelsAnimation(List<Channel> channelsAnimation) {
+		this.channelsAnimation = channelsAnimation;
+	}
 
 }

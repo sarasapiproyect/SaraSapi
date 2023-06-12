@@ -44,6 +44,11 @@ import { RouterModule } from '@angular/router';
         data: { pageTitle: 'saraBusinessInteligenteApp.chatbootStyle.home.title' },
         loadChildren: () => import('./chatboot-style/chatboot-style.module').then(m => m.ChatbootStyleModule),
       },
+      {
+        path: 'channel',
+        data: { pageTitle: 'saraBusinessInteligenteApp.channel.home.title' },
+        loadChildren: () => import('./channel/channel.module').then(m => m.ChannelModule),
+      },
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ]),
   ],

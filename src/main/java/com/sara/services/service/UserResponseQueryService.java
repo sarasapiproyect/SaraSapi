@@ -122,6 +122,33 @@ public class UserResponseQueryService extends QueryService<UserResponse> {
                         buildSpecification(criteria.getIntentId(), root -> root.join(UserResponse_.intents, JoinType.LEFT).get(Intent_.id))
                     );
             }
+            if (criteria.getChannelMultimediaId() != null) {
+                specification =
+                    specification.and(
+                        buildSpecification(
+                            criteria.getChannelMultimediaId(),
+                            root -> root.join(UserResponse_.channelMultimedias, JoinType.LEFT).get(Channel_.id)
+                        )
+                    );
+            }
+            if (criteria.getChannelVoiceId() != null) {
+                specification =
+                    specification.and(
+                        buildSpecification(
+                            criteria.getChannelVoiceId(),
+                            root -> root.join(UserResponse_.channelVoices, JoinType.LEFT).get(Channel_.id)
+                        )
+                    );
+            }
+            if (criteria.getChannelAnimationId() != null) {
+                specification =
+                    specification.and(
+                        buildSpecification(
+                            criteria.getChannelAnimationId(),
+                            root -> root.join(UserResponse_.channelAnimations, JoinType.LEFT).get(Channel_.id)
+                        )
+                    );
+            }
         }
         return specification;
     }

@@ -2,7 +2,7 @@ import { Component, OnInit, ElementRef } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { finalize } from 'rxjs/operators';
+import { finalize, map } from 'rxjs/operators';
 
 import { DefaultResponseFormService, DefaultResponseFormGroup } from './default-response-form.service';
 import { IDefaultResponse } from '../default-response.model';
@@ -10,6 +10,8 @@ import { DefaultResponseService } from '../service/default-response.service';
 import { AlertError } from 'app/shared/alert/alert-error.model';
 import { EventManager, EventWithContent } from 'app/core/util/event-manager.service';
 import { DataUtils, FileLoadError } from 'app/core/util/data-util.service';
+import { IChannel } from 'app/entities/channel/channel.model';
+import { ChannelService } from 'app/entities/channel/service/channel.service';
 import { Priority } from 'app/entities/enumerations/priority.model';
 import { MultimediaType } from 'app/entities/enumerations/multimedia-type.model';
 
@@ -23,6 +25,8 @@ export class DefaultResponseUpdateComponent implements OnInit {
   priorityValues = Object.keys(Priority);
   multimediaTypeValues = Object.keys(MultimediaType);
 
+  channelsSharedCollection: IChannel[] = [];
+
   editForm: DefaultResponseFormGroup = this.defaultResponseFormService.createDefaultResponseFormGroup();
 
   constructor(
@@ -30,9 +34,12 @@ export class DefaultResponseUpdateComponent implements OnInit {
     protected eventManager: EventManager,
     protected defaultResponseService: DefaultResponseService,
     protected defaultResponseFormService: DefaultResponseFormService,
+    protected channelService: ChannelService,
     protected elementRef: ElementRef,
     protected activatedRoute: ActivatedRoute
   ) {}
+
+  compareChannel = (o1: IChannel | null, o2: IChannel | null): boolean => this.channelService.compareChannel(o1, o2);
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ defaultResponse }) => {
@@ -40,6 +47,8 @@ export class DefaultResponseUpdateComponent implements OnInit {
       if (defaultResponse) {
         this.updateForm(defaultResponse);
       }
+
+      this.loadRelationshipsOptions();
     });
   }
 
@@ -106,5 +115,29 @@ export class DefaultResponseUpdateComponent implements OnInit {
   protected updateForm(defaultResponse: IDefaultResponse): void {
     this.defaultResponse = defaultResponse;
     this.defaultResponseFormService.resetForm(this.editForm, defaultResponse);
+
+    this.channelsSharedCollection = this.channelService.addChannelToCollectionIfMissing<IChannel>(
+      this.channelsSharedCollection,
+      ...(defaultResponse.channelMultimedias ?? []),
+      ...(defaultResponse.channelVoices ?? []),
+      ...(defaultResponse.channelAnimations ?? [])
+    );
+  }
+
+  protected loadRelationshipsOptions(): void {
+    this.channelService
+      .query()
+      .pipe(map((res: HttpResponse<IChannel[]>) => res.body ?? []))
+      .pipe(
+        map((channels: IChannel[]) =>
+          this.channelService.addChannelToCollectionIfMissing<IChannel>(
+            channels,
+            ...(this.defaultResponse?.channelMultimedias ?? []),
+            ...(this.defaultResponse?.channelVoices ?? []),
+            ...(this.defaultResponse?.channelAnimations ?? [])
+          )
+        )
+      )
+      .subscribe((channels: IChannel[]) => (this.channelsSharedCollection = channels));
   }
 }

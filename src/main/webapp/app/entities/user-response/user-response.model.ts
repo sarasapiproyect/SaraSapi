@@ -1,4 +1,5 @@
 import { IIntent } from 'app/entities/intent/intent.model';
+import { IChannel } from 'app/entities/channel/channel.model';
 import { Priority } from 'app/entities/enumerations/priority.model';
 import { ResponseType } from 'app/entities/enumerations/response-type.model';
 import { MultimediaType } from 'app/entities/enumerations/multimedia-type.model';
@@ -22,6 +23,9 @@ export interface IUserResponse {
   multimediaType?: MultimediaType | null;
   showMultimedia?: boolean | null;
   intents?: Pick<IIntent, 'id'>[] | null;
+  channelMultimedias?: Pick<IChannel, 'id' | 'description'>[] | null;
+  channelVoices?: Pick<IChannel, 'id' | 'description'>[] | null;
+  channelAnimations?: Pick<IChannel, 'id' | 'description'>[] | null;
 }
 
 export type NewUserResponse = Omit<IUserResponse, 'id'> & { id: null };

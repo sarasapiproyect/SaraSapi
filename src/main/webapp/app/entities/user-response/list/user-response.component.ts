@@ -32,6 +32,7 @@ export class UserResponseComponent implements OnInit {
   searchResponseType = '';
   searchPriority = '';
   searchMultimediaType = '';
+  
 
   constructor(
     protected userResponseService: UserResponseService,
@@ -130,9 +131,9 @@ export class UserResponseComponent implements OnInit {
     const queryObject: any = {
       page: pageToLoad - 1,
       size: this.itemsPerPage,
-      sort: this.getSortQueryParam(predicate, ascending)
+      eagerload: true,
+      sort: this.getSortQueryParam(predicate, ascending),
     };
-    
     if (this.searchvalue) {
        queryObject['valueResponse.contains'] = this.searchvalue;
     }
@@ -147,7 +148,7 @@ export class UserResponseComponent implements OnInit {
     }
     filterOptions?.forEach(filterOption => {
       queryObject[filterOption.name] = filterOption.values;
-    });    
+    });
     return this.userResponseService.query(queryObject).pipe(tap(() => (this.isLoading = false)));
   }
 
@@ -180,7 +181,6 @@ export class UserResponseComponent implements OnInit {
   search(): void {
     this.load();
   }
-
 
   reset(): void {
     this.searchvalue = '';

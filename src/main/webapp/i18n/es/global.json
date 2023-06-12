@@ -15,6 +15,7 @@
         "training": "Training",
         "interations": "Interations",
         "chatbootStyle": "Chatboot Style",
+        "channel": "Channel",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

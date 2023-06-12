@@ -34,6 +34,9 @@ describe('UserResponse Form Service', () => {
             multimediaType: expect.any(Object),
             showMultimedia: expect.any(Object),
             intents: expect.any(Object),
+            channelMultimedias: expect.any(Object),
+            channelVoices: expect.any(Object),
+            channelAnimations: expect.any(Object),
           })
         );
       });
@@ -58,6 +61,9 @@ describe('UserResponse Form Service', () => {
             multimediaType: expect.any(Object),
             showMultimedia: expect.any(Object),
             intents: expect.any(Object),
+            channelMultimedias: expect.any(Object),
+            channelVoices: expect.any(Object),
+            channelAnimations: expect.any(Object),
           })
         );
       });

@@ -14,7 +14,10 @@ type PartialWithRequiredKeyOf<T extends { id: unknown }> = Partial<Omit<T, 'id'>
  */
 type DefaultResponseFormGroupInput = IDefaultResponse | PartialWithRequiredKeyOf<NewDefaultResponse>;
 
-type DefaultResponseFormDefaults = Pick<NewDefaultResponse, 'id' | 'isEndConversation' | 'showMultimedia'>;
+type DefaultResponseFormDefaults = Pick<
+  NewDefaultResponse,
+  'id' | 'isEndConversation' | 'showMultimedia' | 'channelMultimedias' | 'channelVoices' | 'channelAnimations'
+>;
 
 type DefaultResponseFormGroupContent = {
   id: FormControl<IDefaultResponse['id'] | NewDefaultResponse['id']>;
@@ -32,6 +35,9 @@ type DefaultResponseFormGroupContent = {
   saraAnimationUrl: FormControl<IDefaultResponse['saraAnimationUrl']>;
   multimediaType: FormControl<IDefaultResponse['multimediaType']>;
   showMultimedia: FormControl<IDefaultResponse['showMultimedia']>;
+  channelMultimedias: FormControl<IDefaultResponse['channelMultimedias']>;
+  channelVoices: FormControl<IDefaultResponse['channelVoices']>;
+  channelAnimations: FormControl<IDefaultResponse['channelAnimations']>;
 };
 
 export type DefaultResponseFormGroup = FormGroup<DefaultResponseFormGroupContent>;
@@ -67,6 +73,9 @@ export class DefaultResponseFormService {
       saraAnimationUrl: new FormControl(defaultResponseRawValue.saraAnimationUrl),
       multimediaType: new FormControl(defaultResponseRawValue.multimediaType),
       showMultimedia: new FormControl(defaultResponseRawValue.showMultimedia),
+      channelMultimedias: new FormControl(defaultResponseRawValue.channelMultimedias ?? []),
+      channelVoices: new FormControl(defaultResponseRawValue.channelVoices ?? []),
+      channelAnimations: new FormControl(defaultResponseRawValue.channelAnimations ?? []),
     });
   }
 
@@ -89,6 +98,9 @@ export class DefaultResponseFormService {
       id: null,
       isEndConversation: false,
       showMultimedia: false,
+      channelMultimedias: [],
+      channelVoices: [],
+      channelAnimations: [],
     };
   }
 }

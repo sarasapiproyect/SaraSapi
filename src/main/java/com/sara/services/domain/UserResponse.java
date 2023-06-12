@@ -93,6 +93,33 @@ public class UserResponse implements Serializable {
     @JsonIgnoreProperties(value = { "languaje", "userExpresions", "userResponses" }, allowSetters = true)
     private Set<Intent> intents = new HashSet<>();
 
+    @ManyToMany
+    @JoinTable(
+        name = "rel_user_response__channel_multimedia",
+        joinColumns = @JoinColumn(name = "user_response_id"),
+        inverseJoinColumns = @JoinColumn(name = "channel_multimedia_id")
+    )
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    private Set<Channel> channelMultimedias = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(
+        name = "rel_user_response__channel_voice",
+        joinColumns = @JoinColumn(name = "user_response_id"),
+        inverseJoinColumns = @JoinColumn(name = "channel_voice_id")
+    )
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    private Set<Channel> channelVoices = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(
+        name = "rel_user_response__channel_animation",
+        joinColumns = @JoinColumn(name = "user_response_id"),
+        inverseJoinColumns = @JoinColumn(name = "channel_animation_id")
+    )
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    private Set<Channel> channelAnimations = new HashSet<>();
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public Long getId() {
@@ -347,6 +374,75 @@ public class UserResponse implements Serializable {
         return this;
     }
 
+    public Set<Channel> getChannelMultimedias() {
+        return this.channelMultimedias;
+    }
+
+    public void setChannelMultimedias(Set<Channel> channels) {
+        this.channelMultimedias = channels;
+    }
+
+    public UserResponse channelMultimedias(Set<Channel> channels) {
+        this.setChannelMultimedias(channels);
+        return this;
+    }
+
+    public UserResponse addChannelMultimedia(Channel channel) {
+        this.channelMultimedias.add(channel);
+        return this;
+    }
+
+    public UserResponse removeChannelMultimedia(Channel channel) {
+        this.channelMultimedias.remove(channel);
+        return this;
+    }
+
+    public Set<Channel> getChannelVoices() {
+        return this.channelVoices;
+    }
+
+    public void setChannelVoices(Set<Channel> channels) {
+        this.channelVoices = channels;
+    }
+
+    public UserResponse channelVoices(Set<Channel> channels) {
+        this.setChannelVoices(channels);
+        return this;
+    }
+
+    public UserResponse addChannelVoice(Channel channel) {
+        this.channelVoices.add(channel);
+        return this;
+    }
+
+    public UserResponse removeChannelVoice(Channel channel) {
+        this.channelVoices.remove(channel);
+        return this;
+    }
+
+    public Set<Channel> getChannelAnimations() {
+        return this.channelAnimations;
+    }
+
+    public void setChannelAnimations(Set<Channel> channels) {
+        this.channelAnimations = channels;
+    }
+
+    public UserResponse channelAnimations(Set<Channel> channels) {
+        this.setChannelAnimations(channels);
+        return this;
+    }
+
+    public UserResponse addChannelAnimation(Channel channel) {
+        this.channelAnimations.add(channel);
+        return this;
+    }
+
+    public UserResponse removeChannelAnimation(Channel channel) {
+        this.channelAnimations.remove(channel);
+        return this;
+    }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -389,6 +485,7 @@ public class UserResponse implements Serializable {
             ", showMultimedia='" + getShowMultimedia() + "'" +
             "}";
     }
+    
     public static UserResponse getRandomElement(List<UserResponse> userResponses)
     {
         Random rand = new Random();

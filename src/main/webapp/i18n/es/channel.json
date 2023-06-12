@@ -1,0 +1,24 @@
+{
+  "saraBusinessInteligenteApp": {
+    "channel": {
+      "home": {
+        "title": "Channels",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Crear nuevo Channel",
+        "createOrEditLabel": "Crear o editar Channel",
+        "notFound": "Ningún Channels encontrado"
+      },
+      "created": "Un nuevo Channel ha sido creado con el identificador {{ param }}",
+      "updated": "Un Channel ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Channel ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Channel {{ id }}?"
+      },
+      "detail": {
+        "title": "Channel"
+      },
+      "id": "ID",
+      "description": "Description"
+    }
+  }
+}

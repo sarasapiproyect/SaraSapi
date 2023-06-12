@@ -99,6 +99,12 @@ public class UserResponseCriteria implements Serializable, Criteria {
 
     private LongFilter intentId;
 
+    private LongFilter channelMultimediaId;
+
+    private LongFilter channelVoiceId;
+
+    private LongFilter channelAnimationId;
+
     private Boolean distinct;
 
     public UserResponseCriteria() {}
@@ -116,6 +122,9 @@ public class UserResponseCriteria implements Serializable, Criteria {
         this.multimediaType = other.multimediaType == null ? null : other.multimediaType.copy();
         this.showMultimedia = other.showMultimedia == null ? null : other.showMultimedia.copy();
         this.intentId = other.intentId == null ? null : other.intentId.copy();
+        this.channelMultimediaId = other.channelMultimediaId == null ? null : other.channelMultimediaId.copy();
+        this.channelVoiceId = other.channelVoiceId == null ? null : other.channelVoiceId.copy();
+        this.channelAnimationId = other.channelAnimationId == null ? null : other.channelAnimationId.copy();
         this.distinct = other.distinct;
     }
 
@@ -304,6 +313,51 @@ public class UserResponseCriteria implements Serializable, Criteria {
         this.intentId = intentId;
     }
 
+    public LongFilter getChannelMultimediaId() {
+        return channelMultimediaId;
+    }
+
+    public LongFilter channelMultimediaId() {
+        if (channelMultimediaId == null) {
+            channelMultimediaId = new LongFilter();
+        }
+        return channelMultimediaId;
+    }
+
+    public void setChannelMultimediaId(LongFilter channelMultimediaId) {
+        this.channelMultimediaId = channelMultimediaId;
+    }
+
+    public LongFilter getChannelVoiceId() {
+        return channelVoiceId;
+    }
+
+    public LongFilter channelVoiceId() {
+        if (channelVoiceId == null) {
+            channelVoiceId = new LongFilter();
+        }
+        return channelVoiceId;
+    }
+
+    public void setChannelVoiceId(LongFilter channelVoiceId) {
+        this.channelVoiceId = channelVoiceId;
+    }
+
+    public LongFilter getChannelAnimationId() {
+        return channelAnimationId;
+    }
+
+    public LongFilter channelAnimationId() {
+        if (channelAnimationId == null) {
+            channelAnimationId = new LongFilter();
+        }
+        return channelAnimationId;
+    }
+
+    public void setChannelAnimationId(LongFilter channelAnimationId) {
+        this.channelAnimationId = channelAnimationId;
+    }
+
     public Boolean getDistinct() {
         return distinct;
     }
@@ -334,6 +388,9 @@ public class UserResponseCriteria implements Serializable, Criteria {
             Objects.equals(multimediaType, that.multimediaType) &&
             Objects.equals(showMultimedia, that.showMultimedia) &&
             Objects.equals(intentId, that.intentId) &&
+            Objects.equals(channelMultimediaId, that.channelMultimediaId) &&
+            Objects.equals(channelVoiceId, that.channelVoiceId) &&
+            Objects.equals(channelAnimationId, that.channelAnimationId) &&
             Objects.equals(distinct, that.distinct)
         );
     }
@@ -353,6 +410,9 @@ public class UserResponseCriteria implements Serializable, Criteria {
             multimediaType,
             showMultimedia,
             intentId,
+            channelMultimediaId,
+            channelVoiceId,
+            channelAnimationId,
             distinct
         );
     }
@@ -373,6 +433,9 @@ public class UserResponseCriteria implements Serializable, Criteria {
             (multimediaType != null ? "multimediaType=" + multimediaType + ", " : "") +
             (showMultimedia != null ? "showMultimedia=" + showMultimedia + ", " : "") +
             (intentId != null ? "intentId=" + intentId + ", " : "") +
+            (channelMultimediaId != null ? "channelMultimediaId=" + channelMultimediaId + ", " : "") +
+            (channelVoiceId != null ? "channelVoiceId=" + channelVoiceId + ", " : "") +
+            (channelAnimationId != null ? "channelAnimationId=" + channelAnimationId + ", " : "") +
             (distinct != null ? "distinct=" + distinct + ", " : "") +
             "}";
     }

@@ -120,6 +120,15 @@ public class DefaultResponseService {
     }
 
     /**
+     * Get all the defaultResponses with eager load of many-to-many relationships.
+     *
+     * @return the list of entities.
+     */
+    public Page<DefaultResponse> findAllWithEagerRelationships(Pageable pageable) {
+        return defaultResponseRepository.findAllWithEagerRelationships(pageable);
+    }
+
+    /**
      * Get one defaultResponse by id.
      *
      * @param id the id of the entity.
@@ -128,7 +137,7 @@ public class DefaultResponseService {
     @Transactional(readOnly = true)
     public Optional<DefaultResponse> findOne(Long id) {
         log.debug("Request to get DefaultResponse : {}", id);
-        return defaultResponseRepository.findById(id);
+        return defaultResponseRepository.findOneWithEagerRelationships(id);
     }
 
     /**

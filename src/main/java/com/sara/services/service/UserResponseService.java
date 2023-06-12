@@ -126,6 +126,15 @@ public class UserResponseService {
     }
 
     /**
+     * Get all the userResponses with eager load of many-to-many relationships.
+     *
+     * @return the list of entities.
+     */
+    public Page<UserResponse> findAllWithEagerRelationships(Pageable pageable) {
+        return userResponseRepository.findAllWithEagerRelationships(pageable);
+    }
+
+    /**
      * Get one userResponse by id.
      *
      * @param id the id of the entity.
@@ -134,7 +143,7 @@ public class UserResponseService {
     @Transactional(readOnly = true)
     public Optional<UserResponse> findOne(Long id) {
         log.debug("Request to get UserResponse : {}", id);
-        return userResponseRepository.findById(id);
+        return userResponseRepository.findOneWithEagerRelationships(id);
     }
 
     /**
