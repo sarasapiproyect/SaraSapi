@@ -325,9 +325,9 @@ public class InterationsResource {
                 DefaultResponse defaultResponse = DefaultResponse.getRandomElement(defaultResponses);
                 interations.setValueResponse(defaultResponse.getDefaultValueResponse());
                 interationsRepository.save(interations);
-                List<Channel> channelsMultimedia =channelRepository.getChannelMultimediaByUserResponseId(defaultResponse.getId());
-                List<Channel> channelsVoice =channelRepository.getChannelVoiceByUserResponseId(defaultResponse.getId());
-                List<Channel> channelsAnimation =channelRepository.getChannelAnimationByUserResponseId(defaultResponse.getId());
+                List<Channel> channelsMultimedia =channelRepository.getChannelMultimediaByDefaultResponseId(defaultResponse.getId());
+                List<Channel> channelsVoice =channelRepository.getChannelVoiceByDefaultResponseId(defaultResponse.getId());
+                List<Channel> channelsAnimation =channelRepository.getChannelAnimationByDefaultResponseId(defaultResponse.getId());
                 return GeneralUtils.covertToResponseMessage(defaultResponse,channelsMultimedia,channelsVoice, channelsAnimation);
             }
         } else {
@@ -343,9 +343,9 @@ public class InterationsResource {
             DefaultResponse defaultResponse = DefaultResponse.getRandomElement(defaultResponses);
             interations.setValueResponse(defaultResponse.getDefaultValueResponse());
             interationsRepository.save(interations);
-            List<Channel> channelsMultimedia =channelRepository.getChannelMultimediaByUserResponseId(defaultResponse.getId());
-            List<Channel> channelsVoice =channelRepository.getChannelVoiceByUserResponseId(defaultResponse.getId());
-            List<Channel> channelsAnimation =channelRepository.getChannelAnimationByUserResponseId(defaultResponse.getId());
+            List<Channel> channelsMultimedia =channelRepository.getChannelMultimediaByDefaultResponseId(defaultResponse.getId());
+            List<Channel> channelsVoice =channelRepository.getChannelVoiceByDefaultResponseId(defaultResponse.getId());
+            List<Channel> channelsAnimation =channelRepository.getChannelAnimationByDefaultResponseId(defaultResponse.getId());
             return GeneralUtils.covertToResponseMessage(defaultResponse,channelsMultimedia,channelsVoice, channelsAnimation);
         }
     }

@@ -22,7 +22,7 @@ public interface ChannelRepository extends JpaRepository<Channel, Long> {
 	@Query(value = "SELECT * FROM SaraBusinessInteligente.channel c WHERE c.id in (SELECT dr.channel_voice_id FROM SaraBusinessInteligente.rel_default_response__channel_voice dr WHERE dr.default_response_id=:defaultResponseId);", nativeQuery = true)
 	List<Channel> getChannelVoiceByDefaultResponseId(@Param("defaultResponseId") Long defaultResponseId);
 
-	@Query(value = "SELECT * FROM SaraBusinessInteligente.channel c WHERE c.id in (SELECT dr.channel_animation_id FROM SaraBusinessInteligente.rel_default_response__channel_animation ur WHERE dr.default_response_id=:defaultResponseId);", nativeQuery = true)
+	@Query(value = "SELECT * FROM SaraBusinessInteligente.channel c WHERE c.id in (SELECT dr.channel_animation_id FROM SaraBusinessInteligente.rel_default_response__channel_animation dr WHERE dr.default_response_id=:defaultResponseId);", nativeQuery = true)
 	List<Channel> getChannelAnimationByDefaultResponseId(@Param("defaultResponseId") Long defaultResponseId);
 	
 	@Query(value = "SELECT * FROM SaraBusinessInteligente.channel c WHERE c.id in (SELECT ur.channel_multimedia_id FROM SaraBusinessInteligente.rel_user_response__channel_multimedia ur WHERE ur.user_response_id=:userResponseId);", nativeQuery = true)
