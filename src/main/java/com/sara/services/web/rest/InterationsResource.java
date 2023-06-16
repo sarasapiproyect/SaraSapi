@@ -1,29 +1,5 @@
 package com.sara.services.web.rest;
 
-import com.sapi.services.integration.methods.Sapi;
-import com.sapi.services.integration.response.ResponseGeneral;
-import com.sara.services.domain.Channel;
-import com.sara.services.domain.DefaultResponse;
-import com.sara.services.domain.Intent;
-import com.sara.services.domain.Interations;
-import com.sara.services.domain.Training;
-import com.sara.services.domain.UserExpresion;
-import com.sara.services.domain.UserResponse;
-import com.sara.services.domain.enumeration.ResponseType;
-import com.sara.services.repository.ChannelRepository;
-import com.sara.services.repository.DefaultResponseRepository;
-import com.sara.services.repository.IntentRepository;
-import com.sara.services.repository.InterationsRepository;
-import com.sara.services.repository.TrainingRepository;
-import com.sara.services.repository.UserExpresionRepository;
-import com.sara.services.service.InterationsQueryService;
-import com.sara.services.service.InterationsService;
-import com.sara.services.service.UserExpresionService;
-import com.sara.services.service.criteria.InterationsCriteria;
-import com.sara.services.web.rest.Util.GeneralUtils;
-import com.sara.services.web.rest.errors.BadRequestAlertException;
-import com.sara.services.web.rest.request.ReceiveMessageRequest;
-import com.sara.services.web.rest.response.ResponseMessage;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.Instant;
@@ -33,10 +9,12 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.core.Context;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -54,6 +32,31 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import com.sapi.services.integration.methods.Sapi;
+import com.sapi.services.integration.response.ResponseGeneral;
+import com.sara.services.domain.Channel;
+import com.sara.services.domain.DefaultResponse;
+import com.sara.services.domain.Intent;
+import com.sara.services.domain.Interations;
+import com.sara.services.domain.Training;
+import com.sara.services.domain.UserExpresion;
+import com.sara.services.domain.UserResponse;
+import com.sara.services.domain.enumeration.ResponseType;
+import com.sara.services.repository.ChannelRepository;
+import com.sara.services.repository.DefaultResponseRepository;
+import com.sara.services.repository.IntentRepository;
+import com.sara.services.repository.InterationsRepository;
+import com.sara.services.repository.TrainingRepository;
+import com.sara.services.service.InterationsQueryService;
+import com.sara.services.service.InterationsService;
+import com.sara.services.service.UserExpresionService;
+import com.sara.services.service.criteria.InterationsCriteria;
+import com.sara.services.web.rest.Util.GeneralUtils;
+import com.sara.services.web.rest.errors.BadRequestAlertException;
+import com.sara.services.web.rest.request.ReceiveMessageRequest;
+import com.sara.services.web.rest.response.ResponseMessage;
+
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
@@ -349,4 +352,6 @@ public class InterationsResource {
             return GeneralUtils.covertToResponseMessage(defaultResponse,channelsMultimedia,channelsVoice, channelsAnimation);
         }
     }
+    
+   
 }

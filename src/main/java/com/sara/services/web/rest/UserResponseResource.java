@@ -8,12 +8,15 @@ import com.sara.services.service.UserResponseQueryService;
 import com.sara.services.service.UserResponseService;
 import com.sara.services.service.criteria.UserResponseCriteria;
 import com.sara.services.web.rest.errors.BadRequestAlertException;
+import com.sara.services.web.rest.response.ResponseMenu;
+
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -320,5 +323,23 @@ public class UserResponseResource {
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
+    }
+    
+    @GetMapping("/getMenu")
+    public ResponseMenu getMenu() {
+	log.debug("REST request to getMenu : {}");
+        List<String> menu = new ArrayList<String>();
+        UserResponseCriteria criteria = new UserResponseCriteria();
+        List<UserResponse> userResponses = userResponseQueryService.findByCriteria(criteria);
+        for (UserResponse userResponse:userResponses) {
+            if (userResponse.getValueResponse().contains("&")){
+        	String[] opcions = userResponse.getValueResponse().split("&");
+        	for (int i=0; i<opcions.length; i++) {
+                    if (i < opcions.length - 1 && !menu.contains(opcions[i+1].replaceAll("\\s*$","")))
+                    	menu.add(opcions[i+1].replaceAll("\\s*$",""));
+        	}
+            }
+        }
+        return new ResponseMenu(menu);
     }
 }

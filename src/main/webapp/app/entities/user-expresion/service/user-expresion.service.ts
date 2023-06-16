@@ -47,7 +47,7 @@ export class UserExpresionService {
 
   queryCombo(req?: any): Observable<EntityArrayResponseType> {
     const page = 0; // Número de página deseada
-	const size = 150; // Tamaño de página deseado
+	const size = 150000; // Tamaño de página deseado
 
 // Construir los parámetros de paginación
 	let params = new HttpParams();
