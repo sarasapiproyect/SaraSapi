@@ -31,7 +31,7 @@ export class InterationsFormService {
   createInterationsFormGroup(interations: InterationsFormGroupInput = { id: null }): InterationsFormGroup {
     const interationsRawValue = {
       ...this.getFormDefaults(),
-      ...interations,elements[i + 1]
+      ...interations,
     };
     return new FormGroup<InterationsFormGroupContent>({
       id: new FormControl(
