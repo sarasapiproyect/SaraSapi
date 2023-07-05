@@ -36,6 +36,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.sapi.services.integration.methods.Sapi;
 import com.sapi.services.integration.response.ResponseGeneral;
 import com.sara.services.domain.Channel;
+import com.sara.services.domain.Contacts;
 import com.sara.services.domain.DefaultResponse;
 import com.sara.services.domain.Intent;
 import com.sara.services.domain.Interations;
@@ -48,15 +49,19 @@ import com.sara.services.repository.DefaultResponseRepository;
 import com.sara.services.repository.IntentRepository;
 import com.sara.services.repository.InterationsRepository;
 import com.sara.services.repository.TrainingRepository;
+import com.sara.services.service.ContactsQueryService;
+import com.sara.services.service.ContactsService;
 import com.sara.services.service.InterationsQueryService;
 import com.sara.services.service.InterationsService;
 import com.sara.services.service.UserExpresionService;
+import com.sara.services.service.criteria.ContactsCriteria;
 import com.sara.services.service.criteria.InterationsCriteria;
 import com.sara.services.web.rest.Util.GeneralUtils;
 import com.sara.services.web.rest.errors.BadRequestAlertException;
 import com.sara.services.web.rest.request.ReceiveMessageRequest;
 import com.sara.services.web.rest.response.ResponseMessage;
 
+import tech.jhipster.service.filter.StringFilter;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
@@ -90,6 +95,10 @@ public class InterationsResource {
     private final TrainingRepository trainingRepository;
     
     private final ChannelRepository channelRepository;
+    
+    private final ContactsQueryService contactsQueryService;
+    
+    private final ContactsService contactsService;
 
     public InterationsResource(
         InterationsService interationsService,
@@ -99,7 +108,9 @@ public class InterationsResource {
         UserExpresionService userExpresionService,
         DefaultResponseRepository defaultResponseRepository,
         TrainingRepository trainingRepository,
-        ChannelRepository channelRepository
+        ChannelRepository channelRepository,
+        ContactsQueryService contactsQueryService,
+        ContactsService contactsService
     ) {
         this.interationsService = interationsService;
         this.interationsRepository = interationsRepository;
@@ -109,6 +120,8 @@ public class InterationsResource {
         this.trainingRepository = trainingRepository;
         this.intentRepository = intentRepository;
         this.channelRepository = channelRepository;
+        this.contactsQueryService = contactsQueryService;
+        this.contactsService = contactsService;
     }
 
     /**
@@ -271,7 +284,25 @@ public class InterationsResource {
         interations.setValueRequest(request.getValueRequest());
         String[] fields = request.getValueRequest().split("&");
         List<UserExpresion> userExpresions = userExpresionService.findByValue(fields[0]);
-
+        Date date = new Date();
+        if (request.getPhoneNumber()!=null) {
+	        ContactsCriteria criteria = new ContactsCriteria();
+	        StringFilter phoneNumber = new StringFilter();
+	        phoneNumber.setEquals(request.getPhoneNumber());
+	        criteria.setPhoneNumber(phoneNumber);
+	        List<Contacts> contacts= contactsQueryService.findByCriteria(criteria);
+	        if (contacts.isEmpty()) {
+	        	Contacts contacto = new Contacts();
+	        	contacto.setSourceChannel(GeneralUtils.getOriginAplicationValue(request.getSourceChannel()));
+	        	contacto.setPhoneNumber(request.getPhoneNumber());
+	        	contacto.setLastDayConnection(Instant.ofEpochMilli(date.getTime()));
+	        	contactsService.save(contacto);
+	        }else {
+	        	contacts.get(0).setLastDayConnection(Instant.ofEpochMilli(date.getTime()));
+	        	contacts.get(0).setSourceChannel(GeneralUtils.getOriginAplicationValue(request.getSourceChannel()));
+	        	contactsService.update(contacts.get(0));
+	        }
+        }
         if (!userExpresions.isEmpty()) {
             List<Intent> intents = new ArrayList<Intent>();
 
@@ -316,7 +347,6 @@ public class InterationsResource {
                 interationsRepository.save(interations);
                 return GeneralUtils.covertToResponseMessage(userResponse,channelsMultimedia,channelsVoice, channelsAnimation);
             } else {
-                Date date = new Date();
                 List<DefaultResponse> defaultResponses = defaultResponseRepository.findAll();
                 Training training = new Training();
                 training.setCreationDate(Instant.ofEpochMilli(date.getTime()));
@@ -334,7 +364,6 @@ public class InterationsResource {
                 return GeneralUtils.covertToResponseMessage(defaultResponse,channelsMultimedia,channelsVoice, channelsAnimation);
             }
         } else {
-            Date date = new Date();
             List<DefaultResponse> defaultResponses = defaultResponseRepository.findAll();
             Training training = new Training();
             training.setCreationDate(Instant.ofEpochMilli(date.getTime()));

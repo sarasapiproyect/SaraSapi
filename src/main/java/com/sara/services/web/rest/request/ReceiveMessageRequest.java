@@ -7,6 +7,8 @@ public class ReceiveMessageRequest {
 	private String sourceChannel;
 	
 	private String sourceInfo;
+	
+	private String phoneNumber;
 
 	public String getValueRequest() {
 		return valueRequest;
@@ -32,5 +34,12 @@ public class ReceiveMessageRequest {
 		this.sourceInfo = sourceInfo;
 	}
 
-	
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
 }

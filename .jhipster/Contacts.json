@@ -1,0 +1,27 @@
+{
+  "changelogDate": "20230704203539",
+  "dto": "no",
+  "fields": [
+    {
+      "fieldName": "phoneNumber",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "maxlength"],
+      "fieldValidateRulesMaxlength": "15"
+    },
+    {
+      "fieldName": "lastDayConnection",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "sourceChannel",
+      "fieldType": "SourceChannel",
+      "fieldValues": "WHATSAPP,TELEGRAM,WEB"
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "Contacts",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [],
+  "service": "serviceClass"
+}

@@ -29,7 +29,8 @@
       "Training",
       "Interations",
       "ChatbootStyle",
-      "Channel"
+      "Channel",
+      "Contacts"
     ],
     "entitySuffix": "",
     "gradleEnterpriseHost": "",
@@ -37,7 +38,7 @@
     "jhipsterVersion": "7.9.3",
     "jwtSecretKey": "YjMzMTNkYzBmYzE1NTFkY2RlYzkxOGMzMWZmNzhlNGQ4NDBmODIxOWI2OWUyZjJlNTVlNjM5NzU2ZWRmOWRhMjdlYjRhYWJkOWQxZjEyN2NmZmMwMDVlYjMyMDA5OGM3MzYyMDVlNDAxNmYzZWNkNTA2MGViNjEzYTA3YWY3ZmU=",
     "languages": ["en", "es"],
-    "lastLiquibaseTimestamp": 1686345653000,
+    "lastLiquibaseTimestamp": 1688502939000,
     "messageBroker": false,
     "nativeLanguage": "en",
     "otherModules": [],

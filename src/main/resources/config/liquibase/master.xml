@@ -20,8 +20,12 @@
     <include file="config/liquibase/changelog/20230520213731_added_entity_Interations.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20230520213831_added_entity_ChatbootStyle.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20230609212053_added_entity_Channel.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230704203539_added_entity_Contacts.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="config/liquibase/changelog/20230520213231_added_entity_constraints_Intent.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230520213431_added_entity_constraints_UserResponse.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230520213531_added_entity_constraints_DefaultResponse.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230704203539_added_entity_constraints_Contacts.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
 </databaseChangeLog>

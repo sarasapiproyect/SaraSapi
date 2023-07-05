@@ -70,6 +70,7 @@ public class CacheConfiguration {
             createCache(cm, com.sara.services.domain.DefaultResponse.class.getName() + ".channelMultimedias");
             createCache(cm, com.sara.services.domain.DefaultResponse.class.getName() + ".channelVoices");
             createCache(cm, com.sara.services.domain.DefaultResponse.class.getName() + ".channelAnimations");
+            createCache(cm, com.sara.services.domain.Contacts.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

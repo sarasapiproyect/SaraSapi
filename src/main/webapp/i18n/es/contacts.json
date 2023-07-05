@@ -1,0 +1,26 @@
+{
+  "saraBusinessInteligenteApp": {
+    "contacts": {
+      "home": {
+        "title": "Contacts",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Crear nuevo Contacts",
+        "createOrEditLabel": "Crear o editar Contacts",
+        "notFound": "Ningún Contacts encontrado"
+      },
+      "created": "Un nuevo Contacts ha sido creado con el identificador {{ param }}",
+      "updated": "Un Contacts ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Contacts ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Contacts {{ id }}?"
+      },
+      "detail": {
+        "title": "Contacts"
+      },
+      "id": "ID",
+      "phoneNumber": "Phone Number",
+      "lastDayConnection": "Last Day Connection",
+      "sourceChannel": "Source Channel"
+    }
+  }
+}
