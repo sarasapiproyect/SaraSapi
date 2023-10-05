@@ -214,9 +214,9 @@ jhipster:
   api-docs:
     default-include-pattern: ${server.servlet.context-path:}/api/**
     management-include-pattern: ${server.servlet.context-path:}/management/**
-    title: Sara Business Inteligente API
-    description: Sara Business Inteligente API documentation
-    version: 0.0.1
+    title: Petete Business Inteligente API
+    description: Petete Business Inteligente API documentation
+    version: 1.0
     terms-of-service-url:
     contact-name:
     contact-url:

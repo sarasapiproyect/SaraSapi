@@ -1,19 +1,19 @@
 {
   "home": {
-    "title": "Welcome, Sara Training Modulo!",
+    "title": "Welcome, Petete Training Modulo!",
     "subtitle": "This is your homepage",
     "logged": {
       "message": "You are logged in as user \"{{username}}\"."
     },
-    "question": "If you have any question on Sara:",
+    "question": "If you have any question on Petete:",
     "link": {
-      "homepage": "Sapi homepage",
-      "stackoverflow": "Sara on Stack Overflow",
-      "bugtracker": "Sara bug tracker",
-      "chat": "Sara public chat room",
+      "homepage": "Petete homepage",
+      "stackoverflow": "Petete on Stack Overflow",
+      "bugtracker": "Petete bug tracker",
+      "chat": "Petete public chat room",
       "follow": "follow @sapi on Twitter"
     },
-    "like": "If you like Sara, don't forget to give us a star on",
+    "like": "If you like Petete, don't forget to give us a star on",
     "github": "GitHub"
   }
 }
