@@ -20,6 +20,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
@@ -60,6 +61,7 @@ public class IntentResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/intents")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Intent> createIntent(@Valid @RequestBody Intent intent) throws URISyntaxException {
         log.debug("REST request to save Intent : {}", intent);
         if (intent.getId() != null) {
@@ -83,6 +85,7 @@ public class IntentResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/intents/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Intent> updateIntent(
         @PathVariable(value = "id", required = false) final Long id,
         @Valid @RequestBody Intent intent
@@ -118,6 +121,7 @@ public class IntentResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PatchMapping(value = "/intents/{id}", consumes = { "application/json", "application/merge-patch+json" })
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Intent> partialUpdateIntent(
         @PathVariable(value = "id", required = false) final Long id,
         @NotNull @RequestBody Intent intent
@@ -150,6 +154,7 @@ public class IntentResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of intents in body.
      */
     @GetMapping("/intents")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<List<Intent>> getAllIntents(
         IntentCriteria criteria,
         @org.springdoc.api.annotations.ParameterObject Pageable pageable
@@ -167,6 +172,7 @@ public class IntentResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
      */
     @GetMapping("/intents/count")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Long> countIntents(IntentCriteria criteria) {
         log.debug("REST request to count Intents by criteria: {}", criteria);
         return ResponseEntity.ok().body(intentQueryService.countByCriteria(criteria));
@@ -179,6 +185,7 @@ public class IntentResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the intent, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/intents/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Intent> getIntent(@PathVariable Long id) {
         log.debug("REST request to get Intent : {}", id);
         Optional<Intent> intent = intentService.findOne(id);
@@ -192,6 +199,7 @@ public class IntentResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/intents/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Void> deleteIntent(@PathVariable Long id) {
         log.debug("REST request to delete Intent : {}", id);
         intentService.delete(id);

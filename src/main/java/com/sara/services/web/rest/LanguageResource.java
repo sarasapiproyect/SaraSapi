@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import tech.jhipster.web.util.HeaderUtil;
@@ -48,6 +49,7 @@ public class LanguageResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/languages")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Language> createLanguage(@Valid @RequestBody Language language) throws URISyntaxException {
         log.debug("REST request to save Language : {}", language);
         if (language.getId() != null) {
@@ -71,6 +73,7 @@ public class LanguageResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/languages/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Language> updateLanguage(
         @PathVariable(value = "id", required = false) final Long id,
         @Valid @RequestBody Language language
@@ -106,6 +109,7 @@ public class LanguageResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PatchMapping(value = "/languages/{id}", consumes = { "application/json", "application/merge-patch+json" })
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Language> partialUpdateLanguage(
         @PathVariable(value = "id", required = false) final Long id,
         @NotNull @RequestBody Language language
@@ -160,6 +164,7 @@ public class LanguageResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of languages in body.
      */
     @GetMapping("/languages")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public List<Language> getAllLanguages() {
         log.debug("REST request to get all Languages");
         return languageRepository.findAll();
@@ -172,6 +177,7 @@ public class LanguageResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the language, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/languages/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Language> getLanguage(@PathVariable Long id) {
         log.debug("REST request to get Language : {}", id);
         Optional<Language> language = languageRepository.findById(id);
@@ -185,6 +191,7 @@ public class LanguageResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/languages/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Void> deleteLanguage(@PathVariable Long id) {
         log.debug("REST request to delete Language : {}", id);
         languageRepository.deleteById(id);

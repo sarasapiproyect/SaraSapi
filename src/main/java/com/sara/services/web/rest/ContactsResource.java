@@ -20,6 +20,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
@@ -64,6 +65,7 @@ public class ContactsResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/contacts")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Contacts> createContacts(@Valid @RequestBody Contacts contacts) throws URISyntaxException {
         log.debug("REST request to save Contacts : {}", contacts);
         if (contacts.getId() != null) {
@@ -87,6 +89,7 @@ public class ContactsResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/contacts/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Contacts> updateContacts(
         @PathVariable(value = "id", required = false) final Long id,
         @Valid @RequestBody Contacts contacts
@@ -122,6 +125,7 @@ public class ContactsResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PatchMapping(value = "/contacts/{id}", consumes = { "application/json", "application/merge-patch+json" })
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Contacts> partialUpdateContacts(
         @PathVariable(value = "id", required = false) final Long id,
         @NotNull @RequestBody Contacts contacts
@@ -154,6 +158,7 @@ public class ContactsResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of contacts in body.
      */
     @GetMapping("/contacts")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<List<Contacts>> getAllContacts(
         ContactsCriteria criteria,
         @org.springdoc.api.annotations.ParameterObject Pageable pageable
@@ -171,6 +176,7 @@ public class ContactsResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
      */
     @GetMapping("/contacts/count")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Long> countContacts(ContactsCriteria criteria) {
         log.debug("REST request to count Contacts by criteria: {}", criteria);
         return ResponseEntity.ok().body(contactsQueryService.countByCriteria(criteria));
@@ -183,6 +189,7 @@ public class ContactsResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the contacts, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/contacts/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Contacts> getContacts(@PathVariable Long id) {
         log.debug("REST request to get Contacts : {}", id);
         Optional<Contacts> contacts = contactsService.findOne(id);
@@ -196,6 +203,7 @@ public class ContactsResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/contacts/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Void> deleteContacts(@PathVariable Long id) {
         log.debug("REST request to delete Contacts : {}", id);
         contactsService.delete(id);

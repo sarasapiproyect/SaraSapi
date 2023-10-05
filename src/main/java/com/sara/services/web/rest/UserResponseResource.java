@@ -31,6 +31,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
@@ -77,6 +78,7 @@ public class UserResponseResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/user-responses")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<UserResponse> createUserResponse(@Valid @RequestBody UserResponse userResponse) throws URISyntaxException {
         log.debug("REST request to save UserResponse : {}", userResponse);
         if (userResponse.getId() != null) {
@@ -154,6 +156,7 @@ public class UserResponseResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/user-responses/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<UserResponse> updateUserResponse(
         @PathVariable(value = "id", required = false) final Long id,
         @Valid @RequestBody UserResponse userResponse
@@ -242,6 +245,7 @@ public class UserResponseResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PatchMapping(value = "/user-responses/{id}", consumes = { "application/json", "application/merge-patch+json" })
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<UserResponse> partialUpdateUserResponse(
         @PathVariable(value = "id", required = false) final Long id,
         @NotNull @RequestBody UserResponse userResponse
@@ -274,6 +278,7 @@ public class UserResponseResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of userResponses in body.
      */
     @GetMapping("/user-responses")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<List<UserResponse>> getAllUserResponses(
         UserResponseCriteria criteria,
         @org.springdoc.api.annotations.ParameterObject Pageable pageable
@@ -291,6 +296,7 @@ public class UserResponseResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
      */
     @GetMapping("/user-responses/count")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Long> countUserResponses(UserResponseCriteria criteria) {
         log.debug("REST request to count UserResponses by criteria: {}", criteria);
         return ResponseEntity.ok().body(userResponseQueryService.countByCriteria(criteria));
@@ -303,6 +309,7 @@ public class UserResponseResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the userResponse, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/user-responses/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<UserResponse> getUserResponse(@PathVariable Long id) {
         log.debug("REST request to get UserResponse : {}", id);
         Optional<UserResponse> userResponse = userResponseService.findOne(id);
@@ -316,6 +323,7 @@ public class UserResponseResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/user-responses/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Void> deleteUserResponse(@PathVariable Long id) {
         log.debug("REST request to delete UserResponse : {}", id);
         userResponseService.delete(id);
@@ -326,6 +334,7 @@ public class UserResponseResource {
     }
     
     @GetMapping("/getMenu")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseMenu getMenu() {
 	log.debug("REST request to getMenu : {}");
         List<String> menu = new ArrayList<String>();

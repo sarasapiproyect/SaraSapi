@@ -28,6 +28,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
@@ -74,6 +75,7 @@ public class DefaultResponseResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/default-responses")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<DefaultResponse> createDefaultResponse(@Valid @RequestBody DefaultResponse defaultResponse)
         throws URISyntaxException {
         log.debug("REST request to save DefaultResponse : {}", defaultResponse);
@@ -152,6 +154,7 @@ public class DefaultResponseResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/default-responses/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<DefaultResponse> updateDefaultResponse(
         @PathVariable(value = "id", required = false) final Long id,
         @Valid @RequestBody DefaultResponse defaultResponse
@@ -240,6 +243,7 @@ public class DefaultResponseResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PatchMapping(value = "/default-responses/{id}", consumes = { "application/json", "application/merge-patch+json" })
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<DefaultResponse> partialUpdateDefaultResponse(
         @PathVariable(value = "id", required = false) final Long id,
         @NotNull @RequestBody DefaultResponse defaultResponse
@@ -272,6 +276,7 @@ public class DefaultResponseResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of defaultResponses in body.
      */
     @GetMapping("/default-responses")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<List<DefaultResponse>> getAllDefaultResponses(
         DefaultResponseCriteria criteria,
         @org.springdoc.api.annotations.ParameterObject Pageable pageable
@@ -289,6 +294,7 @@ public class DefaultResponseResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
      */
     @GetMapping("/default-responses/count")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Long> countDefaultResponses(DefaultResponseCriteria criteria) {
         log.debug("REST request to count DefaultResponses by criteria: {}", criteria);
         return ResponseEntity.ok().body(defaultResponseQueryService.countByCriteria(criteria));
@@ -301,6 +307,7 @@ public class DefaultResponseResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the defaultResponse, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/default-responses/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<DefaultResponse> getDefaultResponse(@PathVariable Long id) {
         log.debug("REST request to get DefaultResponse : {}", id);
         Optional<DefaultResponse> defaultResponse = defaultResponseService.findOne(id);
@@ -314,6 +321,7 @@ public class DefaultResponseResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/default-responses/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Void> deleteDefaultResponse(@PathVariable Long id) {
         log.debug("REST request to delete DefaultResponse : {}", id);
         defaultResponseService.delete(id);

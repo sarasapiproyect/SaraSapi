@@ -20,6 +20,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
@@ -64,6 +65,7 @@ public class TrainingResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/trainings")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Training> createTraining(@Valid @RequestBody Training training) throws URISyntaxException {
         log.debug("REST request to save Training : {}", training);
         if (training.getId() != null) {
@@ -87,6 +89,7 @@ public class TrainingResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/trainings/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Training> updateTraining(
         @PathVariable(value = "id", required = false) final Long id,
         @Valid @RequestBody Training training
@@ -122,6 +125,7 @@ public class TrainingResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PatchMapping(value = "/trainings/{id}", consumes = { "application/json", "application/merge-patch+json" })
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Training> partialUpdateTraining(
         @PathVariable(value = "id", required = false) final Long id,
         @NotNull @RequestBody Training training
@@ -154,6 +158,7 @@ public class TrainingResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of trainings in body.
      */
     @GetMapping("/trainings")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<List<Training>> getAllTrainings(
         TrainingCriteria criteria,
         @org.springdoc.api.annotations.ParameterObject Pageable pageable
@@ -171,6 +176,7 @@ public class TrainingResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
      */
     @GetMapping("/trainings/count")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Long> countTrainings(TrainingCriteria criteria) {
         log.debug("REST request to count Trainings by criteria: {}", criteria);
         return ResponseEntity.ok().body(trainingQueryService.countByCriteria(criteria));
@@ -183,6 +189,7 @@ public class TrainingResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the training, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/trainings/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Training> getTraining(@PathVariable Long id) {
         log.debug("REST request to get Training : {}", id);
         Optional<Training> training = trainingService.findOne(id);
@@ -196,6 +203,7 @@ public class TrainingResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/trainings/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Void> deleteTraining(@PathVariable Long id) {
         log.debug("REST request to delete Training : {}", id);
         trainingService.delete(id);

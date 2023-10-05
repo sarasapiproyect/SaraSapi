@@ -11,6 +11,8 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+
+import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
@@ -20,6 +22,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
@@ -64,6 +67,7 @@ public class UserExpresionResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/user-expresions")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<UserExpresion> createUserExpresion(@Valid @RequestBody UserExpresion userExpresion) throws URISyntaxException {
         log.debug("REST request to save UserExpresion : {}", userExpresion);
         if (userExpresion.getId() != null) {
@@ -89,6 +93,7 @@ public class UserExpresionResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/user-expresions/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<UserExpresion> updateUserExpresion(
         @PathVariable(value = "id", required = false) final Long id,
         @Valid @RequestBody UserExpresion userExpresion
@@ -124,6 +129,7 @@ public class UserExpresionResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PatchMapping(value = "/user-expresions/{id}", consumes = { "application/json", "application/merge-patch+json" })
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<UserExpresion> partialUpdateUserExpresion(
         @PathVariable(value = "id", required = false) final Long id,
         @NotNull @RequestBody UserExpresion userExpresion
@@ -156,6 +162,7 @@ public class UserExpresionResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of userExpresions in body.
      */
     @GetMapping("/user-expresions")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<List<UserExpresion>> getAllUserExpresions(
         UserExpresionCriteria criteria,
         @org.springdoc.api.annotations.ParameterObject Pageable pageable
@@ -175,6 +182,7 @@ public class UserExpresionResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
      */
     @GetMapping("/user-expresions/count")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Long> countUserExpresions(UserExpresionCriteria criteria) {
         log.debug("REST request to count UserExpresions by criteria: {}", criteria);
         return ResponseEntity.ok().body(userExpresionQueryService.countByCriteria(criteria));
@@ -187,6 +195,7 @@ public class UserExpresionResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the userExpresion, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/user-expresions/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<UserExpresion> getUserExpresion(@PathVariable Long id) {
         log.debug("REST request to get UserExpresion : {}", id);
         Optional<UserExpresion> userExpresion = userExpresionService.findOne(id);
@@ -200,6 +209,7 @@ public class UserExpresionResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/user-expresions/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Void> deleteUserExpresion(@PathVariable Long id) {
         log.debug("REST request to delete UserExpresion : {}", id);
         userExpresionService.delete(id);

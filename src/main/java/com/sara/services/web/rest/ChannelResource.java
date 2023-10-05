@@ -18,6 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -54,6 +55,7 @@ public class ChannelResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/channels")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Channel> createChannel(@Valid @RequestBody Channel channel) throws URISyntaxException {
         log.debug("REST request to save Channel : {}", channel);
         if (channel.getId() != null) {
@@ -77,6 +79,7 @@ public class ChannelResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/channels/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Channel> updateChannel(
         @PathVariable(value = "id", required = false) final Long id,
         @Valid @RequestBody Channel channel
@@ -112,6 +115,7 @@ public class ChannelResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PatchMapping(value = "/channels/{id}", consumes = { "application/json", "application/merge-patch+json" })
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Channel> partialUpdateChannel(
         @PathVariable(value = "id", required = false) final Long id,
         @NotNull @RequestBody Channel channel
@@ -152,6 +156,7 @@ public class ChannelResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of channels in body.
      */
     @GetMapping("/channels")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<List<Channel>> getAllChannels(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
         log.debug("REST request to get a page of Channels");
         Page<Channel> page = channelRepository.findAll(pageable);
@@ -166,6 +171,7 @@ public class ChannelResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the channel, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/channels/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Channel> getChannel(@PathVariable Long id) {
         log.debug("REST request to get Channel : {}", id);
         Optional<Channel> channel = channelRepository.findById(id);
@@ -179,6 +185,7 @@ public class ChannelResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/channels/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Void> deleteChannel(@PathVariable Long id) {
         log.debug("REST request to delete Channel : {}", id);
         channelRepository.deleteById(id);

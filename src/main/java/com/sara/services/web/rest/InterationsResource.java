@@ -10,6 +10,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
+import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -22,6 +23,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -49,6 +51,7 @@ import com.sara.services.repository.DefaultResponseRepository;
 import com.sara.services.repository.IntentRepository;
 import com.sara.services.repository.InterationsRepository;
 import com.sara.services.repository.TrainingRepository;
+import com.sara.services.security.AuthoritiesConstants;
 import com.sara.services.service.ContactsQueryService;
 import com.sara.services.service.ContactsService;
 import com.sara.services.service.InterationsQueryService;
@@ -132,6 +135,7 @@ public class InterationsResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/interations")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Interations> createInterations(@Valid @RequestBody Interations interations) throws URISyntaxException {
         log.debug("REST request to save Interations : {}", interations);
         if (interations.getId() != null) {
@@ -155,6 +159,7 @@ public class InterationsResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/interations/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Interations> updateInterations(
         @PathVariable(value = "id", required = false) final Long id,
         @Valid @RequestBody Interations interations
@@ -190,6 +195,7 @@ public class InterationsResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PatchMapping(value = "/interations/{id}", consumes = { "application/json", "application/merge-patch+json" })
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Interations> partialUpdateInterations(
         @PathVariable(value = "id", required = false) final Long id,
         @NotNull @RequestBody Interations interations
@@ -222,6 +228,7 @@ public class InterationsResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of interations in body.
      */
     @GetMapping("/interations")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<List<Interations>> getAllInterations(
         InterationsCriteria criteria,
         @org.springdoc.api.annotations.ParameterObject Pageable pageable
@@ -239,6 +246,7 @@ public class InterationsResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
      */
     @GetMapping("/interations/count")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Long> countInterations(InterationsCriteria criteria) {
         log.debug("REST request to count Interations by criteria: {}", criteria);
         return ResponseEntity.ok().body(interationsQueryService.countByCriteria(criteria));
@@ -251,6 +259,7 @@ public class InterationsResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the interations, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/interations/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Interations> getInterations(@PathVariable Long id) {
         log.debug("REST request to get Interations : {}", id);
         Optional<Interations> interations = interationsService.findOne(id);
@@ -264,6 +273,7 @@ public class InterationsResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/interations/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Void> deleteInterations(@PathVariable Long id) {
         log.debug("REST request to delete Interations : {}", id);
         interationsService.delete(id);
@@ -274,6 +284,7 @@ public class InterationsResource {
     }
 
     @PostMapping("/receiveMessage")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseMessage receiveMessage(@Valid @RequestBody ReceiveMessageRequest request, @Context HttpServletRequest ipRequest)
         throws URISyntaxException {
         log.debug("REST request to receiveMessage : {}", request);
