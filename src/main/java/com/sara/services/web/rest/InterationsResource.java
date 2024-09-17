@@ -1,40 +1,5 @@
 package com.sara.services.web.rest;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
-
-import javax.annotation.security.RolesAllowed;
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-import javax.ws.rs.core.Context;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
 import com.sapi.services.integration.methods.Sapi;
 import com.sapi.services.integration.response.ResponseGeneral;
 import com.sara.services.domain.Channel;
@@ -63,7 +28,39 @@ import com.sara.services.web.rest.Util.GeneralUtils;
 import com.sara.services.web.rest.errors.BadRequestAlertException;
 import com.sara.services.web.rest.request.ReceiveMessageRequest;
 import com.sara.services.web.rest.response.ResponseMessage;
-
+import com.yaken.chatgpt.ChatGPT;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
+import javax.annotation.security.RolesAllowed;
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.ws.rs.core.Context;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.service.filter.StringFilter;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.PaginationUtil;
@@ -96,11 +93,11 @@ public class InterationsResource {
     private final DefaultResponseRepository defaultResponseRepository;
 
     private final TrainingRepository trainingRepository;
-    
+
     private final ChannelRepository channelRepository;
-    
+
     private final ContactsQueryService contactsQueryService;
-    
+
     private final ContactsService contactsService;
 
     public InterationsResource(
@@ -296,23 +293,23 @@ public class InterationsResource {
         String[] fields = request.getValueRequest().split("&");
         List<UserExpresion> userExpresions = userExpresionService.findByValue(fields[0]);
         Date date = new Date();
-        if (request.getPhoneNumber()!=null) {
-	        ContactsCriteria criteria = new ContactsCriteria();
-	        StringFilter phoneNumber = new StringFilter();
-	        phoneNumber.setEquals(request.getPhoneNumber());
-	        criteria.setPhoneNumber(phoneNumber);
-	        List<Contacts> contacts= contactsQueryService.findByCriteria(criteria);
-	        if (contacts.isEmpty()) {
-	        	Contacts contacto = new Contacts();
-	        	contacto.setSourceChannel(GeneralUtils.getOriginAplicationValue(request.getSourceChannel()));
-	        	contacto.setPhoneNumber(request.getPhoneNumber());
-	        	contacto.setLastDayConnection(Instant.ofEpochMilli(date.getTime()));
-	        	contactsService.save(contacto);
-	        }else {
-	        	contacts.get(0).setLastDayConnection(Instant.ofEpochMilli(date.getTime()));
-	        	contacts.get(0).setSourceChannel(GeneralUtils.getOriginAplicationValue(request.getSourceChannel()));
-	        	contactsService.update(contacts.get(0));
-	        }
+        if (request.getPhoneNumber() != null) {
+            ContactsCriteria criteria = new ContactsCriteria();
+            StringFilter phoneNumber = new StringFilter();
+            phoneNumber.setEquals(request.getPhoneNumber());
+            criteria.setPhoneNumber(phoneNumber);
+            List<Contacts> contacts = contactsQueryService.findByCriteria(criteria);
+            if (contacts.isEmpty()) {
+                Contacts contacto = new Contacts();
+                contacto.setSourceChannel(GeneralUtils.getOriginAplicationValue(request.getSourceChannel()));
+                contacto.setPhoneNumber(request.getPhoneNumber());
+                contacto.setLastDayConnection(Instant.ofEpochMilli(date.getTime()));
+                contactsService.save(contacto);
+            } else {
+                contacts.get(0).setLastDayConnection(Instant.ofEpochMilli(date.getTime()));
+                contacts.get(0).setSourceChannel(GeneralUtils.getOriginAplicationValue(request.getSourceChannel()));
+                contactsService.update(contacts.get(0));
+            }
         }
         if (!userExpresions.isEmpty()) {
             List<Intent> intents = new ArrayList<Intent>();
@@ -327,9 +324,9 @@ public class InterationsResource {
                 Intent intent = intents.get(0);
                 List<UserResponse> userResponses = GeneralUtils.convertToList(intent.getUserResponses());
                 UserResponse userResponse = UserResponse.getRandomElement(userResponses);
-                List<Channel> channelsMultimedia =channelRepository.getChannelMultimediaByUserResponseId(userResponse.getId());
-                List<Channel> channelsVoice =channelRepository.getChannelVoiceByUserResponseId(userResponse.getId());
-                List<Channel> channelsAnimation =channelRepository.getChannelAnimationByUserResponseId(userResponse.getId());
+                List<Channel> channelsMultimedia = channelRepository.getChannelMultimediaByUserResponseId(userResponse.getId());
+                List<Channel> channelsVoice = channelRepository.getChannelVoiceByUserResponseId(userResponse.getId());
+                List<Channel> channelsAnimation = channelRepository.getChannelAnimationByUserResponseId(userResponse.getId());
                 if (userResponse.getResponseType().equals(ResponseType.QUERY)) {
                     log.info("UserResponse de tipo Query");
                     interations.setValueResponse(userResponse.getValueResponse());
@@ -356,7 +353,7 @@ public class InterationsResource {
                     }
                 }
                 interationsRepository.save(interations);
-                return GeneralUtils.covertToResponseMessage(userResponse,channelsMultimedia,channelsVoice, channelsAnimation);
+                return GeneralUtils.covertToResponseMessage(userResponse, channelsMultimedia, channelsVoice, channelsAnimation);
             } else {
                 List<DefaultResponse> defaultResponses = defaultResponseRepository.findAll();
                 Training training = new Training();
@@ -367,12 +364,20 @@ public class InterationsResource {
                 training.setIp(ip);
                 trainingRepository.save(training);
                 DefaultResponse defaultResponse = DefaultResponse.getRandomElement(defaultResponses);
+                String response = ChatGPT.chatGPT(request.getValueRequest());
                 interations.setValueResponse(defaultResponse.getDefaultValueResponse());
                 interationsRepository.save(interations);
-                List<Channel> channelsMultimedia =channelRepository.getChannelMultimediaByDefaultResponseId(defaultResponse.getId());
-                List<Channel> channelsVoice =channelRepository.getChannelVoiceByDefaultResponseId(defaultResponse.getId());
-                List<Channel> channelsAnimation =channelRepository.getChannelAnimationByDefaultResponseId(defaultResponse.getId());
-                return GeneralUtils.covertToResponseMessage(defaultResponse,channelsMultimedia,channelsVoice, channelsAnimation);
+                List<Channel> channelsMultimedia = channelRepository.getChannelMultimediaByDefaultResponseId(defaultResponse.getId());
+                List<Channel> channelsVoice = channelRepository.getChannelVoiceByDefaultResponseId(defaultResponse.getId());
+                List<Channel> channelsAnimation = channelRepository.getChannelAnimationByDefaultResponseId(defaultResponse.getId());
+                ResponseMessage responseMessage = GeneralUtils.covertToResponseMessage(
+                    defaultResponse,
+                    channelsMultimedia,
+                    channelsVoice,
+                    channelsAnimation
+                );
+                responseMessage.setValueResponse(response);
+                return responseMessage;
             }
         } else {
             List<DefaultResponse> defaultResponses = defaultResponseRepository.findAll();
@@ -384,14 +389,20 @@ public class InterationsResource {
             training.setIp(ip);
             trainingRepository.save(training);
             DefaultResponse defaultResponse = DefaultResponse.getRandomElement(defaultResponses);
+            String response = ChatGPT.chatGPT(request.getValueRequest());
             interations.setValueResponse(defaultResponse.getDefaultValueResponse());
             interationsRepository.save(interations);
-            List<Channel> channelsMultimedia =channelRepository.getChannelMultimediaByDefaultResponseId(defaultResponse.getId());
-            List<Channel> channelsVoice =channelRepository.getChannelVoiceByDefaultResponseId(defaultResponse.getId());
-            List<Channel> channelsAnimation =channelRepository.getChannelAnimationByDefaultResponseId(defaultResponse.getId());
-            return GeneralUtils.covertToResponseMessage(defaultResponse,channelsMultimedia,channelsVoice, channelsAnimation);
+            List<Channel> channelsMultimedia = channelRepository.getChannelMultimediaByDefaultResponseId(defaultResponse.getId());
+            List<Channel> channelsVoice = channelRepository.getChannelVoiceByDefaultResponseId(defaultResponse.getId());
+            List<Channel> channelsAnimation = channelRepository.getChannelAnimationByDefaultResponseId(defaultResponse.getId());
+            ResponseMessage responseMessage = GeneralUtils.covertToResponseMessage(
+                defaultResponse,
+                channelsMultimedia,
+                channelsVoice,
+                channelsAnimation
+            );
+            responseMessage.setValueResponse(response);
+            return responseMessage;
         }
     }
-    
-   
 }
